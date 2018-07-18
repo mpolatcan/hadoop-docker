@@ -1,0 +1,25 @@
+version: "3.5"
+services:
+  hadoop_slave:
+    image: mpolatcan/hadoop:ubuntu
+    container_name: slave2
+    hostname: slave2
+    environment:
+      - HADOOP_NODE_TYPE=datanode
+      - FS_HOSTNAME=master
+      - YARN_RM_HOSTNAME=master
+      - DFS_REPLICATION=2
+    networks:
+      hadoop_net:
+        ipv4_address: 10.10.0.5
+
+networks:
+  hadoop_net:
+    name: hadoop_net
+    driver: overlay
+    attachable: true
+    ipam:
+      driver: default
+      config:
+        -
+          subnet: 10.10.0.0/16

@@ -1,0 +1,30 @@
+version: "3.5"
+services:
+  hadoop_master:
+    image: mpolatcan/hadoop:ubuntu
+    container_name: master
+    hostname: master
+    environment:
+      - HADOOP_NODE_TYPE=namenode
+      - DFS_REPLICATION=2
+    ports:
+      - 50070:50070
+      - 50090:50090
+      - 50075:50075
+      - 1988:1988
+      - 8042:8042
+      - 8088:8088
+    networks:
+      hadoop_net:
+        ipv4_address: 10.10.0.3
+
+networks:
+  hadoop_net:
+    name: hadoop_net
+    driver: overlay
+    attachable: true
+    ipam:
+      driver: default
+      config:
+        -
+          subnet: 10.10.0.0/16
