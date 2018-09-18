@@ -33,7 +33,7 @@ function startDatanode() {
 }
 
 # Load Hadoop configs
-hadoop_config_loader.sh
+/hadoop_config_loader.sh
 
 [[ "${HADOOP_NODE_TYPE}" == "namenode" ]] && startNamenode
 
