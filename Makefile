@@ -1,8 +1,8 @@
 .PHONY: publish-hadoop
 publish-hadoop:
-	sudo docker build -q -t mpolatcan/hadoop:ubuntu-3.1.0 --build-arg HADOOP_VERSION="3.1.0" ./ubuntu/
-	sudo docker push mpolatcan/hadoop:ubuntu-3.1.0
-	sudo docker rmi mpolatcan/hadoop:ubuntu-3.1.0
+	sudo docker build -q -t mpolatcan/hadoop:ubuntu-3.1.1 --build-arg HADOOP_VERSION="3.1.1" ./ubuntu/
+	sudo docker push mpolatcan/hadoop:ubuntu-3.1.1
+	sudo docker rmi mpolatcan/hadoop:ubuntu-3.1.1
 
 	sudo docker build -q -t mpolatcan/hadoop:alpine-3.1.0 --build-arg HADOOP_VERSION="3.1.0" ./alpine/
 	sudo docker push mpolatcan/hadoop:alpine-3.1.0
