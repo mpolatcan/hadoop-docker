@@ -252,6 +252,6 @@ RUN apt-get update && \
     chmod -R 777 ${HADOOP_TMP_DIR} && \
     # 5 - Make scripts executable
     chmod +x entrypoint.sh hadoop_config_loader.sh && \
-    echo "PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" >> /etc/profile
+    echo "PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" >> /etc/environment
 
 ENTRYPOINT ["./entrypoint.sh"]
