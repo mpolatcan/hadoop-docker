@@ -250,6 +250,7 @@ RUN apk --update add --no-cache procps bash nano htop wget && \
     chown -R hduser:hadoop ${HADOOP_TMP_DIR} && \
     chmod -R 777 ${HADOOP_TMP_DIR} && \
     # 5 - Other things
-    chmod +x entrypoint.sh hadoop_config_loader.sh
+    chmod +x entrypoint.sh hadoop_config_loader.sh && \
+    echo "PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" >> /etc/profile
 
 ENTRYPOINT ["./entrypoint.sh"]
