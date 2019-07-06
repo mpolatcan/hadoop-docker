@@ -230,7 +230,8 @@ ENV YARN_TIMELINE_SERVICE_LEVELDB_TIMELINE_STORE_START_TIME_WRITE_CACHE_SIZE "10
 ENV YARN_TIMELINE_SERVICE_HANDLER_THREAD_COUNT "10"
 ########################################################################################################################
 
-COPY entrypoint.sh hadoop_config_loader.sh ./
+ADD entrypoint.sh /hadoop_entrypoint.sh
+ADD hadoop_config_loader.sh /
 
 # 1 - Update and Install Required Packages
 RUN apk --update add --no-cache procps bash nano htop wget && \
@@ -250,7 +251,8 @@ RUN apk --update add --no-cache procps bash nano htop wget && \
     chown -R hduser:hadoop ${HADOOP_TMP_DIR} && \
     chmod -R 777 ${HADOOP_TMP_DIR} && \
     # 5 - Other things
-    chmod +x entrypoint.sh hadoop_config_loader.sh && \
+    chmod +x hadoop_entrypoint.sh hadoop_config_loader.sh && \
     echo "PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" >> /etc/profile
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["./hadoop_entrypoint.sh"]
+CMD ["tail", "-f", "/dev/null"]
