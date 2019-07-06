@@ -255,5 +255,4 @@ RUN apt-get update && \
     chmod +x hadoop_entrypoint.sh hadoop_config_loader.sh && \
     echo "PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" >> /etc/environment
 
-ENTRYPOINT ["./hadoop_entrypoint.sh"]
-CMD ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["./hadoop_entrypoint.sh", "&&", "tail", "-f", "/dev/null"]
