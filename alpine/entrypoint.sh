@@ -38,3 +38,7 @@ function startDatanode() {
 [[ "${HADOOP_NODE_TYPE}" == "namenode" ]] && startNamenode
 
 [[ "${HADOOP_NODE_TYPE}" == "datanode" ]] && startDatanode
+
+if [[ "$1" == "hadoop" ]]; then
+    tail -f /dev/null
+fi
