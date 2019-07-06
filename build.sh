@@ -23,7 +23,7 @@ DISTS=(
 function build_image() {
     sudo docker build -q -t mpolatcan/hadoop:$1-$2 --build-arg HADOOP_VERSION=$2 ./$1/
 	sudo docker push mpolatcan/hadoop:$1-$2
-	sudo docker rmi mpolatcan/hadoop:$1-$2
+	sudo docker rmi $(sudo docker images -q)
 }
 
 for HADOOP_VERSION in ${HADOOP_VERSIONS[@]}; do
