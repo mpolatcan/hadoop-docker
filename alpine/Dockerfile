@@ -1,4 +1,4 @@
-FROM anapsix/alpine-java
+FROM openjdk:8-alpine
 
 # TODO Multi master Hadoop
 # TODO Add new configurations
@@ -8,10 +8,9 @@ MAINTAINER Mutlu Polatcan <mutlupolatcan@gmail.com>
 ARG HADOOP_VERSION=2.9.0
 ARG HADOOP_DOWNLOAD_LINK="http://www-eu.apache.org/dist/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz"
 
-ENV JAVA_HOME "/opt/jdk"
 ENV HADOOP_HOME "/usr/local/hadoop"
 ENV HADOOP_CONF_DIR "/usr/local/hadoop/etc/hadoop"
-ENV PATH $PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+ENV PATH $PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 
 ########################################################################################################################
 ############################################### HADOOP ENV VARIABLES ###################################################
@@ -252,6 +251,6 @@ RUN apk --update add --no-cache procps bash nano htop wget && \
     chmod -R 777 ${HADOOP_TMP_DIR} && \
     # 5 - Other things
     chmod +x hadoop_entrypoint.sh hadoop_config_loader.sh && \
-    echo "PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" >> /etc/profile
+    echo "PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" >> /etc/profile
 
 ENTRYPOINT ["./hadoop_entrypoint.sh", "hadoop"]

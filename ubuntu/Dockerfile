@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM openjdk:8
 
 # TODO Multi master Hadoop
 # TODO Add new configurations
@@ -7,10 +7,9 @@ MAINTAINER Mutlu Polatcan <mutlupolatcan@gmail.com>
 ARG HADOOP_VERSION=2.9.0
 ARG HADOOP_DOWNLOAD_LINK="http://www-eu.apache.org/dist/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz"
 
-ENV JAVA_HOME "/usr/lib/jvm/java-8-openjdk-amd64"
 ENV HADOOP_HOME "/usr/local/hadoop"
 ENV HADOOP_CONF_DIR "/usr/local/hadoop/etc/hadoop"
-ENV PATH $PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+ENV PATH $PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 
 ########################################################################################################################
 ############################################### HADOOP ENV VARIABLES ###################################################
@@ -234,7 +233,7 @@ ADD hadoop_config_loader.sh /
 
 # 1 - Update and Install Required Packages
 RUN apt-get update && \
-    apt-get -y install --no-install-recommends nano htop default-jre default-jdk wget && \
+    apt-get -y install --no-install-recommends nano htop wget && \
     rm -rf /var/lib/apt/lists/* && \
     # 2 - Add Hadoop user to system
     addgroup hadoop && adduser --disabled-password --gecos "" --ingroup hadoop hduser && \
@@ -253,6 +252,6 @@ RUN apt-get update && \
     chmod -R 777 ${HADOOP_TMP_DIR} && \
     # 5 - Make scripts executable
     chmod +x hadoop_entrypoint.sh hadoop_config_loader.sh && \
-    echo "PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" >> /etc/environment
+    echo "PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" >> /etc/environment
 
 ENTRYPOINT ["./hadoop_entrypoint.sh", "hadoop"]
