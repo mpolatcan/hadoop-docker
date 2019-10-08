@@ -19,7 +19,7 @@ JAVA_VERSIONS=(
 # $1: HADOOP_VERSION
 # $2: JAVA_VERSION
 function build_image() {
-    sudo docker build -q -t mpolatcan/hadoop:$1-java$2 --build-arg HADOOP_VERSION=$1 --build-arg JAVA_VERSION=$2 ./src
+    sudo docker build -q -t mpolatcan/hadoop:$1-java$2 --build-arg HADOOP_VERSION=$1 --build-arg JAVA_VERSION=$2 ./src/
 	  sudo docker push mpolatcan/hadoop:$1-java$2
 	  sudo docker rmi mpolatcan/hadoop:$1-java$2
 }
