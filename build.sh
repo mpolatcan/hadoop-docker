@@ -26,6 +26,6 @@ function build_image() {
 
 for HADOOP_VERSION in ${HADOOP_VERSIONS[@]}; do
   for JAVA_VERSION in ${JAVA_VERSIONS[@]}; do
-        build_image $HADOOP_VERSION $JAVA_VERSION
+      build_image $HADOOP_VERSION $JAVA_VERSION
   done
 done
