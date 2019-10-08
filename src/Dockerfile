@@ -1,11 +1,13 @@
-FROM openjdk:8
-
 # TODO Multi master Hadoop
 # TODO Add new configurations
+
 MAINTAINER Mutlu Polatcan <mutlupolatcan@gmail.com>
 
+ARG JAVA_VERSION=8
 ARG HADOOP_VERSION=2.9.0
 ARG HADOOP_DOWNLOAD_LINK="http://www-eu.apache.org/dist/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz"
+
+FROM openjdk:${JAVA_VERSION}
 
 ENV HADOOP_HOME "/usr/local/hadoop"
 ENV HADOOP_CONF_DIR "/usr/local/hadoop/etc/hadoop"
