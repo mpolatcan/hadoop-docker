@@ -9,8 +9,7 @@ HADOOP_VERSIONS=(
 )
 
 DISTS=(
-    "alpine"
-    "ubuntu"
+    "debian"
 )
 
 # $1: DIST
