@@ -20,6 +20,7 @@ ENV HADOOP_CONF_DIR "${HADOOP_HOME}/etc/hadoop"
 ENV YARN_CONF_DIR "${HADOOP_HOME}/etc/hadoop"
 ENV HADOOP_TMP_DIR "${HDUSER_HOME}/app/hadoop/tmp"
 ENV PATH $PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+ENV LD_LIBRARY_PATH=${HADOOP_HOME}/lib/native/:$LD_LIBRARY_PATH
 
 # ----------------------- core.site.xml configs ---------------------
 ENV FS_HOSTNAME "NULL"
