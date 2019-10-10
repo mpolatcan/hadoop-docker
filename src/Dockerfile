@@ -10,16 +10,16 @@ ARG HADOOP_DOWNLOAD_LINK="http://www-eu.apache.org/dist/hadoop/common/hadoop-${H
 
 MAINTAINER Mutlu Polatcan <mutlupolatcan@gmail.com>
 
-ENV HADOOP_HOME "/usr/local/hadoop"
-ENV HADOOP_CONF_DIR "/usr/local/hadoop/etc/hadoop"
-ENV YARN_CONF_DIR "/usr/local/hadoop/etc/hadoop"
-ENV PATH $PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
-
 ########################################################################################################################
 ############################################### HADOOP ENV VARIABLES ###################################################
 ########################################################################################################################
 ENV HADOOP_NODE_TYPE "namenode"
-ENV HADOOP_TMP_DIR "/app/hadoop/tmp"
+ENV HDUSER_HOME "/hduser"
+ENV HADOOP_HOME "${HDUSER_HOME}/hadoop"
+ENV HADOOP_CONF_DIR "${HADOOP_HOME}/etc/hadoop"
+ENV YARN_CONF_DIR "${HADOOP_HOME}/etc/hadoop"
+ENV HADOOP_TMP_DIR "${HDUSER_HOME}/app/hadoop/tmp"
+ENV PATH $PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 
 # ----------------------- core.site.xml configs ---------------------
 ENV FS_HOSTNAME "NULL"
@@ -241,15 +241,17 @@ ADD hadoop_config_loader.sh /hduser/
 RUN apt-get update && \
     apt-get -y install --no-install-recommends nano htop wget && \
     rm -rf /var/lib/apt/lists/* && \
-    # 2 - Add Hadoop user to system
+    # 2 - Add Hadoop user to system and create home directory for hduser
     addgroup hadoop && adduser --disabled-password --gecos "" --ingroup hadoop hduser && \
+    mkdir -p ${HDUSER_HOME} && \
+    chown -R hduser:hadoop ${HDUSER_HOME} && \
     # 3 - Extract and Install Hadoop
     mkdir -p ${HADOOP_HOME} && \
     wget ${HADOOP_DOWNLOAD_LINK} && \
-    tar -xvzf hadoop-${HADOOP_VERSION}.tar.gz -C /usr/local && \
-    mv /usr/local/hadoop-${HADOOP_VERSION}/* ${HADOOP_HOME} && \
-    rm -r /usr/local/hadoop-${HADOOP_VERSION} && \
-    rm hadoop-${HADOOP_VERSION}.tar.gz && \
+    tar -xvzf hadoop-${HADOOP_VERSION}.tar.gz -C ${HDUSER_HOME} && \
+    mv ${HDUSER_HOME}/hadoop-${HADOOP_VERSION}/* ${HADOOP_HOME} && \
+    rm -r ${HDUSER_HOME}/hadoop-${HADOOP_VERSION} && \
+    rm ${HDUSER_HOME}/hadoop-${HADOOP_VERSION}.tar.gz && \
     chown -R hduser:hadoop ${HADOOP_HOME} && \
     chmod -R 777 ${HADOOP_HOME} && \
     # 4 - Create tmp directory for Hadoop
@@ -257,10 +259,8 @@ RUN apt-get update && \
     chown -R hduser:hadoop ${HADOOP_TMP_DIR} && \
     chmod -R 777 ${HADOOP_TMP_DIR} && \
     # 5 - Make scripts executable
-    chmod +x /hduser/hadoop_entrypoint.sh /hduser/hadoop_config_loader.sh && \
-    echo "PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" >> /etc/environment && \
-    mkdir -p /hduser && \
-    chown -R hduser:hadoop /hduser
+    chmod +x ${HDUSER_HOME}/hadoop_entrypoint.sh ${HDUSER_HOME}/hadoop_config_loader.sh && \
+    echo "PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" >> /etc/environment
 
 USER hduser
 WORKDIR /hduser
