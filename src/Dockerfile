@@ -251,7 +251,7 @@ RUN apt-get update && \
     tar -xvzf hadoop-${HADOOP_VERSION}.tar.gz -C ${HDUSER_HOME} && \
     mv ${HDUSER_HOME}/hadoop-${HADOOP_VERSION}/* ${HADOOP_HOME} && \
     rm -r ${HDUSER_HOME}/hadoop-${HADOOP_VERSION} && \
-    rm ${HDUSER_HOME}/hadoop-${HADOOP_VERSION}.tar.gz && \
+    rm hadoop-${HADOOP_VERSION}.tar.gz && \
     chown -R hduser:hadoop ${HADOOP_HOME} && \
     chmod -R 777 ${HADOOP_HOME} && \
     # 4 - Create tmp directory for Hadoop
