@@ -202,9 +202,14 @@ echo "</configuration>" >> ${HADOOP_CONF_DIR}/yarn-site.xml
 
 # ---------------------------- Load mapred-site.xml configs --------------------
 echo "<configuration>" > ${HADOOP_CONF_DIR}/mapred-site.xml
+loadConfig "yarn.app.mapreduce.am.env" "HADOOP_MAPRED_HOME=${HADOOP_HOME}" "mapred-site.xml"
+loadConfig "mapreduce.map.env" "HADOOP_MAPRED_HOME=${HADOOP_HOME}" "mapred-site-xml"
+loadConfig "mapreduce.reduce.env" "HADOOP_MAPRED_HOME=${HADOOP_HOME}" "mapred-site.xml"
 loadConfig "mapreduce.framework.name" ${MAPREDUCE_FRAMEWORK_NAME} "mapred-site.xml"
 loadConfig "mapreduce.map.memory.mb" ${MAPREDUCE_MAP_MEMORY_MB} "mapred-site.xml"
+loadConfig "mapreduce.map.java.opts" ${MAPREDUCE_MAP_JAVA_OPTS} "mapred-site.xml"
 loadConfig "mapreduce.reduce.memory.mb" ${MAPREDUCE_REDUCE_MEMORY_MB} "mapred-site.xml"
+loadConfig "mapreduce.reduce.java.opts" ${MAPREDUCE_REDUCE_JAVA_OPTS} "mapred-site.xml"
 loadConfig "mapreduce.task.io.sort.factor" ${MAPREDUCE_TASK_IO_SORT_FACTOR} "mapred-site.xml"
 loadConfig "mapreduce.task.io.sort.mb" ${MAPREDUCE_TASK_IO_SORT_MB} "mapred-site.xml"
 loadConfig "mapreduce.reduce.shuffle.parallelcopies" ${MAPREDUCE_REDUCE_SHUFFLE_PARALLELCOPIES} "mapred-site.xml"

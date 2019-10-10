@@ -7,6 +7,9 @@ services:
     environment:
       - HADOOP_NODE_TYPE=namenode
       - DFS_REPLICATION=2
+      - YARN_RM_SCHEDULER_MIN_ALLOC_MB=1024
+      - YARN_RM_SCHEDULER_MAX_ALLOC_MB=2048
+      - YARN_RM_SCHEDULER_MAX_ALLOC_VCORES=2
     ports:
       - 8080:16010
       - 50070:50070

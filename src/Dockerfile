@@ -1,5 +1,6 @@
 # TODO Multi master Hadoop
 # TODO Add new configurations
+# TODO Scala will be added
 ARG JAVA_VERSION=8
 
 FROM openjdk:${JAVA_VERSION}
@@ -11,6 +12,7 @@ MAINTAINER Mutlu Polatcan <mutlupolatcan@gmail.com>
 
 ENV HADOOP_HOME "/usr/local/hadoop"
 ENV HADOOP_CONF_DIR "/usr/local/hadoop/etc/hadoop"
+ENV YARN_CONF_DIR "/usr/local/hadoop/etc/hadoop"
 ENV PATH $PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 
 ########################################################################################################################
@@ -121,8 +123,10 @@ ENV DFS_IMAGE_COMPRESS "false"
 ENV MAPREDUCE_HOSTNAME "NULL"
 ENV MAPREDUCE_FRAMEWORK_NAME "yarn"
 ENV MAPREDUCE_MAP_MEMORY_MB "1024"
+ENV MAPREDUCE_MAP_JAVA_OPTS "NULL"
 ENV MAPREDUCE_MAP_CPU_VCORES "1"
 ENV MAPREDUCE_REDUCE_MEMORY_MB "1024"
+ENV MAPREDUCE_REDUCE_JAVA_OPTS ""
 ENV MAPREDUCE_REDUCE_CPU_VCORES "1"
 ENV MAPREDUCE_JOBTRACKER_ADDR "local"
 ENV MAPREDUCE_JOBHISTORY_WEBAPP_IP "0.0.0.0"
@@ -230,8 +234,8 @@ ENV YARN_TIMELINE_SERVICE_LEVELDB_TIMELINE_STORE_START_TIME_WRITE_CACHE_SIZE "10
 ENV YARN_TIMELINE_SERVICE_HANDLER_THREAD_COUNT "10"
 ########################################################################################################################
 
-ADD entrypoint.sh /hadoop_entrypoint.sh
-ADD hadoop_config_loader.sh /
+ADD entrypoint.sh /hduser/hadoop_entrypoint.sh
+ADD hadoop_config_loader.sh /hduser/
 
 # 1 - Update and Install Required Packages
 RUN apt-get update && \
@@ -253,7 +257,11 @@ RUN apt-get update && \
     chown -R hduser:hadoop ${HADOOP_TMP_DIR} && \
     chmod -R 777 ${HADOOP_TMP_DIR} && \
     # 5 - Make scripts executable
-    chmod +x hadoop_entrypoint.sh hadoop_config_loader.sh && \
-    echo "PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" >> /etc/environment
+    chmod +x /hduser/hadoop_entrypoint.sh /hduser/hadoop_config_loader.sh && \
+    echo "PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" >> /etc/environment && \
+    mkdir -p /hduser && \
+    chown -R hduser:hadoop /hduser
 
+USER hduser
+WORKDIR /hduser
 ENTRYPOINT ["./hadoop_entrypoint.sh", "hadoop"]
