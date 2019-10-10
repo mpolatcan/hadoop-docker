@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-function startNamenode() {
+function start_namenode() {
     # Formatting HDFS
     [[ ! -d "${HADOOP_TMP_DIR}/dfs" ]] && hdfs namenode -format
 
@@ -22,7 +22,7 @@ function startNamenode() {
     mapred --daemon start historyserver
 }
 
-function startDatanode() {
+function start_datanode() {
     # Start Datanode
     hdfs --daemon start datanode
 
@@ -33,9 +33,9 @@ function startDatanode() {
 # Load Hadoop configs
 ./hadoop_config_loader.sh
 
-[[ "${HADOOP_NODE_TYPE}" == "namenode" ]] && startNamenode
+[[ "${HADOOP_NODE_TYPE}" == "namenode" ]] && start_namenode
 
-[[ "${HADOOP_NODE_TYPE}" == "datanode" ]] && startDatanode
+[[ "${HADOOP_NODE_TYPE}" == "datanode" ]] && start_datanode
 
 if [[ "$1" == "hadoop" ]]; then
     tail -f /dev/null

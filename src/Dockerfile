@@ -234,8 +234,8 @@ ENV YARN_TIMELINE_SERVICE_LEVELDB_TIMELINE_STORE_START_TIME_WRITE_CACHE_SIZE "10
 ENV YARN_TIMELINE_SERVICE_HANDLER_THREAD_COUNT "10"
 ########################################################################################################################
 
-ADD entrypoint.sh /hduser/hadoop_entrypoint.sh
-ADD hadoop_config_loader.sh /hduser/
+ADD entrypoint.sh ${HDUSER_HOME}/hadoop_entrypoint.sh
+ADD hadoop_config_loader.sh ${HDUSER_HOME}/
 
 # 1 - Update and Install Required Packages
 RUN apt-get update && \
@@ -263,5 +263,5 @@ RUN apt-get update && \
     echo "PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin" >> /etc/environment
 
 USER hduser
-WORKDIR /hduser
+WORKDIR ${HDUSER_HOME}
 ENTRYPOINT ["./hadoop_entrypoint.sh", "hadoop"]
