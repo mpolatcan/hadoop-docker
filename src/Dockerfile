@@ -240,7 +240,7 @@ ADD hadoop_config_loader.sh ${HDUSER_HOME}/
 
 # 1 - Update and Install Required Packages
 RUN apt-get update && \
-    apt-get -y install --no-install-recommends nano htop wget && \
+    apt-get -y install --no-install-recommends nano htop wget rsync scala gcc g++ && \
     rm -rf /var/lib/apt/lists/* && \
     # 2 - Add Hadoop user to system and create home directory for hduser
     addgroup hadoop && adduser --disabled-password --gecos "" --ingroup hadoop hduser && \
