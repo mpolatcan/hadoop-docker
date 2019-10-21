@@ -1,5 +1,3 @@
-# TODO Multi master Hadoop
-# TODO Add new configurations
 ARG JAVA_VERSION=8
 
 FROM openjdk:${JAVA_VERSION}
