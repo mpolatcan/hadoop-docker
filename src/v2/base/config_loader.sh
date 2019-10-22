@@ -30,7 +30,7 @@ load_config "dfs.namenode.lifeline.handler.count" ${DFS_NAMENODE_LIFELINE_HANDLE
 load_config "dfs.namenode.secondary.http-port" ${DFS_NAMENODE_SECONDARY_HTTP_PORT} "hdfs-site.xml"
 load_config_with_opt "dfs.namenode.secondary.http-address" ${DFS_NAMENODE_HOSTNAME} "${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_SECONDARY_HTTP_PORT}" "${HOSTNAME}:${DFS_NAMENODE_SECONDARY_HTTP_PORT}" "hdfs-site.xml"
 load_config "dfs.namenode.secondary.https-port" ${DFS_NAMENODE_SECONDARY_HTTPS_PORT} "hdfs-site.xml"
-load_config_with_opt "dfs.namenode.secondary.https-address" ${DFS_NAMENODE_HOSTNAME} "${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_SECONDARY_HTTPS_PORT}" "${HOSTNAME}:{DFS_NAMENODE_SECONDARY_HTTPS_PORT}" "hdfs-site.xml"
+load_config_with_opt "dfs.namenode.secondary.https-address" ${DFS_NAMENODE_HOSTNAME} "${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_SECONDARY_HTTPS_PORT}" "${HOSTNAME}:${DFS_NAMENODE_SECONDARY_HTTPS_PORT}" "hdfs-site.xml"
 load_config "dfs.namenode.http-port" ${DFS_NAMENODE_HTTP_PORT} "hdfs-site.xml"
 load_config "dfs.namenode.https-port" ${DFS_NAMENODE_HTTPS_PORT} "hdfs-site.xml"
 load_config_with_opt "dfs.namenode.http-address" ${DFS_NAMENODE_HOSTNAME} "${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_HTTP_PORT}" "${HOSTNAME}:${DFS_NAMENODE_HTTP_PORT}" "hdfs-site.xml"
