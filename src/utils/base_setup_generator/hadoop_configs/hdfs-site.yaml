@@ -660,7 +660,7 @@ dfs:
       random:
         order: "false"
     datanode-restart:
-      timeout: "30s"
+      timeout: "30"
     use:
       datanode:
         hostname: "false"
