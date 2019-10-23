@@ -1474,5 +1474,5 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     addgroup hadoop && adduser --disabled-password --gecos "" --ingroup hadoop hduser && \
     mkdir -p ${HADOOP_HOME} ${HADOOP_TMP_DIR} && \
-    chown -R hduser:hadoop ${HDUSER_HOME} ${HADOOP_HOME} ${HADOOP_TMP_DIR} && \
+    chown -R hduser:hadoop ${HDUSER_HOME} && \
     chmod +x ${HDUSER_HOME}/hadoop_entrypoint.sh ${HDUSER_HOME}/hadoop_config_loader.sh

@@ -10,7 +10,7 @@ ARG HADOOP_DOWNLOAD_LINK="http://www-eu.apache.org/dist/hadoop/common/hadoop-${H
 RUN wget ${HADOOP_DOWNLOAD_LINK} && \
     tar -xvzf hadoop-${HADOOP_VERSION}.tar.gz -C ${HDUSER_HOME} && \
     mv ${HDUSER_HOME}/hadoop-${HADOOP_VERSION}/* ${HADOOP_HOME} && \
-    chown -R hduser:hadoop ${HDUSER_HOME} ${HADOOP_HOME} ${HADOOP_TMP_DIR} && \
+    chown -R hduser:hadoop ${HDUSER_HOME} && \
     rm -r ${HDUSER_HOME}/hadoop-${HADOOP_VERSION} && \
     rm hadoop-${HADOOP_VERSION}.tar.gz
 
