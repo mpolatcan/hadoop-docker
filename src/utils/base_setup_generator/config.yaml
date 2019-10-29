@@ -1,5 +1,5 @@
 base_dockerfile_template: |
-  ARG JAVA_VERSION=8
+  ARG JAVA_VERSION=""
 
   FROM openjdk:${{JAVA_VERSION}}
 

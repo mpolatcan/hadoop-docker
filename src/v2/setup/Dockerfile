@@ -1,10 +1,10 @@
-ARG JAVA_VERSION=8
+ARG JAVA_VERSION=""
 
 FROM mpolatcan/hadoop:base-java${JAVA_VERSION}
 
 MAINTAINER Mutlu Polatcan <mutlupolatcan@gmail.com>
 
-ARG HADOOP_VERSION=3.2.1
+ARG HADOOP_VERSION=""
 ARG HADOOP_DOWNLOAD_LINK="http://www-eu.apache.org/dist/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz"
 
 RUN wget ${HADOOP_DOWNLOAD_LINK} && \
