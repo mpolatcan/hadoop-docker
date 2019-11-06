@@ -15,7 +15,7 @@ jobs:
       - run: docker build -q
           -t ${{secrets.DOCKER_USERNAME}}/${{matrix.repository}}:base-java${{matrix.java_version}}
           --build-arg JAVA_VERSION=${{matrix.java_version}}
-          src/v2/base
+          src/base
       - run: docker push ${{secrets.DOCKER_USERNAME}}/${{matrix.repository}}:base-java${{matrix.java_version}}
       - run: docker rmi ${{secrets.DOCKER_USERNAME}}/${{matrix.repository}}:base-java${{matrix.java_version}}
 
@@ -34,6 +34,6 @@ jobs:
           -t ${{secrets.DOCKER_USERNAME}}/${{matrix.repository}}:${{matrix.hadoop_version}}-java${{matrix.java_version}}
           --build-arg HADOOP_VERSION=${{matrix.hadoop_version}}
           --build-arg JAVA_VERSION=${{matrix.java_version}}
-          src/v2/setup
+          src/setup
       - run: docker push ${{secrets.DOCKER_USERNAME}}/${{matrix.repository}}:${{matrix.hadoop_version}}-java${{matrix.java_version}}
       - run: docker rmi ${{secrets.DOCKER_USERNAME}}/${{matrix.repository}}:${{matrix.hadoop_version}}-java${{matrix.java_version}}
