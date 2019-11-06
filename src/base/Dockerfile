@@ -1470,7 +1470,7 @@ ADD entrypoint.sh ${HDUSER_HOME}/hadoop_entrypoint.sh
 ADD config_loader.sh ${HDUSER_HOME}/hadoop_config_loader.sh
 
 RUN apt-get update && \
-    apt-get -y install --no-install-recommends nano htop wget rsync gcc g++ && \
+    apt-get -y install --no-install-recommends nano wget rsync gcc g++ unzip && \
     rm -rf /var/lib/apt/lists/* && \
     addgroup hadoop && adduser --disabled-password --gecos "" --ingroup hadoop hduser && \
     mkdir -p ${HADOOP_HOME} ${HADOOP_TMP_DIR} && \
