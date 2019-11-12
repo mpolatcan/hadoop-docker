@@ -793,4 +793,6 @@ yarn:
   web-proxy:
     principal: "NULL"
     keytab: "NULL"
-    address: "NULL"
+    hostname: "0.0.0.0"
+    port: "8092"
+    address: "=${YARN_WEB_PROXY_HOSTNAME}:${YARN_WEB_PROXY_PORT}"

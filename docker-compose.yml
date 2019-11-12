@@ -11,6 +11,7 @@ services:
       - YARN_NODEMANAGER_VMEM_CHECK_ENABLED=false
       - YARN_NODEMANAGER_RESOURCE_MEMORY_MB=1536
       - YARN_NODEMANAGER_RESOURCE_CPU_VCORES=2
+      - HADOOP_ADDITIONAL_DAEMONS=proxyserver
     ports:
       - 8088:8088 # resource manager port
       - 9868:9868 # secondary namenode port
