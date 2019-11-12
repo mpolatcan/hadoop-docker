@@ -1,9 +1,6 @@
 name: Hadoop Docker Development Image Publish
 
-on:
-  push:
-    branches:
-      - development
+on: [push]
 
 jobs:
   build-base-image:
