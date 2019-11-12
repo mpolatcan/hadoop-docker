@@ -30,58 +30,22 @@ daemons[zkfc]=hdfs
 daemons[historyserver]=mapred
 # -------------------------------
 
-function start_daemon() {
-    ${daemons[$1]} --daemon start $1
-}
+function start_daemons() {
+  for daemon in ${HADOOP_DAEMONS[@]}; do
+      if [[ "$daemon" == "namenode" ]]; then
+          # Formatting HDFS
+          hdfs namenode -format
+      fi
 
-function start_namenode() {
-    # Formatting HDFS
-    [[ ! -d "${HADOOP_TMP_DIR}/dfs" ]] && hdfs namenode -format
-
-    # Start Hadoop Namenode
-    start_daemon namenode
-
-    # Start Hadoop Secondary namenode
-    start_daemon secondarynamenode
-
-    # Start Hadoop Datanode
-    start_daemon datanode
-
-    # Start YARN Resourcemanager
-    start_daemon resourcemanager
-
-    # Start YARN Nodemanager
-    start_daemon nodemanager
-
-    # Start JobHistory server
-    start_daemon historyserver
-}
-
-function start_datanode() {
-    # Start Datanode
-    start_daemon datanode
-
-    # Start YARN Nodemanager
-    start_daemon nodemanager
-}
-
-function run_additional_daemons() {
-  HADOOP_ADDITIONAL_DAEMONS=(${HADOOP_ADDITIONAL_DAEMONS//,/ })
-
-  for daemon in ${HADOOP_ADDITIONAL_DAEMONS[@]}; do
-    start_daemon $daemon
+      # Start current daemon
+      ${daemons[$daemon]} --daemon start $daemon
   done
 }
 
 # Load Hadoop configs
 ./hadoop_config_loader.sh
 
-[[ "${HADOOP_NODE_TYPE}" == "namenode" ]] && start_namenode
+# Start Hadoop Daemons
+[[ "${HADOOP_DAEMONS}" != "NULL" ]] && start_daemons
 
-[[ "${HADOOP_NODE_TYPE}" == "datanode" ]] && start_datanode
-
-[[ "${HADOOP_ADDITIONAL_DAEMONS}" != "NULL" ]] && run_additional_daemons
-
-if [[ "$1" == "hadoop" ]]; then
-    tail -f /dev/null
-fi
+if [[ "$1" == "hadoop" ]] && tail -f /dev/null

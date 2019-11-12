@@ -1,32 +1,47 @@
 version: "3"
 services:
-  master:
-    image: mpolatcan/hadoop:3.2.1-java8
-    container_name: master
-    hostname: master
+  namenode:
+    image: mpolatcan/hadoop-dev:3.2.1-java8
+    container_name: namenode
+    hostname: namenode
     environment:
-      - HADOOP_NODE_TYPE=namenode
-      - YARN_SCHEDULER_MINIMUM_ALLOCATION_MB=128
-      - YARN_SCHEDULER_MAXIMUM_ALLOCATION_MB=1536
-      - YARN_NODEMANAGER_VMEM_CHECK_ENABLED=false
-      - YARN_NODEMANAGER_RESOURCE_MEMORY_MB=1536
-      - YARN_NODEMANAGER_RESOURCE_CPU_VCORES=2
-      - HADOOP_ADDITIONAL_DAEMONS=proxyserver
+      - HADOOP_DAEMONS=
+          namenode
+          nodemanager
     ports:
-      - 8088:8088 # resource manager port
-      - 9868:9868 # secondary namenode port
-      - 9864:9864 # datanode port
-      - 9870:9870 # namenode port
-      - 8480:8480 # journalnode port
-      - 8092:8092 # proxyserver port
+      - 9870:9870
 
-  slave:
+  secondarynamenode:
+    image: mpolatcan/hadoop-dev:3.2.1-java8
+    container_name: secondarynamenode
+    hostname: secondarynamenode
+    environment:
+      - HADOOP_DAEMONS=
+          secondarynamenode
+    ports:
+      - 9868:9868
+
+  resourcemanager:
+    image: mpolatcan/hadoop-dev:3.2.1-java8
+    container_name: resourcemanager
+    hostname: resourcemanager
+    environment:
+      - HADOOP_DAEMONS=
+          resourcemanager
+    ports:
+      - 8088:8088
+
+  datanode:
     image: mpolatcan/hadoop:3.2.1-java8
     environment:
-      - HADOOP_NODE_TYPE=datanode
-      - FS_HOSTNAME=master
+      - HADOOP_DAEMONS=
+          datanode
+          nodemanager
+      - FS_HOSTNAME=namenode
       - YARN_NODEMANAGER_RESOURCE_MEMORY_MB=1536
       - YARN_NODEMANAGER_RESOURCE_CPU_VCORES=2
-      - YARN_RESOURCEMANAGER_HOSTNAME=master
+      - YARN_RESOURCEMANAGER_HOSTNAME=resourcemanager
     links:
-      - master
+      - namenode
+    ports:
+      - 9864
