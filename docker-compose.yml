@@ -18,6 +18,7 @@ services:
       - 9864:9864 # datanode port
       - 9870:9870 # namenode port
       - 8480:8480 # journalnode port
+      - 8092:8092 # proxyserver port
 
   slave:
     image: mpolatcan/hadoop:3.2.1-java8
