@@ -189,10 +189,10 @@ yarn:
       threadpool-size-max: "100"
     webapp:
       port: "8042"
-      address: "?${YARN_NODEMANAGER_HOSTNAME},${YARN_NODEMANAGER_HOSTNAME}:${YARN_NODEMANAGER_WEBAPP_PORT},${HOSTNAME}:${YARN_NODEMANAGER_WEBAPP_PORT}"
+      address: "=${HADOOP_WEBAPPS_HOSTNAME}:${YARN_NODEMANAGER_WEBAPP_PORT}"
       https:
         port: "8044"
-        address: "?${YARN_NODEMANAGER_HOSTNAME},${YARN_NODEMANAGER_HOSTNAME}:${YARN_NODEMANAGER_WEBAPP_HTTPS_PORT},${HOSTNAME}:${YARN_NODEMANAGER_WEBAPP_HTTPS_PORT}"
+        address: "=${HADOOP_WEBAPPS_HOSTNAME}:${YARN_NODEMANAGER_WEBAPP_HTTPS_PORT}"
       spnego-keytab-file: "NULL"
       spnego-principal: "NULL"
       cross-origin:
@@ -410,10 +410,10 @@ yarn:
       processors: "NULL"
     webapp:
       port: "8088"
-      address: "?${YARN_RESOURCEMANAGER_HOSTNAME},${YARN_RESOURCEMANAGER_HOSTNAME}:${YARN_RESOURCEMANAGER_WEBAPP_PORT},${HOSTNAME}:${YARN_RESOURCEMANAGER_WEBAPP_PORT}"
+      address: "=${HADOOP_WEBAPPS_HOSTNAME}:${YARN_RESOURCEMANAGER_WEBAPP_PORT}"
       https:
         port: "8090"
-        address: "?${YARN_RESOURCEMANAGER_HOSTNAME},${YARN_RESOURCEMANAGER_HOSTNAME}:${YARN_RESOURCEMANAGER_WEBAPP_HTTPS_PORT},${HOSTNAME}:${YARN_RESOURCEMANAGER_WEBAPP_HTTPS_PORT}"
+        address: "=${HADOOP_WEBAPPS_HOSTNAME}:${YARN_RESOURCEMANAGER_WEBAPP_HTTPS_PORT}"
       spnego-keytab-file: "NULL"
       spnego-principal: "NULL"
       ui-actions:
@@ -593,10 +593,10 @@ yarn:
         pipeline: "org.apache.hadoop.yarn.server.router.webapp.DefaultRequestInterceptorREST"
       hostname: "NULL"
       port: "8089"
-      address: "?${YARN_ROUTER_WEBAPP_HOSTNAME},${YARN_ROUTER_WEBAPP_HOSTNAME}:${YARN_ROUTER_WEBAPP_PORT},${HOSTNAME}:${YARN_ROUTER_WEBAPP_PORT}"
+      address: "=${HADOOP_WEBAPPS_HOSTNAME}:${YARN_ROUTER_WEBAPP_PORT}"
       https:
         port: "8091"
-        address: "?${YARN_ROUTER_WEBAPP_HOSTNAME},${YARN_ROUTER_WEBAPP_HOSTNAME}:${YARN_ROUTER_WEBAPP_HTTPS_PORT},${HOSTNAME}:${YARN_ROUTER_WEBAPP_HTTPS_PORT}"
+        address: "=${HADOOP_WEBAPPS_HOSTNAME}:${YARN_ROUTER_WEBAPP_HTTPS_PORT}"
 
   rm:
     system-metrics-publisher:
@@ -646,7 +646,7 @@ yarn:
     webapp:
       hostname: "NULL"
       port: "8788"
-      address: "?${YARN_SHAREDCACHE_WEBAPP_HOSTNAME},${YARN_SHAREDCACHE_WEBAPP_HOSTNAME}:${YARN_SHAREDCACHE_WEBAPP_PORT},${HOSTNAME}:${YARN_SHAREDCACHE_WEBAPP_PORT}"
+      address: "=${HADOOP_WEBAPPS_HOSTNAME}:${YARN_SHAREDCACHE_WEBAPP_PORT}"
     cleaner:
       period-mins: "1440"
       initial-delay-mins: "10"
@@ -682,10 +682,10 @@ yarn:
     address: "?${YARN_TIMELINE_SERVICE_HOSTNAME},${YARN_TIMELINE_SERVICE_HOSTNAME}:${YARN_TIMELINE_SERVICE_PORT},${HOSTNAME}:${YARN_TIMELINE_SERVICE_PORT}"
     webapp:
       port: "8188"
-      address: "?${YARN_TIMELINE_SERVICE_HOSTNAME},${YARN_TIMELINE_SERVICE_HOSTNAME}:${YARN_TIMELINE_SERVICE_WEBAPP_PORT},${HOSTNAME}:${YARN_TIMELINE_SERVICE_WEBAPP_PORT}"
+      address: "=${HADOOP_WEBAPPS_HOSTNAME}:${YARN_TIMELINE_SERVICE_WEBAPP_PORT}"
       https:
         port: "8190"
-        address: "?${YARN_TIMELINE_SERVICE_HOSTNAME},${YARN_TIMELINE_SERVICE_HOSTNAME}:${YARN_TIMELINE_SERVICE_WEBAPP_HTTPS_PORT},${HOSTNAME}:${YARN_TIMELINE_SERVICE_WEBAPP_HTTPS_PORT}"
+        address: "=${HADOOP_WEBAPPS_HOSTNAME}:${YARN_TIMELINE_SERVICE_WEBAPP_HTTPS_PORT}"
       rest-csrf:
         enabled: "false"
         custom-header: "X-XSRF-Header"
@@ -751,9 +751,9 @@ yarn:
     reader:
       class: "org.apache.hadoop.yarn.server.timelineservice.storage.HBaseTimelineReaderImpl"
       webapp:
-        address: "?${YARN_TIMELINE_SERVICE_HOSTNAME},${YARN_TIMELINE_SERVICE_HOSTNAME}:${YARN_TIMELINE_SERVICE_WEBAPP_PORT},${HOSTNAME}:${YARN_TIMELINE_SERVICE_WEBAPP_PORT}"
+        address: "=${HADOOP_WEBAPPS_HOSTNAME}:${YARN_TIMELINE_SERVICE_WEBAPP_PORT}"
         https:
-          address: "?${YARN_TIMELINE_SERVICE_HOSTNAME},${YARN_TIMELINE_SERVICE_HOSTNAME}:${YARN_TIMELINE_SERVICE_WEBAPP_HTTPS_PORT},${HOSTNAME}:${YARN_TIMELINE_SERVICE_WEBAPP_HTTPS_PORT}"
+          address: "=${HADOOP_WEBAPPS_HOSTNAME}:${YARN_TIMELINE_SERVICE_WEBAPP_HTTPS_PORT}"
       bind-host: "NULL"
     app-collector:
       linger-period:
