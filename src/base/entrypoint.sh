@@ -48,4 +48,6 @@ function start_daemons() {
 # Start Hadoop Daemons
 [[ "${HADOOP_DAEMONS}" != "NULL" ]] && start_daemons
 
-if [[ "$1" == "hadoop" ]] && tail -f /dev/null
+if [[ "$1" == "hadoop" ]]; then
+    tail -f /dev/null
+fi
