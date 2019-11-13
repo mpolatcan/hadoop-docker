@@ -5,4 +5,23 @@
 
 Scalable Hadoop Docker image works at Docker and Kubernetes
 
-Coming soon...
+## To Do 
+
+- Config loader improvements
+- Documentation
+- Kubernetes deployment
+
+## Research
+
+#### HDFS
+- Namenode HA with Quorum Journalnode Manager
+- Namenode HA with NFS
+- ViewFS
+- Federation
+- Router Federation
+
+
+#### YARN
+- YARN Resourcemanager Restart
+- YARN Resourcemanager HA
+- YARN Federation
