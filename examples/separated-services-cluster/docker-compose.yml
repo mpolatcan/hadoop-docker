@@ -43,7 +43,6 @@ services:
       HADOOP_DAEMONS: |
           secondarynamenode
       FS_HOSTNAME: namenode
-      DFS_NAMENODE_HOSTNAME: namenode
     ports:
       - 9868:9868
 
