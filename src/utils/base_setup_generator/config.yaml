@@ -13,6 +13,7 @@ base_dockerfile_template: |
       PATH=$PATH:${{HADOOP_HOME}}/bin:${{HADOOP_HOME}}/sbin \
       LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${{HADOOP_HOME}}/lib/native/ \
       HADOOP_DAEMONS="NULL" \
+      HADOOP_DFS_NAMESERVICES="" \
       HADOOP_WEBAPPS_HOSTNAME="0.0.0.0" \
   {env_vars}
 

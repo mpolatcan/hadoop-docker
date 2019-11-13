@@ -2,8 +2,9 @@ dfs:
   namenode:
     hostname: "NULL"
     rpc-address:
-      "": "NULL"
+      "": "?${DFS_NAMENODE_HOSTNAME},${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_RPC_PORT},${HOSTNAME}:${DFS_NAMENODE_RPC_PORT}"
       auxiliary-ports: "NULL"
+    rpc-port: "8020"
     rpc-bind-host: "0.0.0.0"
     servicerpc-address: "NULL"
     servicerpc-bind-host: "0.0.0.0"

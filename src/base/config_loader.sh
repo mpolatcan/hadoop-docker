@@ -18,8 +18,9 @@ function load_config_with_opt() {
 
 printf "<configuration>\n" > "${HADOOP_CONF_DIR}/hdfs-site.xml"
 load_config "dfs.namenode.hostname" "${DFS_NAMENODE_HOSTNAME}" "hdfs-site.xml"
-load_config "dfs.namenode.rpc-address" "${DFS_NAMENODE_RPC_ADDRESS}" "hdfs-site.xml"
+load_config_with_opt "dfs.namenode.rpc-address" "${DFS_NAMENODE_HOSTNAME}" "${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_RPC_PORT}" "${HOSTNAME}:${DFS_NAMENODE_RPC_PORT}" "hdfs-site.xml"
 load_config "dfs.namenode.rpc-address.auxiliary-ports" "${DFS_NAMENODE_RPC_ADDRESS_AUXILIARY_PORTS}" "hdfs-site.xml"
+load_config "dfs.namenode.rpc-port" "${DFS_NAMENODE_RPC_PORT}" "hdfs-site.xml"
 load_config "dfs.namenode.rpc-bind-host" "${DFS_NAMENODE_RPC_BIND_HOST}" "hdfs-site.xml"
 load_config "dfs.namenode.servicerpc-address" "${DFS_NAMENODE_SERVICERPC_ADDRESS}" "hdfs-site.xml"
 load_config "dfs.namenode.servicerpc-bind-host" "${DFS_NAMENODE_SERVICERPC_BIND_HOST}" "hdfs-site.xml"
@@ -546,6 +547,7 @@ load_config "ssl.server.truststore.location" "${SSL_SERVER_TRUSTSTORE_LOCATION}"
 load_config "ssl.server.truststore.password" "${SSL_SERVER_TRUSTSTORE_PASSWORD}" "hdfs-site.xml"
 load_config "https.buffer.size" "${HTTPS_BUFFER_SIZE}" "hdfs-site.xml"
 printf "</configuration>" >> "${HADOOP_CONF_DIR}/hdfs-site.xml"
+
 printf "<configuration>\n" > "${HADOOP_CONF_DIR}/yarn-site.xml"
 load_config "yarn.acl.enable" "${YARN_ACL_ENABLE}" "yarn-site.xml"
 load_config "yarn.acl.reservation-enable" "${YARN_ACL_RESERVATION_ENABLE}" "yarn-site.xml"
@@ -1012,6 +1014,7 @@ load_config "yarn.web-proxy.hostname" "${YARN_WEB_PROXY_HOSTNAME}" "yarn-site.xm
 load_config "yarn.web-proxy.port" "${YARN_WEB_PROXY_PORT}" "yarn-site.xml"
 load_config "yarn.web-proxy.address" "${YARN_WEB_PROXY_HOSTNAME}:${YARN_WEB_PROXY_PORT}" "yarn-site.xml"
 printf "</configuration>" >> "${HADOOP_CONF_DIR}/yarn-site.xml"
+
 printf "<configuration>\n" > "${HADOOP_CONF_DIR}/core-site.xml"
 load_config "hadoop.tmp.dir" "${HDUSER_HOME}/app/hadoop/tmp" "core-site.xml"
 load_config "hadoop.http.filter.initializers" "${HADOOP_HTTP_FILTER_INITIALIZERS}" "core-site.xml"
@@ -1347,6 +1350,7 @@ load_config "adl.http.timeout" "${ADL_HTTP_TIMEOUT}" "core-site.xml"
 load_config "seq.io.sort.mb" "${SEQ_IO_SORT_MB}" "core-site.xml"
 load_config "seq.io.sort.factor" "${SEQ_IO_SORT_FACTOR}" "core-site.xml"
 printf "</configuration>" >> "${HADOOP_CONF_DIR}/core-site.xml"
+
 printf "<configuration>\n" > "${HADOOP_CONF_DIR}/mapred-site.xml"
 load_config_with_opt "mapreduce.job.hdfs-servers" "${FS_HOSTNAME}" "${FS_PREFIX}${FS_HOSTNAME}:${FS_PORT}" "${FS_PREFIX}${HOSTNAME}:${FS_PORT}" "mapred-site.xml"
 load_config "mapreduce.job.committer.setup.cleanup.needed" "${MAPREDUCE_JOB_COMMITTER_SETUP_CLEANUP_NEEDED}" "mapred-site.xml"
@@ -1564,3 +1568,4 @@ load_config "yarn.app.mapreduce.client.job.max-retries" "${YARN_APP_MAPREDUCE_CL
 load_config "yarn.app.mapreduce.client.job.retry-interval" "${YARN_APP_MAPREDUCE_CLIENT_JOB_RETRY_INTERVAL}" "mapred-site.xml"
 load_config "yarn.app.mapreduce.client.max-retries" "${YARN_APP_MAPREDUCE_CLIENT_MAX_RETRIES}" "mapred-site.xml"
 printf "</configuration>" >> "${HADOOP_CONF_DIR}/mapred-site.xml"
+
