@@ -17,7 +17,7 @@ class Constants:
     CONFIG_LOADER_SUBST_STATEMENT_FMT = "load_config \"{property}\" \"{substitution}\" \"{config_filename}\""
     CONFIG_LOADER_OPT_SUBST_STATEMENT_FMT = "load_config_with_opt \"{property}\" \"{check}\" \"{substitution_not_null}\" \"{substitution_null}\" \"{config_filename}\""
     CONFIGURATION_TAG_WRITE_FMT = "printf \"<configuration>\\n\" > \"${{HADOOP_CONF_DIR}}/{filename}\""
-    CONFIGURATION_TAG_APPEND_FMT = "printf \"</configuration>\" >> \"${{HADOOP_CONF_DIR}}/{filename}\""
+    CONFIGURATION_TAG_APPEND_FMT = "printf \"</configuration>\" >> \"${{HADOOP_CONF_DIR}}/{filename}\"\n"
 
 
 class BaseSetupGenerator:

@@ -2,8 +2,9 @@ dfs:
   namenode:
     hostname: "NULL"
     rpc-address:
-      "": "NULL"
+      "": "?${DFS_NAMENODE_HOSTNAME},${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_RPC_PORT},${HOSTNAME}:${DFS_NAMENODE_RPC_PORT}"
       auxiliary-ports: "NULL"
+    rpc-port: "8020"
     rpc-bind-host: "0.0.0.0"
     servicerpc-address: "NULL"
     servicerpc-bind-host: "0.0.0.0"
@@ -14,10 +15,11 @@ dfs:
         ratio: "0.10"
         count: "NULL"
     secondary:
+      hostname: "NULL"
       http-port: "9868"
-      http-address: "?${DFS_NAMENODE_HOSTNAME},${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_SECONDARY_HTTP_PORT},${HOSTNAME}:${DFS_NAMENODE_SECONDARY_HTTP_PORT}"
+      http-address: "?${DFS_NAMENODE_SECONDARY_HOSTNAME},${DFS_NAMENODE_SECONDARY_HOSTNAME}:${DFS_NAMENODE_SECONDARY_HTTP_PORT},${HOSTNAME}:${DFS_NAMENODE_SECONDARY_HTTP_PORT}"
       https-port: "9869"
-      https-address: "?${DFS_NAMENODE_HOSTNAME},${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_SECONDARY_HTTPS_PORT},${HOSTNAME}:${DFS_NAMENODE_SECONDARY_HTTPS_PORT}"
+      https-address: "?${DFS_NAMENODE_SECONDARY_HOSTNAME},${DFS_NAMENODE_SECONDARY_HOSTNAME}:${DFS_NAMENODE_SECONDARY_HTTPS_PORT},${HOSTNAME}:${DFS_NAMENODE_SECONDARY_HTTPS_PORT}"
     http-port: "9870"
     https-port: "9871"
     http-address: "?${DFS_NAMENODE_HOSTNAME},${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_HTTP_PORT},${HOSTNAME}:${DFS_NAMENODE_HTTP_PORT}"
@@ -27,10 +29,11 @@ dfs:
     heartbeat:
       recheck-interval: "300000"
     backup:
+      hostname: "NULL"
       port: "50100"
-      address: "?${DFS_NAMENODE_HOSTNAME},${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_BACKUP_PORT},${HOSTNAME}:${DFS_NAMENODE_BACKUP_PORT}"
+      address: "?${DFS_NAMENODE_BACKUP_HOSTNAME},${DFS_NAMENODE_BACKUP_HOSTNAME}:${DFS_NAMENODE_BACKUP_PORT},${HOSTNAME}:${DFS_NAMENODE_BACKUP_PORT}"
       http-port: "50105"
-      http-address: "?${DFS_NAMENODE_HOSTNAME},${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_BACKUP_HTTP_PORT},${HOSTNAME}:${DFS_NAMENODE_BACKUP_HTTP_PORT}"
+      http-address: "?${DFS_NAMENODE_BACKUP_HOSTNAME},${DFS_NAMENODE_BACKUP_HOSTNAME}:${DFS_NAMENODE_BACKUP_HTTP_PORT},${HOSTNAME}:${DFS_NAMENODE_BACKUP_HTTP_PORT}"
       dnrpc-address: "NULL"
     redundancy:
       considerLoad:

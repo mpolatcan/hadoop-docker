@@ -1,0 +1,58 @@
+# TODO HDFS Federation example will be written
+version: "3"
+services:
+  namenode_1:
+    image: mpolatcan/hadoop-dev:3.2.1-java8
+    container_name: namenode_1
+    hostname: namenode-1
+    environment:
+      HADOOP_DAEMONS: |
+        namenode
+      DFS_NAMESERVICE_ID: ns1
+      HADOOP_DFS_NAMESERVICES: |
+        ns1=namenode-1
+        ns2=namenode-2
+        ns3=namenode-3
+    ports:
+      - 9870:9870
+
+  namenode_2:
+    image: mpolatcan/hadoop-dev:3.2.1-java8
+    container_name: namenode_2
+    hostname: namenode-2
+    environment:
+      HADOOP_DAEMONS: |
+        namenode
+      DFS_NAMESERVICE_ID: ns2
+      HADOOP_DFS_NAMESERVICES: |
+        ns1,namenode-1,8020,9870
+        ns2,namenode-2,8020,9870
+        ns3,namenode-3,8020,9870
+    ports:
+      - 9871:9870
+
+  namenode_3:
+    image: mpolatcan/hadoop-dev:3.2.1-java8
+    container_name: namenode_3
+    hostname: namenode-3
+    environment:
+      HADOOP_DAEMONS: |
+        namenode
+      DFS_NAMESERVICE_ID: ns3
+      HADOOP_DFS_NAMESERVICES: |
+        ns1=namenode-1
+        ns2=namenode-2
+        ns3=namenode-3
+    ports:
+      - 9872:9870
+
+  datanode:
+    image: mpolatcan/hadoop-dev:3.2.1-java8
+      HADOOP_DAEMONS: |
+        datanode
+      HADOOP_DFS_NAMESERVICES: |
+        ns1=namenode-1
+        ns2=namenode-2
+        ns3=namenode-3
+    ports:
+      - 9864

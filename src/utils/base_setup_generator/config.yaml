@@ -12,8 +12,8 @@ base_dockerfile_template: |
       HADOOP_TMP_DIR="${{HDUSER_HOME}}/app/hadoop/tmp" \
       PATH=$PATH:${{HADOOP_HOME}}/bin:${{HADOOP_HOME}}/sbin \
       LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${{HADOOP_HOME}}/lib/native/ \
-      HADOOP_NODE_TYPE="namenode" \
-      HADOOP_ADDITIONAL_DAEMONS="NULL" \
+      HADOOP_DAEMONS="NULL" \
+      HADOOP_DFS_NAMESERVICES="" \
       HADOOP_WEBAPPS_HOSTNAME="0.0.0.0" \
   {env_vars}
 
