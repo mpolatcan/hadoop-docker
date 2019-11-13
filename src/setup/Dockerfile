@@ -1,6 +1,6 @@
 ARG JAVA_VERSION=""
 
-FROM mpolatcan/hadoop:base-java${JAVA_VERSION}
+FROM mpolatcan/hadoop-dev:base-java${JAVA_VERSION}
 
 MAINTAINER Mutlu Polatcan <mutlupolatcan@gmail.com>
 
