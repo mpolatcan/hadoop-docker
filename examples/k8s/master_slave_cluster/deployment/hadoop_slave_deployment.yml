@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hadoop-slave
+  labels:
+    app: hadoop
+    type: slave
+spec:
+  serviceName: hadoop
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hadoop
+      type: slave
+  template:
+    metadata:
+      name: hadoop-slave
+      labels:
+        app: hadoop
+        type: slave
+    spec:
+      containers:
+        - name: hadoop-slave
+          image: mpolatcan/hadoop:3.2.1-java8
+          imagePullPolicy: Always
+          env:
+            - name: HADOOP_DAEMONS
+              value: |
+                datanode
+                nodemanager
+            - name: FS_HOSTNAME
+              value: "hadoop-master-0.hadoop.default.svc.cluster.local"
+            - name: YARN_RESOURCEMANAGER_HOSTNAME
+              value: "hadoop-master-0.hadoop.default.svc.cluster.local"
+            - name: YARN_NODEMANAGER_RESOURCE_MEMORY_MB
+              value: "1536"
+            - name: YARN_NODEMANAGER_RESOURCE_CPU_VCORES
+              value: "2"
+      restartPolicy: Always

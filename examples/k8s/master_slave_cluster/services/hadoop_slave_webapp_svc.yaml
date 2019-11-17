@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hadoop-slave-webapp
+spec:
+  selector:
+    app: hadoop
+    type: slave
+  ports:
+    - port: 9864 # Datanode HTTP Port
+      name: dn-http-port
+    - port: 9865 # Datanode HTTPS Port
+      name: dn-https-port
+    - port: 8042 # YARN Nodemanager HTTP Port
+      name: nm-http-port
+    - port: 8044 # YARN Nodemanager HTTPS Port
+      name: nm-https-port
+  type: ClusterIP

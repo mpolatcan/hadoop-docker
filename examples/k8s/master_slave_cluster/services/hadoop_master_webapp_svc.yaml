@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hadoop-master-webapp
+spec:
+  selector:
+    app: hadoop
+    type: master
+  ports:
+    - port: 9870 # Namenode HTTP Port
+      name: nn-http-port
+    - port: 9871 # Namenode HTTPS Port
+      name: nn-https-port
+    - port: 9868 # Secondary Namenode HTTP Port
+      name: snn-http-port
+    - port: 9869 # Secondary Namenode HTTPS Port
+      name: snn-https-port
+    - port: 8088 # YARN Resourcemanager HTTP Port
+      name: rm-http-port
+    - port: 8090 # YARN Resourcemanager HTTPS Port
+      name: rm-https-port
+  type: ClusterIP

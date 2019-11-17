@@ -21,7 +21,7 @@ base_dockerfile_template: |
   ADD config_loader.sh ${{HDUSER_HOME}}/hadoop_config_loader.sh
 
   RUN apt-get update && \
-      apt-get -y install --no-install-recommends procps nano wget rsync gcc g++ unzip && \
+      apt-get -y install --no-install-recommends procps nano wget rsync gcc g++ unzip iputils-ping telnet && \
       rm -rf /var/lib/apt/lists/* && \
       addgroup hadoop && adduser --disabled-password --gecos "" --ingroup hadoop hduser && \
       mkdir -p ${{HADOOP_HOME}} ${{HADOOP_TMP_DIR}} && \

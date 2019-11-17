@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hadoop-other-webapp
+spec:
+  selector:
+    app: hadoop
+    type: other
+  ports:
+    - port: 8480 # Journalnode HTTP Port
+      name: jn-http-port
+    - port: 8481 # Journalnode HTTPS Port
+      name: jn-https-port
+    - port: 8188 # YARN Timeline Service HTTP Port
+      name: ts-http-port
+    - port: 8190 # YARN Timeline Service HTTPS Port
+      name: ts-https-port
+    - port: 8089 # YARN Router HTTP Port
+      name: rt-http-port
+    - port: 8091 # YARN Router HTTPS Port
+      name: rt-https-port
+    - port: 19888 # MapReduce JobHistory HTTP Port
+      name: mrjh-http-port
+    - port: 19890 # MapReduce JobHistory HTTPS Port
+      name: mrjh-https-port
+  type: ClusterIP
