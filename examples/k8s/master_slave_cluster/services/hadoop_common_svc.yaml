@@ -8,9 +8,7 @@ spec:
   selector:
     app: hadoop
   ports:
-    - port: 9000
-      name: fs-port
-    - port: 8020 # Namenode RPC Port
+    - port: 9000 # Namenode RPC Port
       name: nn-rpc-port
     - port: 9866 # Datanode Port
       name: dn-port

@@ -1012,7 +1012,7 @@ load_config "yarn.web-proxy.principal" "${YARN_WEB_PROXY_PRINCIPAL}" "yarn-site.
 load_config "yarn.web-proxy.keytab" "${YARN_WEB_PROXY_KEYTAB}" "yarn-site.xml"
 load_config "yarn.web-proxy.hostname" "${YARN_WEB_PROXY_HOSTNAME}" "yarn-site.xml"
 load_config "yarn.web-proxy.port" "${YARN_WEB_PROXY_PORT}" "yarn-site.xml"
-load_config "yarn.web-proxy.address" "${YARN_WEB_PROXY_HOSTNAME}:${YARN_WEB_PROXY_PORT}" "yarn-site.xml"
+load_config_with_opt "yarn.web-proxy.address" "${YARN_WEB_PROXY_HOSTNAME}" "${YARN_WEB_PROXY_HOSTNAME}:${YARN_WEB_PROXY_PORT}" "${HOSTNAME}:${YARN_WEB_PROXY_PORT}" "yarn-site.xml"
 printf "</configuration>" >> "${HADOOP_CONF_DIR}/yarn-site.xml"
 
 printf "<configuration>\n" > "${HADOOP_CONF_DIR}/core-site.xml"

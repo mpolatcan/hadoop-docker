@@ -29,7 +29,7 @@ spec:
               value: |
                 datanode
                 nodemanager
-            - name: FS_HOSTNAME
+            - name: DFS_NAMENODE_HOSTNAME
               value: "hadoop-master-0.hadoop.default.svc.cluster.local"
             - name: YARN_RESOURCEMANAGER_HOSTNAME
               value: "hadoop-master-0.hadoop.default.svc.cluster.local"

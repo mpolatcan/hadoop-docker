@@ -33,7 +33,4 @@ spec:
               value: "128"
             - name: YARN_SCHEDULER_MAXIMUM_ALLOCATION_MB
               value: "1536"
-          ports:
-            - containerPort: 9000
-              name: fs-port
       restartPolicy: Always
