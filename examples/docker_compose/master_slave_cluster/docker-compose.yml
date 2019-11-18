@@ -1,7 +1,7 @@
 version: "3"
 services:
   master:
-    image: mpolatcan/hadoop-dev:3.2.1-java8
+    image: mpolatcan/hadoop:3.2.1-java8
     container_name: master
     hostname: master
     environment:
@@ -17,15 +17,18 @@ services:
       - 8088:8088 # Resourcemanager UI Port
 
   slave:
-    image: mpolatcan/hadoop-dev:3.2.1-java8
+    image: mpolatcan/hadoop:3.2.1-java8
     environment:
       HADOOP_DAEMONS: |
           datanode
           nodemanager
       FS_HOSTNAME: master
+      DFS_NAMENODE_HOSTNAME: master
       YARN_RESOURCEMANAGER_HOSTNAME: master
       YARN_NODEMANAGER_RESOURCE_MEMORY_MB: 1536
       YARN_NODEMANAGER_RESOURCE_CPU_VCORES: 2
     ports:
       - 9864 # Datanode UI Port
       - 8042 # Nodemanager UI Port
+    depends_on:
+      - master

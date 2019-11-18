@@ -5,7 +5,7 @@ dfs:
       "": "?${DFS_NAMENODE_HOSTNAME},${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_RPC_PORT},${HOSTNAME}:${DFS_NAMENODE_RPC_PORT}"
       auxiliary-ports: "NULL"
     rpc-port: "8020"
-    rpc-bind-host: "0.0.0.0"
+    rpc-bind-host: "NULL"
     servicerpc-address: "NULL"
     servicerpc-bind-host: "0.0.0.0"
     lifeline:
@@ -24,8 +24,8 @@ dfs:
     https-port: "9871"
     http-address: "?${DFS_NAMENODE_HOSTNAME},${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_HTTP_PORT},${HOSTNAME}:${DFS_NAMENODE_HTTP_PORT}"
     https-address: "?${DFS_NAMENODE_HOSTNAME},${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_HTTPS_PORT},${HOSTNAME}:${DFS_NAMENODE_HTTPS_PORT}"
-    http-bind-host: "0.0.0.0"
-    https-bind-host: "0.0.0.0"
+    http-bind-host: "NULL"
+    https-bind-host: "NULL"
     heartbeat:
       recheck-interval: "300000"
     backup:
@@ -909,13 +909,13 @@ dfs:
       file: "NULL"
     rpc-port: "8485"
     rpc-address: "?${DFS_JOURNALNODE_HOSTNAME},${DFS_JOURNALNODE_HOSTNAME}:${DFS_JOURNALNODE_RPC_PORT},${HOSTNAME}:${DFS_JOURNALNODE_RPC_PORT}"
-    rpc-bind-host: "0.0.0.0"
+    rpc-bind-host: "NULL"
     http-port: "8480"
     http-address: "?${DFS_JOURNALNODE_HOSTNAME},${DFS_JOURNALNODE_HOSTNAME}:${DFS_JOURNALNODE_HTTP_PORT},${HOSTNAME}:${DFS_JOURNALNODE_HTTP_PORT}"
-    http-bind-host: "0.0.0.0"
+    http-bind-host: "NULL"
     https-port: "8481"
     https-address: "?${DFS_JOURNALNODE_HOSTNAME},${DFS_JOURNALNODE_HOSTNAME}:${DFS_JOURNALNODE_HTTPS_PORT},${HOSTNAME}:${DFS_JOURNALNODE_HTTPS_PORT}"
-    https-bind-host: "0.0.0.0"
+    https-bind-host: "NULL"
     edits:
       dir:
         "": "/tmp/hadoop/dfs/journalnode/"

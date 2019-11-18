@@ -1,7 +1,7 @@
 version: "3"
 services:
   resourcemanager:
-    image: mpolatcan/hadoop-dev:3.2.1-java8
+    image: mpolatcan/hadoop:3.2.1-java8
     container_name: resourcemanager
     hostname: resourcemanager
     environment:
@@ -14,7 +14,7 @@ services:
       - 8088:8088
 
   nodemanager:
-    image: mpolatcan/hadoop-dev:3.2.1-java8
+    image: mpolatcan/hadoop:3.2.1-java8
     environment:
       HADOOP_DAEMONS: |
           nodemanager
@@ -26,17 +26,18 @@ services:
       - 8042
 
   namenode:
-    image: mpolatcan/hadoop-dev:3.2.1-java8
+    image: mpolatcan/hadoop:3.2.1-java8
     container_name: namenode
     hostname: namenode
     environment:
       HADOOP_DAEMONS: |
           namenode
+      DFS_NAMENODE_RPC_BIND_HOST: "NULL"
     ports:
       - 9870:9870
 
   secondarynamenode:
-    image: mpolatcan/hadoop-dev:3.2.1-java8
+    image: mpolatcan/hadoop:3.2.1-java8
     container_name: secondarynamenode
     hostname: secondarynamenode
     environment:
@@ -47,10 +48,11 @@ services:
       - 9868:9868
 
   datanode:
-    image: mpolatcan/hadoop-dev:3.2.1-java8
+    image: mpolatcan/hadoop:3.2.1-java8
     environment:
       HADOOP_DAEMONS: |
           datanode
       FS_HOSTNAME: namenode
+      DFS_NAMENODE_HOSTNAME: namenode
     ports:
       - 9864
