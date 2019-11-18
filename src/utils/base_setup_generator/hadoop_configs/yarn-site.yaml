@@ -114,7 +114,7 @@ yarn:
     hostname: "NULL"
     port: "8050"
     address: "?${YARN_NODEMANAGER_HOSTNAME},${YARN_NODEMANAGER_HOSTNAME}:${YARN_NODEMANAGER_PORT},${HOSTNAME}:${YARN_NODEMANAGER_PORT}"
-    bind-host: "0.0.0.0"
+    bind-host: "NULL"
     admin-env: "MALLOC_ARENA_MAX=$MALLOC_ARENA_MAX"
     env-whitelist: "JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CONF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_HOME,PATH,LANG,TZ"
     container-executor:
@@ -377,7 +377,7 @@ yarn:
     hostname: "NULL"
     port: "8032"
     address: "?${YARN_RESOURCEMANAGER_HOSTNAME},${YARN_RESOURCEMANAGER_HOSTNAME}:${YARN_RESOURCEMANAGER_PORT},${HOSTNAME}:${YARN_RESOURCEMANAGER_PORT}"
-    bind-host: "0.0.0.0"
+    bind-host: "NULL"
     auto-update:
       containers: "false"
     client:
@@ -587,7 +587,7 @@ yarn:
     rmadmin:
       interceptor-class:
         pipeline: "org.apache.hadoop.yarn.server.router.rmadmin.DefaultRMAdminRequestInterceptor"
-    bind-host: "0.0.0.0"
+    bind-host: "NULL"
     webapp:
       interceptor-class:
         pipeline: "org.apache.hadoop.yarn.server.router.webapp.DefaultRequestInterceptorREST"
@@ -692,7 +692,7 @@ yarn:
         methods-to-ignore: "GET,OPTIONS,HEAD"
       xfs-filter:
         xframe-options: "SAMEORIGIN"
-    bind-host: "0.0.0.0"
+    bind-host: "NULL"
     generic-application-history:
       max-applications: "10000"
     store-class: "org.apache.hadoop.yarn.server.timeline.LeveldbTimelineStore"
@@ -754,7 +754,7 @@ yarn:
         address: "=${HADOOP_WEBAPPS_HOSTNAME}:${YARN_TIMELINE_SERVICE_WEBAPP_PORT}"
         https:
           address: "=${HADOOP_WEBAPPS_HOSTNAME}:${YARN_TIMELINE_SERVICE_WEBAPP_HTTPS_PORT}"
-      bind-host: "0.0.0.0"
+      bind-host: "NULL"
     app-collector:
       linger-period:
         ms: "60000"
@@ -793,6 +793,6 @@ yarn:
   web-proxy:
     principal: "NULL"
     keytab: "NULL"
-    hostname: "0.0.0.0"
+    hostname: "NULL"
     port: "8092"
     address: "=${YARN_WEB_PROXY_HOSTNAME}:${YARN_WEB_PROXY_PORT}"

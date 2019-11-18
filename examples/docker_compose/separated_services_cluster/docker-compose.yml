@@ -32,7 +32,6 @@ services:
     environment:
       HADOOP_DAEMONS: |
           namenode
-      DFS_NAMENODE_RPC_BIND_HOST: "NULL"
     ports:
       - 9870:9870
 
@@ -53,6 +52,5 @@ services:
       HADOOP_DAEMONS: |
           datanode
       FS_HOSTNAME: namenode
-      DFS_NAMENODE_HOSTNAME: namenode
     ports:
       - 9864
