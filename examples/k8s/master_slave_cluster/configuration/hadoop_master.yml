@@ -1,0 +1,14 @@
+# Written by Mutlu Polatcan
+# 18.11.2019
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hadoop-master
+data:
+  HOSTNAME: "hadoop-master-0.hadoop"
+  HADOOP_DAEMONS: |
+    namenode
+    secondarynamenode
+    resourcemanager
+  YARN_SCHEDULER_MINIMUM_ALLOCATION_MB: "128"
+  YARN_SCHEDULER_MAXIMUM_ALLOCATION_MB: "1536"

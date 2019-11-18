@@ -1,7 +1,9 @@
+# Written by Mutlu Polatcan
+# 18.11.2019
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: hadoop
+  name: hadoop-rm-webapp
   annotations:
     kubernetes.io/ingress.class: "nginx"
 spec:

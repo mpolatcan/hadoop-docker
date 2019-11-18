@@ -1,0 +1,14 @@
+# Written by Mutlu Polatcan
+# 18.11.2019
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hadoop-slave
+data:
+  HADOOP_DAEMONS: |
+    datanode
+    nodemanager
+  DFS_NAMENODE_HOSTNAME: "hadoop-master-0.hadoop"
+  YARN_RESOURCEMANAGER_HOSTNAME: "hadoop-master-0.hadoop"
+  YARN_NODEMANAGER_RESOURCE_MEMORY_MB: "1536"
+  YARN_NODEMANAGER_RESOURCE_CPU_VCORES: "2"

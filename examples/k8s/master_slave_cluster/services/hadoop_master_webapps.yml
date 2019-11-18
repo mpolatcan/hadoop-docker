@@ -1,7 +1,9 @@
+# Written by Mutlu Polatcan
+# 18.11.2019
 apiVersion: v1
 kind: Service
 metadata:
-  name: hadoop-master-webapp
+  name: hadoop-master-webapps
 spec:
   selector:
     app: hadoop
