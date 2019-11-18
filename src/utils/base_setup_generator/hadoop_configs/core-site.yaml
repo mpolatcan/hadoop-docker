@@ -377,9 +377,7 @@ io:
 
 fs:
   prefix: "hdfs://"
-  hostname: "NULL"
-  port: "9000"
-  defaultFS: "?${FS_HOSTNAME},${FS_PREFIX}${FS_HOSTNAME}:${FS_PORT},${FS_PREFIX}${HOSTNAME}:${FS_PORT}"
+  defaultFS: "?${DFS_NAMENODE_HOSTNAME},${FS_PREFIX}${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_RPC_PORT},${FS_PREFIX}${HOSTNAME}:${DFS_NAMENODE_RPC_PORT}"
   trash:
     interval: "0"
     checkpoint:

@@ -22,7 +22,6 @@ services:
       HADOOP_DAEMONS: |
           datanode
           nodemanager
-      FS_HOSTNAME: master
       DFS_NAMENODE_HOSTNAME: master
       YARN_RESOURCEMANAGER_HOSTNAME: master
       YARN_NODEMANAGER_RESOURCE_MEMORY_MB: 1536
