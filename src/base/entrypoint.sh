@@ -34,7 +34,9 @@ function start_daemons() {
   for daemon in ${HADOOP_DAEMONS[@]}; do
       if [[ "$daemon" == "namenode" ]]; then
           # Formatting HDFS
-          hdfs namenode -format
+          if [[ ! -d "${HADOOP_TMP_DIR}/dfs" ]]; then
+              hdfs namenode -format
+          fi
       fi
 
       # Start current daemon
