@@ -1,0 +1,64 @@
+# Written by Mutlu Polatcan
+# 18.11.2019
+# TODO Pod affinity for slave nodes
+# TODO Liveness and Readiness probes will be added
+# TODO Research on Pod Disruption Budget
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hadoop-slave
+  labels:
+    app: hadoop
+    type: slave
+spec:
+  serviceName: hadoop
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hadoop
+      type: slave
+  template:
+    metadata:
+      name: hadoop-slave
+      labels:
+        app: hadoop
+        type: slave
+    spec:
+      initContainers:
+        - name: init-hadoop
+          imagePullPolicy: Always
+          image: mpolatcan/hadoop:3.2.1-java8
+          command:
+            - /bin/bash
+          args:
+            - -c
+            - $(INIT_SCRIPT)
+          envFrom:
+            - configMapRef:
+                name: hadoop-init
+          volumeMounts:
+            - mountPath: /hadoop-state
+              name: hadoop-volume
+      containers:
+        - name: hadoop-slave
+          image: mpolatcan/hadoop:3.2.1-java8
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: hadoop-slave
+          volumeMounts:
+            - mountPath: /home/hduser/app/hadoop/tmp
+              name: hadoop-volume
+      securityContext:
+        fsGroup: 1000
+      restartPolicy: Always
+  volumeClaimTemplates:
+    - metadata:
+        name: hadoop-volume
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: gce-pd-hdd
+        resources:
+          requests:
+            storage: 50Gi

@@ -1,0 +1,17 @@
+# Written by Mutlu Polatcan
+# 18.11.2019
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hadoop-init
+data:
+  VOLUME_DIR: "/hadoop-state"
+  INIT_SCRIPT: |
+    if (( $(ls -1 ${VOLUME_DIR} | wc -l) > 1 )); then
+      echo "Disk is not empty!"
+      echo "Disk contents: "
+      echo "$(ls -l ${VOLUME_DIR})"
+    else
+      echo "Copying Hadoop setup to empty volume..."
+      mv /home/hduser/* ${VOLUME_DIR}
+    fi

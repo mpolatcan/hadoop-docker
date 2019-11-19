@@ -12,5 +12,5 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: hadoop-master-webapp
-              servicePort: rm-http-port
+              serviceName: hadoop-master-webapps
+              servicePort: nn-http-port

@@ -21,4 +21,4 @@ spec:
       name: rm-http-port
     - port: 8090 # YARN Resourcemanager HTTPS Port
       name: rm-https-port
-  type: ClusterIP
+  type: NodePort
