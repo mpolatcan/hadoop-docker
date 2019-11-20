@@ -131,7 +131,7 @@ dfs:
           minimum: "1"
     datanode:
       registration:
-        ip-hostname-check: "true"
+        ip-hostname-check: "false"
     decomission:
       interval: "30s"
       blocks:

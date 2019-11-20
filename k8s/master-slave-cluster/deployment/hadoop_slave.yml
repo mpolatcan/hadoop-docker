@@ -59,7 +59,7 @@ spec:
             - configMapRef:
                 name: hadoop-slave
           volumeMounts:
-            - mountPath: /home/hduser/app/hadoop/tmp
+            - mountPath: /home/hduser
               name: hadoop-volume
           livenessProbe:
             httpGet:
