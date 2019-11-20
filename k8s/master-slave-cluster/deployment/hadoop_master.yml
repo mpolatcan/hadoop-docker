@@ -1,7 +1,6 @@
 # Written by Mutlu Polatcan
 # 18.11.2019
 # TODO Liveness and Readiness probes will be added
-# TODO Research on Pod Disruption Budget
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:

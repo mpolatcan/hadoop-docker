@@ -1,8 +1,6 @@
 # Written by Mutlu Polatcan
 # 18.11.2019
-# TODO Pod affinity for slave nodes
 # TODO Liveness and Readiness probes will be added
-# TODO Research on Pod Disruption Budget
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -24,6 +22,21 @@ spec:
         app: hadoop
         type: slave
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - hadoop
+                  - key: type
+                    operator: In
+                    values:
+                      - master
+                      - slave
+              topologyKey: kubernetes.io/hostname
       initContainers:
         - name: init-hadoop
           imagePullPolicy: Always
