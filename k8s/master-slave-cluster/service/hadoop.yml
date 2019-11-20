@@ -46,4 +46,40 @@ spec:
       name: yp-port
     - port: 10020 # MapReduce JobHistory Port
       name: mrjh-port
+    - port: 9870 # Namenode HTTP Port
+      name: nn-http-port
+    - port: 9871 # Namenode HTTPS Port
+      name: nn-https-port
+    - port: 9868 # Secondary Namenode HTTP Port
+      name: snn-http-port
+    - port: 9869 # Secondary Namenode HTTPS Port
+      name: snn-https-port
+    - port: 8088 # YARN Resourcemanager HTTP Port
+      name: rm-http-port
+    - port: 8090 # YARN Resourcemanager HTTPS Port
+      name: rm-https-port
+    - port: 9864 # Datanode HTTP Port
+      name: dn-http-port
+    - port: 9865 # Datanode HTTPS Port
+      name: dn-https-port
+    - port: 8042 # YARN Nodemanager HTTP Port
+      name: nm-http-port
+    - port: 8044 # YARN Nodemanager HTTPS Port
+      name: nm-https-port
+    - port: 8480 # Journalnode HTTP Port
+      name: jn-http-port
+    - port: 8481 # Journalnode HTTPS Port
+      name: jn-https-port
+    - port: 8188 # YARN Timeline Service HTTP Port
+      name: ts-http-port
+    - port: 8190 # YARN Timeline Service HTTPS Port
+      name: ts-https-port
+    - port: 8089 # YARN Router HTTP Port
+      name: rt-http-port
+    - port: 8091 # YARN Router HTTPS Port
+      name: rt-https-port
+    - port: 19888 # MapReduce JobHistory HTTP Port
+      name: mrjh-http-port
+    - port: 19890 # MapReduce JobHistory HTTPS Port
+      name: mrjh-https-port
   clusterIP: None

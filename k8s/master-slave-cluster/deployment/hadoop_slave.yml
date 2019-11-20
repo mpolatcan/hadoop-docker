@@ -62,6 +62,18 @@ spec:
           volumeMounts:
             - mountPath: /home/hduser/app/hadoop/tmp
               name: hadoop-volume
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 9864
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 9864
+            initialDelaySeconds: 5
+            periodSeconds: 5
       securityContext:
         fsGroup: 1000
       restartPolicy: Always
