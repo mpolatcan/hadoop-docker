@@ -1,17 +1,13 @@
-# Written by Mutlu Polatcan
-# 18.11.2019
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: hadoop-master
+  name: hadoop-resourcemanager
   labels:
     app: hadoop
-    unit: master
+    unit: namenode
 data:
-  HOSTNAME: "hadoop-master-0.hadoop"
   HADOOP_DAEMONS: |
-    namenode
-    secondarynamenode
     resourcemanager
+  DFS_NAMENODE_HOSTNAME: "hadoop-namenode-0.hadoop"
   YARN_SCHEDULER_MINIMUM_ALLOCATION_MB: "128"
   YARN_SCHEDULER_MAXIMUM_ALLOCATION_MB: "1536"

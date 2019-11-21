@@ -1,25 +1,24 @@
 # Written by Mutlu Polatcan
-# 18.11.2019
+# 21.11.2019
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: hadoop-slave
+  name: hadoop-nodemanager
   labels:
     app: hadoop
-    unit: slave
+    unit: nodemanager
 spec:
   serviceName: hadoop
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: hadoop
-      unit: slave
+      unit: nodemanager
   template:
     metadata:
-      name: hadoop-slave
       labels:
         app: hadoop
-        unit: slave
+        unit: nodemanager
     spec:
       affinity:
         podAntiAffinity:
@@ -33,13 +32,13 @@ spec:
                   - key: unit
                     operator: In
                     values:
-                      - master
-                      - slave
+                      - resourcemanager
+                      - nodemanager
               topologyKey: kubernetes.io/hostname
       initContainers:
         - name: hadoop-init
-          imagePullPolicy: Always
           image: mpolatcan/hadoop:3.2.1-java8
+          imagePullPolicy: Always
           command:
             - /bin/bash
           args:
@@ -52,25 +51,25 @@ spec:
             - mountPath: /hadoop-state
               name: hadoop-volume
       containers:
-        - name: hadoop-slave
+        - name: hadoop-nodemanager
           image: mpolatcan/hadoop:3.2.1-java8
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
-                name: hadoop-slave
+                name: hadoop-nodemanager
           volumeMounts:
             - mountPath: /home/hduser
               name: hadoop-volume
           livenessProbe:
             httpGet:
               path: /
-              port: 9864
+              port: 8042
             initialDelaySeconds: 5
             periodSeconds: 5
           readinessProbe:
             httpGet:
               path: /
-              port: 9864
+              port: 8042
             initialDelaySeconds: 5
             periodSeconds: 5
       securityContext:

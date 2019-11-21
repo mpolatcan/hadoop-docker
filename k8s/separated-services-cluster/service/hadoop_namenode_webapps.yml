@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hadoop-namenode-webapps
+  labels:
+    app: hadoop
+    unit: namenode
+spec:
+  selector:
+    app: hadoop
+    unit: namenode
+  ports:
+    - port: 9870 # Namenode HTTP Port
+      name: nn-http-port
+    - port: 9871 # Namenode HTTPS Port
+      name: nn-https-port
+  type: NodePort

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hadoop-nodemanager
+  labels:
+    app: hadoop
+    unit: nodemanager
+data:
+  HADOOP_DAEMONS: |
+    nodemanager
+  DFS_NAMENODE_HOSTNAME: "hadoop-namenode-0.hadoop"
+  YARN_RESOURCEMANAGER_HOSTNAME: "hadoop-resourcemanager-0.hadoop"
+  YARN_NODEMANAGER_RESOURCE_MEMORY_MB: "1536"
+  YARN_NODEMANAGER_RESOURCE_CPU_VCORES: "2"

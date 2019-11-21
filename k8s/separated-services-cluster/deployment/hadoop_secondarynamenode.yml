@@ -1,44 +1,27 @@
 # Written by Mutlu Polatcan
-# 18.11.2019
+# 21.11.2019
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: hadoop-slave
+  name: hadoop-secondarynamenode
   labels:
     app: hadoop
-    unit: slave
+    unit: secondarynamenode
 spec:
   serviceName: hadoop
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: hadoop
-      unit: slave
+      unit: secondarynamenode
   template:
     metadata:
-      name: hadoop-slave
       labels:
         app: hadoop
-        unit: slave
+        unit: secondarynamenode
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - hadoop
-                  - key: unit
-                    operator: In
-                    values:
-                      - master
-                      - slave
-              topologyKey: kubernetes.io/hostname
       initContainers:
         - name: hadoop-init
-          imagePullPolicy: Always
           image: mpolatcan/hadoop:3.2.1-java8
           command:
             - /bin/bash
@@ -52,25 +35,25 @@ spec:
             - mountPath: /hadoop-state
               name: hadoop-volume
       containers:
-        - name: hadoop-slave
+        - name: hadoop-secondarynamenode
           image: mpolatcan/hadoop:3.2.1-java8
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
-                name: hadoop-slave
+                name: hadoop-secondarynamenode
           volumeMounts:
             - mountPath: /home/hduser
               name: hadoop-volume
           livenessProbe:
             httpGet:
               path: /
-              port: 9864
+              port: 9868
             initialDelaySeconds: 5
             periodSeconds: 5
           readinessProbe:
             httpGet:
               path: /
-              port: 9864
+              port: 9868
             initialDelaySeconds: 5
             periodSeconds: 5
       securityContext:

@@ -6,23 +6,23 @@ metadata:
   name: hadoop-master
   labels:
     app: hadoop
-    type: master
+    unit: master
 spec:
   serviceName: hadoop
   replicas: 1
   selector:
     matchLabels:
       app: hadoop
-      type: master
+      unit: master
   template:
     metadata:
       name: hadoop-master
       labels:
         app: hadoop
-        type: master
+        unit: master
     spec:
       initContainers:
-        - name: init-hadoop
+        - name: hadoop-init
           imagePullPolicy: Always
           image: mpolatcan/hadoop:3.2.1-java8
           command:

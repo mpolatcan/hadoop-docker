@@ -4,6 +4,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: hadoop-slave
+  labels:
+    app: hadoop
+    unit: slave
 data:
   HADOOP_DAEMONS: |
     datanode

@@ -7,7 +7,7 @@ metadata:
 spec:
   selector:
     app: hadoop
-    type: master
+    unit: master
   ports:
     - port: 9870 # Namenode HTTP Port
       name: nn-http-port

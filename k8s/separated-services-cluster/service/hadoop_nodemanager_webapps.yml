@@ -1,18 +1,15 @@
-# Written by Mutlu Polatcan
-# 18.11.2019
 apiVersion: v1
 kind: Service
 metadata:
-  name: hadoop-slave-webapps
+  name: hadoop-nodemanager-webapps
+  labels:
+    app: hadoop
+    unit: nodemanager
 spec:
   selector:
     app: hadoop
-    unit: slave
+    unit: nodemanager
   ports:
-    - port: 9864 # Datanode HTTP Port
-      name: dn-http-port
-    - port: 9865 # Datanode HTTPS Port
-      name: dn-https-port
     - port: 8042 # YARN Nodemanager HTTP Port
       name: nm-http-port
     - port: 8044 # YARN Nodemanager HTTPS Port

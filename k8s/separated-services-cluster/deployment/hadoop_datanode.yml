@@ -1,25 +1,24 @@
 # Written by Mutlu Polatcan
-# 18.11.2019
+# 21.11.2019
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: hadoop-slave
+  name: hadoop-datanode
   labels:
     app: hadoop
-    unit: slave
+    unit: datanode
 spec:
   serviceName: hadoop
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: hadoop
-      unit: slave
+      unit: datanode
   template:
     metadata:
-      name: hadoop-slave
       labels:
         app: hadoop
-        unit: slave
+        unit: datanode
     spec:
       affinity:
         podAntiAffinity:
@@ -33,13 +32,13 @@ spec:
                   - key: unit
                     operator: In
                     values:
-                      - master
-                      - slave
+                      - namenode
+                      - datanode
               topologyKey: kubernetes.io/hostname
       initContainers:
         - name: hadoop-init
-          imagePullPolicy: Always
           image: mpolatcan/hadoop:3.2.1-java8
+          imagePullPolicy: Always
           command:
             - /bin/bash
           args:
@@ -52,12 +51,12 @@ spec:
             - mountPath: /hadoop-state
               name: hadoop-volume
       containers:
-        - name: hadoop-slave
+        - name: hadoop-datanode
           image: mpolatcan/hadoop:3.2.1-java8
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
-                name: hadoop-slave
+                name: hadoop-datanode
           volumeMounts:
             - mountPath: /home/hduser
               name: hadoop-volume

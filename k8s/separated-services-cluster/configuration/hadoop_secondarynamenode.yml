@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hadoop-secondarynamenode
+  labels:
+    app: hadoop
+    component: secondarynamenode
+data:
+  HADOOP_DAEMONS: |
+    secondarynamenode
+  DFS_NAMENODE_HOSTNAME: "hadoop-namenode-0.hadoop"

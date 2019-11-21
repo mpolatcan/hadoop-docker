@@ -8,11 +8,12 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
   labels:
     app: hadoop
+    unit: namenode
 spec:
   rules:
     - http:
         paths:
-          - path: /
+          - path: /*
             backend:
-              serviceName: hadoop-master-webapps
-              servicePort: nn-http-port
+              serviceName: hadoop-resourcemanager-webapps
+              servicePort: rm-http-port

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hadoop-datanode
+  labels:
+    app: hadoop
+    unit: datanode
+data:
+  HADOOP_DAEMONS: |
+    datanode
+  DFS_NAMENODE_HOSTNAME: "hadoop-namenode-0.hadoop"

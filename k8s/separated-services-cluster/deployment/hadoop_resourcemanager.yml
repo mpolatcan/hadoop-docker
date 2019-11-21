@@ -1,45 +1,29 @@
 # Written by Mutlu Polatcan
-# 18.11.2019
+# 21.11.2019
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: hadoop-slave
+  name: hadoop-resourcemanager
   labels:
     app: hadoop
-    unit: slave
+    unit: resourcemanager
 spec:
   serviceName: hadoop
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: hadoop
-      unit: slave
+      unit: resourcemanager
   template:
     metadata:
-      name: hadoop-slave
       labels:
         app: hadoop
-        unit: slave
+        unit: resourcemanager
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - hadoop
-                  - key: unit
-                    operator: In
-                    values:
-                      - master
-                      - slave
-              topologyKey: kubernetes.io/hostname
       initContainers:
         - name: hadoop-init
-          imagePullPolicy: Always
           image: mpolatcan/hadoop:3.2.1-java8
+          imagePullPolicy: Always
           command:
             - /bin/bash
           args:
@@ -52,25 +36,25 @@ spec:
             - mountPath: /hadoop-state
               name: hadoop-volume
       containers:
-        - name: hadoop-slave
+        - name: hadoop-nodemanager
           image: mpolatcan/hadoop:3.2.1-java8
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
-                name: hadoop-slave
+                name: hadoop-resourcemanager
           volumeMounts:
             - mountPath: /home/hduser
               name: hadoop-volume
           livenessProbe:
             httpGet:
               path: /
-              port: 9864
+              port: 8088
             initialDelaySeconds: 5
             periodSeconds: 5
           readinessProbe:
             httpGet:
               path: /
-              port: 9864
+              port: 8088
             initialDelaySeconds: 5
             periodSeconds: 5
       securityContext:
@@ -86,3 +70,4 @@ spec:
         resources:
           requests:
             storage: 50Gi
+

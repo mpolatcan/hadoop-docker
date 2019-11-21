@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hadoop-namenode
+  labels:
+    app: hadoop
+    unit: namenode
+data:
+  HADOOP_DAEMONS: |
+    namenode
+  HOSTNAME: "hadoop-namenode-0.hadoop"

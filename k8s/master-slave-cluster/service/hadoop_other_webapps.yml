@@ -7,7 +7,7 @@ metadata:
 spec:
   selector:
     app: hadoop
-    type: other
+    unit: other
   ports:
     - port: 8480 # Journalnode HTTP Port
       name: jn-http-port

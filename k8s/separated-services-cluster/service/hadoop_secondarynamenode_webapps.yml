@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hadoop-secondarynamenode-webapps
+  labels:
+    app: hadoop
+    unit: secondarynamenode
+spec:
+  selector:
+    app: hadoop
+    unit: secondarynamenode
+  ports:
+    - port: 9868 # Secondary Namenode HTTP Port
+      name: snn-http-port
+    - port: 9869 # Secondary Namenode HTTPS Port
+      name: snn-https-port
+  type: NodePort
