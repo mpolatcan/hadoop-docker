@@ -49,7 +49,7 @@ spec:
                 name: hadoop-init
           volumeMounts:
             - mountPath: /hadoop-state
-              name: hadoop-volume
+              name: hadoop-nm-volume
       containers:
         - name: hadoop-nodemanager
           image: mpolatcan/hadoop:3.2.1-java8
@@ -59,7 +59,7 @@ spec:
                 name: hadoop-nodemanager
           volumeMounts:
             - mountPath: /home/hduser
-              name: hadoop-volume
+              name: hadoop-nm-volume
           livenessProbe:
             httpGet:
               path: /
@@ -77,7 +77,7 @@ spec:
       restartPolicy: Always
   volumeClaimTemplates:
     - metadata:
-        name: hadoop-volume
+        name: hadoop-nm-volume
       spec:
         accessModes:
           - ReadWriteOnce
