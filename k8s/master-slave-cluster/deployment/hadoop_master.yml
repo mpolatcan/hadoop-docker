@@ -22,7 +22,7 @@ spec:
         unit: master
     spec:
       initContainers:
-        - name: hadoop-init
+        - name: hadoop-master-init
           imagePullPolicy: Always
           image: mpolatcan/hadoop:3.2.1-java8
           command:
