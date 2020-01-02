@@ -8,7 +8,7 @@ metadata:
     app: hadoop
     unit: master
 data:
-  HOSTNAME: "hadoop-master-0.hadoop"
+  HOSTNAME: "hadoop-master-0.hadoop.default"
   HADOOP_DAEMONS: |
     namenode
     secondarynamenode

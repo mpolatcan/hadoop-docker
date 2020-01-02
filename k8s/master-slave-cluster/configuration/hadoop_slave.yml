@@ -11,7 +11,7 @@ data:
   HADOOP_DAEMONS: |
     datanode
     nodemanager
-  DFS_NAMENODE_HOSTNAME: "hadoop-master-0.hadoop"
-  YARN_RESOURCEMANAGER_HOSTNAME: "hadoop-master-0.hadoop"
+  DFS_NAMENODE_HOSTNAME: "hadoop-master-0.hadoop.default"
+  YARN_RESOURCEMANAGER_HOSTNAME: "hadoop-master-0.hadoop.default"
   YARN_NODEMANAGER_RESOURCE_MEMORY_MB: "1536"
   YARN_NODEMANAGER_RESOURCE_CPU_VCORES: "2"

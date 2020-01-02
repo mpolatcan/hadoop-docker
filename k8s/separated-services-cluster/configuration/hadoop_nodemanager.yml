@@ -8,7 +8,7 @@ metadata:
 data:
   HADOOP_DAEMONS: |
     nodemanager
-  DFS_NAMENODE_HOSTNAME: "hadoop-namenode-0.hadoop"
-  YARN_RESOURCEMANAGER_HOSTNAME: "hadoop-resourcemanager-0.hadoop"
+  DFS_NAMENODE_HOSTNAME: "hadoop-namenode-0.hadoop.default"
+  YARN_RESOURCEMANAGER_HOSTNAME: "hadoop-resourcemanager-0.hadoop.default"
   YARN_NODEMANAGER_RESOURCE_MEMORY_MB: "1536"
   YARN_NODEMANAGER_RESOURCE_CPU_VCORES: "2"

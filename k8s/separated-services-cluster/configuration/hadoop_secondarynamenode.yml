@@ -8,4 +8,4 @@ metadata:
 data:
   HADOOP_DAEMONS: |
     secondarynamenode
-  DFS_NAMENODE_HOSTNAME: "hadoop-namenode-0.hadoop"
+  DFS_NAMENODE_HOSTNAME: "hadoop-namenode-0.hadoop.default"

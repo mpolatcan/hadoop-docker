@@ -8,6 +8,6 @@ metadata:
 data:
   HADOOP_DAEMONS: |
     resourcemanager
-  DFS_NAMENODE_HOSTNAME: "hadoop-namenode-0.hadoop"
+  DFS_NAMENODE_HOSTNAME: "hadoop-namenode-0.hadoop.default"
   YARN_SCHEDULER_MINIMUM_ALLOCATION_MB: "128"
   YARN_SCHEDULER_MAXIMUM_ALLOCATION_MB: "1536"
