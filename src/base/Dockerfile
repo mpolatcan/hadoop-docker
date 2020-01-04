@@ -1481,6 +1481,7 @@ RUN apt-get update && \
                                                g++ \
                                                unzip \
                                                iputils-ping \
+                                               netcat \
                                                telnet \
                                                net-tools && \
     rm -rf /var/lib/apt/lists/* && \
