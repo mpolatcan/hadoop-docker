@@ -61,20 +61,20 @@ function health_checker() {
 
   port=${daemon_ports[$2]}
 
-  echo "Hadoop $2 healthcheck started (host: \"$host\", port: \"$port\")"
+  echo "Hadoop $2 healthcheck started (for: \"$1\", host: \"$host\", port: \"$port\")"
 
   nc $host $port
   result=$?
 
   until [[ $result -eq 0 ]]; do
-    echo "Waiting Hadoop $2 is ready (host: \"$host\", port: \"$port\")..."
+    echo "Waiting Hadoop $2 is ready (for: \"$1\", host: \"$host\", port: \"$port\")"
     sleep 2
 
     nc $host $port
     result=$?
   done
 
-  echo "Hadoop $2 is ready (host: \"$host\", port: \"$port\") ✔"
+  echo "Hadoop $2 is ready (for: \"$1\", host: \"$host\", port: \"$port\") ✔"
 }
 
 function start_daemons() {
