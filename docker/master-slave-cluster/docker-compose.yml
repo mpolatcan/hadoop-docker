@@ -6,9 +6,9 @@ services:
     hostname: master
     environment:
       HADOOP_DAEMONS: |
-          namenode
-          secondarynamenode
-          resourcemanager
+        namenode
+        secondarynamenode
+        resourcemanager
       YARN_SCHEDULER_MINIMUM_ALLOCATION_MB: "128"
       YARN_SCHEDULER_MAXIMUM_ALLOCATION_MB: "1536"
     ports:
@@ -20,8 +20,8 @@ services:
     image: mpolatcan/hadoop:3.2.1-java8
     environment:
       HADOOP_DAEMONS: |
-          datanode
-          nodemanager
+        datanode
+        nodemanager
       DFS_NAMENODE_HOSTNAME: "master"
       YARN_RESOURCEMANAGER_HOSTNAME: "master"
       YARN_NODEMANAGER_RESOURCE_MEMORY_MB: "1536"

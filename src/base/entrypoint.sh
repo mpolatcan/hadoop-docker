@@ -55,7 +55,7 @@ daemon_ports[namenode]=$DFS_NAMENODE_HTTP_PORT
 function health_checker() {
   host=${daemon_hosts[$2]}
 
-  if [[ "${daemon_hosts[$2]}" != "NULL" ]]; then
+  if [[ "${daemon_hosts[$2]}" == "NULL" ]]; then
     host=$HOSTNAME
   fi
 
