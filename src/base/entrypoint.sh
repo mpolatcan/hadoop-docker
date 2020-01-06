@@ -1,12 +1,8 @@
 #!/bin/bash
-# TODO All healthchecks will be added
-HADOOP_DAEMON_NODEMANAGER="nodemanager"
-HADOOP_DAEMON_DATANODE="datanode"
-
 declare -A daemons
-declare -A daemon_hosts
-declare -A daemon_ports
 declare -A healthchecks
+declare -A healthcheck_hosts
+declare -A healthcheck_ports
 
 # ------------------------- DAEMONS -----------------------
 # ------- YARN Daemons ---------
@@ -40,26 +36,22 @@ daemons[historyserver]=mapred
 # ------------------------ HEALTHCHECKS -----------------------
 healthchecks[nodemanager]=resourcemanager
 healthchecks[datanode]=namenode
-# -------------------------------------------------------------
 
-# ------------------------- DAEMON HOSTS ----------------------
-daemon_hosts[resourcemanager]=$YARN_RESOURCEMANAGER_HOSTNAME
-daemon_hosts[namenode]=$DFS_NAMENODE_HOSTNAME
-# -------------------------------------------------------------
+healthcheck_hosts[resourcemanager]=$YARN_RESOURCEMANAGER_HOSTNAME
+healthcheck_hosts[namenode]=$DFS_NAMENODE_HOSTNAME
 
-# ------------------------ DAEMON PORTS -----------------------
-daemon_ports[resourcemanager]=$YARN_RESOURCEMANAGER_WEBAPP_PORT
-daemon_ports[namenode]=$DFS_NAMENODE_HTTP_PORT
+healthcheck_ports[resourcemanager]=$YARN_RESOURCEMANAGER_WEBAPP_PORT
+healthcheck_ports[namenode]=$DFS_NAMENODE_HTTP_PORT
 # -------------------------------------------------------------
 
 function health_checker() {
-  host=${daemon_hosts[$2]}
+  host=${healthcheck_hosts[$2]}
 
-  if [[ "${daemon_hosts[$2]}" == "NULL" ]]; then
+  if [[ "${healthcheck_hosts[$2]}" == "NULL" ]]; then
     host=$HOSTNAME
   fi
 
-  port=${daemon_ports[$2]}
+  port=${healthcheck_ports[$2]}
 
   echo "Hadoop $2 healthcheck started (for: \"$1\", host: \"$host\", port: \"$port\")"
 
