@@ -14,6 +14,7 @@ ENV HADOOP_CONF_DIR="${HADOOP_HOME}/etc/hadoop" \
     HADOOP_DAEMONS="NULL" \
     HADOOP_DFS_NAMESERVICES="" \
     HADOOP_WEBAPPS_HOSTNAME="0.0.0.0" \
+    HADOOP_HEALTHCHECK_INTERVAL_IN_SECS="2" \
 	DFS_NAMENODE_HOSTNAME="NULL" \
 	DFS_NAMENODE_RPC_ADDRESS_AUXILIARY_PORTS="NULL" \
 	DFS_NAMENODE_RPC_PORT="9000" \
@@ -1481,7 +1482,6 @@ RUN apt-get update && \
                                                g++ \
                                                unzip \
                                                iputils-ping \
-                                               netcat \
                                                telnet \
                                                net-tools && \
     rm -rf /var/lib/apt/lists/* && \

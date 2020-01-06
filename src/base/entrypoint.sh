@@ -60,7 +60,7 @@ function health_checker() {
 
   until [[ $result -eq 0 ]]; do
     echo "Waiting Hadoop $2 is ready (for: \"$1\", host: \"$host\", port: \"$port\")"
-    sleep 2
+    sleep $HADOOP_HEALTHCHECK_INTERVAL_IN_SECS
 
     nc $host $port
     result=$?

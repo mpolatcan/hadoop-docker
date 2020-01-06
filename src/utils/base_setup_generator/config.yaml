@@ -15,6 +15,7 @@ base_dockerfile_template: |
       HADOOP_DAEMONS="NULL" \
       HADOOP_DFS_NAMESERVICES="" \
       HADOOP_WEBAPPS_HOSTNAME="0.0.0.0" \
+      HADOOP_HEALTHCHECK_INTERVAL_IN_SECS="2" \
   {env_vars}
 
   ADD entrypoint.sh ${{HDUSER_HOME}}/hadoop_entrypoint.sh
