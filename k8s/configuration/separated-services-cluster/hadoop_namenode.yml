@@ -8,4 +8,3 @@ metadata:
 data:
   HADOOP_DAEMONS: |
     namenode
-  HOSTNAME: "hadoop-namenode-0.hadoop.default"
