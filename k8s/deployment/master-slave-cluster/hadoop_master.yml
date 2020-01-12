@@ -67,7 +67,7 @@ spec:
       spec:
         accessModes:
           - ReadWriteOnce
-        storageClassName: gce-pd-hdd
+        storageClassName: do-block-storage
         resources:
           requests:
             storage: 50Gi

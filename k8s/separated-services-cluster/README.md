@@ -1,3 +1,0 @@
-# Hadoop Kubernetes Separated Services  Cluster Deployment
-
-Coming soon...

@@ -1483,7 +1483,8 @@ RUN apt-get update && \
                                                unzip \
                                                iputils-ping \
                                                telnet \
-                                               net-tools && \
+                                               dnsutils \
+                                               netcat && \
     rm -rf /var/lib/apt/lists/* && \
     addgroup hadoop && adduser --disabled-password --gecos "" --ingroup hadoop hduser && \
     mkdir -p ${HADOOP_HOME} ${HADOOP_TMP_DIR} && \

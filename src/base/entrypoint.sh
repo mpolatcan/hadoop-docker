@@ -44,6 +44,11 @@ healthcheck_ports[resourcemanager]=$YARN_RESOURCEMANAGER_WEBAPP_PORT
 healthcheck_ports[namenode]=$DFS_NAMENODE_HTTP_PORT
 # -------------------------------------------------------------
 
+# $1: message
+function __log__() {
+  echo "[$(date '+%d/%m/%Y %H:%M:%S')] -> $1"
+}
+
 function health_checker() {
   host=${healthcheck_hosts[$2]}
 
@@ -53,20 +58,20 @@ function health_checker() {
 
   port=${healthcheck_ports[$2]}
 
-  echo "Hadoop $2 healthcheck started (for: \"$1\", host: \"$host\", port: \"$port\")"
+  __log__ "Hadoop $2 healthcheck started (for: \"$1\", host: \"$host\", port: \"$port\")"
 
   nc $host $port
   result=$?
 
   until [[ $result -eq 0 ]]; do
-    echo "Waiting Hadoop $2 is ready (for: \"$1\", host: \"$host\", port: \"$port\")"
+    __log__ "Waiting Hadoop $2 is ready (for: \"$1\", host: \"$host\", port: \"$port\")"
     sleep $HADOOP_HEALTHCHECK_INTERVAL_IN_SECS
 
     nc $host $port
     result=$?
   done
 
-  echo "Hadoop $2 is ready (for: \"$1\", host: \"$host\", port: \"$port\") ✔"
+  __log__ "Hadoop $2 is ready (for: \"$1\", host: \"$host\", port: \"$port\") ✔"
 }
 
 function start_daemons() {
@@ -74,10 +79,10 @@ function start_daemons() {
       if [[ "$daemon" == "namenode" ]]; then
           # Formatting HDFS
           if [[ ! -d "${HADOOP_TMP_DIR}/dfs" ]]; then
-              echo "Formatting HDFS on namenode..."
+              __log__ "Formatting HDFS on namenode..."
               hdfs namenode -format
           else
-              echo "HDFS already formatted!"
+              __log__ "HDFS already formatted!"
           fi
       fi
 
@@ -86,17 +91,19 @@ function start_daemons() {
       fi
 
       # Start current daemon
-      echo "Starting Hadoop  $daemon..."
+      __log__ "Starting Hadoop  $daemon..."
       ${daemons[$daemon]} --daemon start $daemon
   done
 }
 
-# Load Hadoop configs
-./hadoop_config_loader.sh
+if [[ "${HADOOP_DAEMONS}" != "NULL" ]]; then
+  # Load Hadoop configs
+  ./hadoop_config_loader.sh
 
-# Start Hadoop Daemons
-[[ "${HADOOP_DAEMONS}" != "NULL" ]] && start_daemons
+  # Start Hadoop Daemons
+  start_daemons
 
-if [[ "$1" == "hadoop" ]]; then
+  if [[ "$1" == "hadoop" ]]; then
     tail -f /dev/null
+  fi
 fi

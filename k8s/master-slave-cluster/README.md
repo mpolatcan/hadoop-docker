@@ -1,3 +1,0 @@
-# Hadoop Kubernetes Master-Slave Cluster Deployment
-
-Coming soon...
