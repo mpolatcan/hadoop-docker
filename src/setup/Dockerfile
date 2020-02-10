@@ -13,7 +13,6 @@ RUN wget ${HADOOP_DOWNLOAD_LINK} && \
     chown -R hduser:hadoop ${HDUSER_HOME} && \
     rm -r ${HDUSER_HOME}/hadoop-${HADOOP_VERSION} && \
     rm hadoop-${HADOOP_VERSION}.tar.gz
-
 USER hduser
 WORKDIR ${HDUSER_HOME}
 ENTRYPOINT ["./hadoop_entrypoint.sh", "hadoop"]

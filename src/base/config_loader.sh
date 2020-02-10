@@ -1567,3 +1567,6 @@ load_config "yarn.app.mapreduce.client.job.retry-interval" "${YARN_APP_MAPREDUCE
 load_config "yarn.app.mapreduce.client.max-retries" "${YARN_APP_MAPREDUCE_CLIENT_MAX_RETRIES}" "mapred-site.xml"
 printf "</configuration>" >> "${HADOOP_CONF_DIR}/mapred-site.xml"
 
+
+# Add additional JARs to Hadoop classpath like AWS, S3 and Hadoop Streaming
+echo "export HADOOP_CLASSPATH=\$HADOOP_CLASSPATH:\$HADOOP_HOME/share/hadoop/tools/lib/*" >> "${HADOOP_HOME}/etc/hadoop/hadoop-env.sh"
