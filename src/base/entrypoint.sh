@@ -96,17 +96,20 @@ function start_daemons() {
   done
 }
 
-if [[ "${HADOOP_DAEMONS}" != "NULL" ]]; then
+function main() {
   # Load Hadoop configs
   ./hadoop_config_loader.sh
 
-  # Start Hadoop Daemons
-  start_daemons
-else
-  __log__ "HADOOP_DAEMONS environment variable is not defined so that container will be run in \"client\" mode"
-fi
+  if [[ "${HADOOP_DAEMONS}" != "NULL" ]]; then
+    # Start Hadoop Daemons
+    start_daemons
+  else
+    __log__ "HADOOP_DAEMONS environment variable is not defined so that container will be run in \"client\" mode"
+  fi
 
+  if [[ "$1" == "hadoop" ]]; then
+    tail -f /dev/null
+  fi
+}
 
-if [[ "$1" == "hadoop" ]]; then
-  tail -f /dev/null
-fi
+main
