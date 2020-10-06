@@ -40,8 +40,8 @@ healthchecks[datanode]=namenode
 healthcheck_hosts[resourcemanager]=$YARN_RESOURCEMANAGER_HOSTNAME
 healthcheck_hosts[namenode]=$DFS_NAMENODE_HOSTNAME
 
-healthcheck_ports[resourcemanager]=$YARN_RESOURCEMANAGER_WEBAPP_PORT
-healthcheck_ports[namenode]=$DFS_NAMENODE_HTTP_PORT
+healthcheck_ports[resourcemanager]=${YARN_RESOURCEMANAGER_WEBAPP_PORT:=8088}
+healthcheck_ports[namenode]=${DFS_NAMENODE_HTTP_PORT:=9870}
 # -------------------------------------------------------------
 
 # $1: message
