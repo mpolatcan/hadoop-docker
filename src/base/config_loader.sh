@@ -18,10 +18,10 @@ function load_config_with_opt() {
 
 printf "<configuration>\n" > "${HADOOP_CONF_DIR}/hdfs-site.xml"
 load_config "dfs.namenode.hostname" "${DFS_NAMENODE_HOSTNAME:=NULL}" "hdfs-site.xml"
-load_config_with_opt "dfs.namenode.rpc-address" "${DFS_NAMENODE_HOSTNAME}" "${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_RPC_PORT}" "${HOSTNAME}:${DFS_NAMENODE_RPC_PORT}" "hdfs-site.xml"
-load_config "dfs.namenode.rpc-address.auxiliary-ports" "${DFS_NAMENODE_RPC_ADDRESS_AUXILIARY_PORTS:=NULL}" "hdfs-site.xml"
 load_config "dfs.namenode.rpc-port" "${DFS_NAMENODE_RPC_PORT:=9000}" "hdfs-site.xml"
 load_config "dfs.namenode.rpc-bind-host" "${DFS_NAMENODE_RPC_BIND_HOST:=0.0.0.0}" "hdfs-site.xml"
+load_config_with_opt "dfs.namenode.rpc-address" "${DFS_NAMENODE_HOSTNAME}" "${DFS_NAMENODE_HOSTNAME}:${DFS_NAMENODE_RPC_PORT}" "${HOSTNAME}:${DFS_NAMENODE_RPC_PORT}" "hdfs-site.xml"
+load_config "dfs.namenode.rpc-address.auxiliary-ports" "${DFS_NAMENODE_RPC_ADDRESS_AUXILIARY_PORTS:=NULL}" "hdfs-site.xml"
 load_config "dfs.namenode.servicerpc-address" "${DFS_NAMENODE_SERVICERPC_ADDRESS:=NULL}" "hdfs-site.xml"
 load_config "dfs.namenode.servicerpc-bind-host" "${DFS_NAMENODE_SERVICERPC_BIND_HOST:=0.0.0.0}" "hdfs-site.xml"
 load_config "dfs.namenode.lifeline.rpc-address" "${DFS_NAMENODE_LIFELINE_RPC_ADDRESS:=NULL}" "hdfs-site.xml"
