@@ -1,9 +1,8 @@
 # hadoop-docker
 
-![](https://github.com/mpolatcan/hadoop-docker/workflows/hadoop-docker%20(master)/badge.svg)
-![](https://github.com/mpolatcan/hadoop-docker/workflows/hadoop-docker%20(development)/badge.svg)
+![](https://github.com/mpolatcan/hadoop-docker/workflows/hadoop-docker/badge.svg)
 
-Scalable Hadoop Docker image works at Docker and Kubernetes
+Scalable **Apache Hadoop** Docker image works at **Docker Compose** and **Kubernetes**
 
 ## To Do 
 
