@@ -99,7 +99,7 @@ load_config "dfs.namenode.plugins" "${DFS_NAMENODE_PLUGINS:=NULL}" "hdfs-site.xm
 load_config "dfs.namenode.block-placement-policy.default.prefer-local-node" "${DFS_NAMENODE_BLOCK_PLACEMENT_POLICY_DEFAULT_PREFER_LOCAL_NODE:=true}" "hdfs-site.xml"
 load_config "dfs.namenode.checkpoint.dir" "file://${HADOOP_TMP_DIR}/dfs/namesecondary" "hdfs-site.xml"
 load_config "dfs.namenode.checkpoint.edits.dir" "${DFS_NAMENODE_CHECKPOINT_DIR}" "hdfs-site.xml"
-load_config "dfs.namenode.checkpoint.period" "${DFS_NAMENODE_CHECKPOINT_PERIOD:=3600s}" "hdfs-site.xml"
+load_config "dfs.namenode.checkpoint.period" "${DFS_NAMENODE_CHECKPOINT_PERIOD:=NULL}" "hdfs-site.xml"
 load_config "dfs.namenode.checkpoint.txns" "${DFS_NAMENODE_CHECKPOINT_TXNS:=1000000}" "hdfs-site.xml"
 load_config "dfs.namenode.checkpoint.check.period" "${DFS_NAMENODE_CHECKPOINT_CHECK_PERIOD:=60s}" "hdfs-site.xml"
 load_config "dfs.namenode.checkpoint.check.quiet-multiplier" "${DFS_NAMENODE_CHECKPOINT_CHECK_QUIET_MULTIPLIER:=1.5}" "hdfs-site.xml"
