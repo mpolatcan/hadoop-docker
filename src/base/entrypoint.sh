@@ -80,15 +80,12 @@ function health_checker() {
 
     __log__ "Hadoop $2 healthcheck started (for: \"$1\", host: \"$host\", port: \"$port\")"
 
-    nc $host $port
-    result=$?
+    nc -z $host $port
 
-    until [[ $result -eq 0 ]]; do
+    until [[ $? -eq 0 ]]; do
         __log__ "Waiting Hadoop $2 is ready (for: \"$1\", host: \"$host\", port: \"$port\")"
         sleep $HADOOP_HEALTHCHECK_INTERVAL_IN_SECS
-
-        nc $host $port
-        result=$?
+        nc -z $host $port
     done
 
     __log__ "Hadoop $2 is ready (for: \"$1\", host: \"$host\", port: \"$port\") ✔"
@@ -96,6 +93,7 @@ function health_checker() {
 
 function start_daemons() {
     IFS='.' read -r -a HADOOP_VERSION_TOKENS <<< "$HADOOP_VERSION"
+
     __log__ "Hadoop CLI Version ${HADOOP_VERSION_TOKENS[0]}!"
 
     for daemon in ${HADOOP_DAEMONS[@]}; do

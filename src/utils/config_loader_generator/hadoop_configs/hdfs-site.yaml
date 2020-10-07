@@ -93,7 +93,7 @@ dfs:
         minimum: "1"
     datanode.registration.ip-hostname-check: "false"
     decomission:
-      interval: "30s"
+      interval: "NULL"
       blocks.per.interval: "500000"
       max.concurrent.tracked.nodes: "100"
     accesstime.precision: "3600000"
@@ -105,7 +105,7 @@ dfs:
       period: "NULL"
       txns: "1000000"
       check:
-        period: "60s"
+        period: "NULL"
         quiet-multiplier: "1.5"
       max-retries: "3"
     num:
@@ -171,7 +171,7 @@ dfs:
       interval.ms: "1000"
       initial.delay.ms: "3000"
     reencrypt:
-      sleep.interval: "1m"
+      sleep.interval: "NULL"
       batch.size: "1000"
       throttle.limit:
         handler.ratio: "1.0"
@@ -244,12 +244,12 @@ dfs:
       "": "=file://${HADOOP_TMP_DIR}/dfs/data"
       perm: "700"
     directoryscan:
-      interval: "21600s"
+      interval: "NULL"
       threads: "1"
       throttle.limit.ms.per.sec: "1000"
     lifeline.interval.seconds: "NULL"
     balance:
-      bandwidthPerSec: "10m"
+      bandwidthPerSec: "NULL"
       max.concurrent.moves: "50"
     plugins: "NULL"
     failed.volumes.tolerated: "0"
@@ -273,7 +273,7 @@ dfs:
     peer:
       stats.enabled: "false"
       metrics.min.outlier.detection.samples: "1000"
-    outliers.report.interval: "30m"
+    outliers.report.interval: "NULL"
     fileio.profiling.sampling.percentage: "0"
     available-space-volume-choosing-policy:
       balanced-space-threshold: "10737418240"
@@ -294,7 +294,7 @@ dfs:
     transfer.socket:
       send.buffer.size: "0"
       recv.buffer.size: "0"
-    bp-ready.timeout: "20s"
+    bp-ready.timeout: "NULL"
     cached-dfsused.check.interval.ms: "600000"
     fsdataset:
       factory: "NULL"
@@ -310,8 +310,8 @@ dfs:
       write.timeout: "480000"
     transferTo.allowed: "true"
     disk.check:
-      min.gap: "15m"
-      timeout: "10m"
+      min.gap: "NULL"
+      timeout: "NULL"
   http:
     policy: "HTTP_ONLY"
     client:
@@ -434,7 +434,7 @@ dfs:
     max: "512"
   blockreport:
     intervalMsec: "21600000"
-    initialDelay: "0s"
+    initialDelay: "NULL"
     split.threshold: "1000000"
     incremental.intervalMsec: "0"
   heartbeat.interval: "NULL"
@@ -458,7 +458,7 @@ dfs:
   ha:
     namenodes.EXAMPLENAMESERVICE: "NULL"
     namenode.id: "NULL"
-    log-roll.period: "120s"
+    log-roll.period: "NULL"
     tail-edits:
       period:
         "": "60s"
@@ -529,8 +529,8 @@ dfs:
     user.provider.user.pattern: "^[A-Za-z_][A-Za-z0-9._-]*[$]?$"
     acl.provider.permission.pattern: "^(default:)?(user|group|mask|other):[[A-Za-z_][A-Za-z0-9._-]]*:([rwx-]{3\\})?(,(default:)?(user|group|mask|other):[[A-Za-z_][A-Za-z0-9._-]]*:([rwx-]{3\\})?)*$"
     socket:
-      connect-timeout: "60s"
-      read-timeout: "60s"
+      connect-timeout: "NULL"
+      read-timeout: "NULL"
     ugi.expire.after.access: "600000"
     rest-csrf:
       enabled: "false"
@@ -648,10 +648,10 @@ dfs:
         write.dir: "NULL"
       leveldb.path: "NULL"
       load.retries: "0"
-  lock.suppress.warning.interval: "10s"
+  lock.suppress.warning.interval: "NULL"
   use.dfs.network.topology: "true"
   net.topology.impl: "org.apache.hadoop.hdfs.net.DFSNetworkTopology"
-  qjm.operations.timeout: "60s"
+  qjm.operations.timeout: "NULL"
   reformat.disabled: "false"
   blocksize: "134217728"
   stream-buffer-size: "4096"

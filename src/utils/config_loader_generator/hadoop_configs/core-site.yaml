@@ -88,7 +88,7 @@ hadoop:
         background.reload:
           "": "false"
           threads: "3"
-        shell.command.timeout: "0s"
+        shell.command.timeout: "NULL"
       negative-cache.secs: "30"
     uid.cache.secs: "14400"
     saslproperties.resolver.class: "NULL"
@@ -125,7 +125,7 @@ hadoop:
         base.millis: "100"
         max.millis: "2000"
 
-  service.shutdown.timeout: "30s"
+  service.shutdown.timeout: "NULL"
 
   rpc:
     protection: "authentication"
@@ -268,7 +268,7 @@ fs:
       arn: "NULL"
       session:
         name: "NULL"
-        duration: "30m"
+        duration: "NULL"
       policy: "NULL"
       sts.endpoint:
         "": "NULL"
@@ -326,14 +326,14 @@ fs:
           read: "500"
           write: "100"
       max.retries: "9"
-      throttle.retry.interval: "100ms"
-      background.sleep: "25ms"
+      throttle.retry.interval: "NULL"
+      background.sleep: "NULL"
     retry:
       limit: "=${FS_S3A_ATTEMPTS_MAXIMUM}"
-      interval: "500ms"
+      interval: "NULL"
       throttle:
         limit: "=${FS_S3A_ATTEMPTS_MAXIMUM}"
-        interval: "1000ms"
+        interval: "NULL"
     committer:
       name: "file"
       magic.enabled: "false"
@@ -355,7 +355,7 @@ fs:
     secure.mode: "false"
     local.sas:
       key.mode: "false"
-      expiry.period: "90d"
+      expiry.period: "NULL"
     authorization:
       "": "false"
       caching.enable: "true"
