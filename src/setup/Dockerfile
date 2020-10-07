@@ -7,6 +7,8 @@ MAINTAINER Mutlu Polatcan <mutlupolatcan@gmail.com>
 ARG HADOOP_VERSION=""
 ARG HADOOP_DOWNLOAD_LINK="http://downloads.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz"
 
+ENV HADOOP_VERSION=$HADOOP_VERSION
+
 RUN wget ${HADOOP_DOWNLOAD_LINK} && \
     tar -xvzf hadoop-${HADOOP_VERSION}.tar.gz -C ${HDUSER_HOME} && \
     mv ${HDUSER_HOME}/hadoop-${HADOOP_VERSION}/* ${HADOOP_HOME} && \
