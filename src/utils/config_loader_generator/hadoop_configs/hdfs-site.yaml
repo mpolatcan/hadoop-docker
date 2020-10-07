@@ -102,7 +102,7 @@ dfs:
     checkpoint:
       dir: "=file://${HADOOP_TMP_DIR}/dfs/namesecondary"
       edits.dir: "=${DFS_NAMENODE_CHECKPOINT_DIR}"
-      period: "3600s"
+      period: "NULL"
       txns: "1000000"
       check:
         period: "60s"
