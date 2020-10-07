@@ -38,7 +38,7 @@ dfs:
       considerLoad:
         "": "true"
         factor: "2.0"
-      interval.seconds: "3s"
+      interval.seconds: "NULL"
     name:
       dir:
         "": "=file://${HADOOP_TMP_DIR}/dfs/name"
@@ -437,7 +437,7 @@ dfs:
     initialDelay: "0s"
     split.threshold: "1000000"
     incremental.intervalMsec: "0"
-  heartbeat.interval: "3s"
+  heartbeat.interval: "NULL"
   hosts:
     "": "NULL"
     exclude: "NULL"
