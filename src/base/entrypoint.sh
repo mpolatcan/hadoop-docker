@@ -72,7 +72,7 @@ function __log__() {
 function health_checker() {
     host=${healthcheck_hosts[$2]}
 
-    if [[ "${healthcheck_hosts[$2]}" == "NULL" ]]; then
+    if [[ "${healthcheck_hosts[$2]}" == "" ]]; then
         host=$HOSTNAME
     fi
 
