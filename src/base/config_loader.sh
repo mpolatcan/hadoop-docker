@@ -546,8 +546,7 @@ load_config "ssl.server.keystore.password" "${SSL_SERVER_KEYSTORE_PASSWORD:=NULL
 load_config "ssl.server.truststore.location" "${SSL_SERVER_TRUSTSTORE_LOCATION:=NULL}" "hdfs-site.xml"
 load_config "ssl.server.truststore.password" "${SSL_SERVER_TRUSTSTORE_PASSWORD:=NULL}" "hdfs-site.xml"
 load_config "https.buffer.size" "${HTTPS_BUFFER_SIZE:=4096}" "hdfs-site.xml"
-printf "</configuration>" >> "${HADOOP_CONF_DIR}/hdfs-site.xml"
-
+# ======================================================================
 printf "<configuration>\n" > "${HADOOP_CONF_DIR}/yarn-site.xml"
 load_config "yarn.acl.enable" "${YARN_ACL_ENABLE:=false}" "yarn-site.xml"
 load_config "yarn.acl.reservation-enable" "${YARN_ACL_RESERVATION_ENABLE:=false}" "yarn-site.xml"
@@ -1013,8 +1012,8 @@ load_config "yarn.web-proxy.keytab" "${YARN_WEB_PROXY_KEYTAB:=NULL}" "yarn-site.
 load_config "yarn.web-proxy.hostname" "${YARN_WEB_PROXY_HOSTNAME:=0.0.0.0}" "yarn-site.xml"
 load_config "yarn.web-proxy.port" "${YARN_WEB_PROXY_PORT:=8092}" "yarn-site.xml"
 load_config_with_opt "yarn.web-proxy.address" "${YARN_WEB_PROXY_HOSTNAME}" "${YARN_WEB_PROXY_HOSTNAME}:${YARN_WEB_PROXY_PORT}" "${HOSTNAME}:${YARN_WEB_PROXY_PORT}" "yarn-site.xml"
-printf "</configuration>" >> "${HADOOP_CONF_DIR}/yarn-site.xml"
-
+load_config "hadoop.zk.address" "${HADOOP_ZK_ADDRESS:=NULL}" "yarn-site.xml"
+# ======================================================================
 printf "<configuration>\n" > "${HADOOP_CONF_DIR}/core-site.xml"
 load_config "hadoop.tmp.dir" "${HDUSER_HOME}/app/hadoop/tmp" "core-site.xml"
 load_config "hadoop.http.filter.initializers" "${HADOOP_HTTP_FILTER_INITIALIZERS:=org.apache.hadoop.http.lib.StaticUserWebFilter}" "core-site.xml"
@@ -1347,8 +1346,7 @@ load_config "adl.feature.ownerandgroup.enableupn" "${ADL_FEATURE_OWNERANDGROUP_E
 load_config "adl.http.timeout" "${ADL_HTTP_TIMEOUT:=-1}" "core-site.xml"
 load_config "seq.io.sort.mb" "${SEQ_IO_SORT_MB:=100}" "core-site.xml"
 load_config "seq.io.sort.factor" "${SEQ_IO_SORT_FACTOR:=100}" "core-site.xml"
-printf "</configuration>" >> "${HADOOP_CONF_DIR}/core-site.xml"
-
+# ======================================================================
 printf "<configuration>\n" > "${HADOOP_CONF_DIR}/mapred-site.xml"
 load_config_with_opt "mapreduce.job.hdfs-servers" "${FS_HOSTNAME}" "${FS_PREFIX}${FS_HOSTNAME}:${FS_PORT}" "${FS_PREFIX}${HOSTNAME}:${FS_PORT}" "mapred-site.xml"
 load_config "mapreduce.job.committer.setup.cleanup.needed" "${MAPREDUCE_JOB_COMMITTER_SETUP_CLEANUP_NEEDED:=true}" "mapred-site.xml"
@@ -1565,8 +1563,37 @@ load_config "yarn.app.mapreduce.client-am.ipc.max-retries-on-timeouts" "${YARN_A
 load_config "yarn.app.mapreduce.client.job.max-retries" "${YARN_APP_MAPREDUCE_CLIENT_JOB_MAX_RETRIES:=3}" "mapred-site.xml"
 load_config "yarn.app.mapreduce.client.job.retry-interval" "${YARN_APP_MAPREDUCE_CLIENT_JOB_RETRY_INTERVAL:=2000}" "mapred-site.xml"
 load_config "yarn.app.mapreduce.client.max-retries" "${YARN_APP_MAPREDUCE_CLIENT_MAX_RETRIES:=3}" "mapred-site.xml"
-printf "</configuration>" >> "${HADOOP_CONF_DIR}/mapred-site.xml"
+# ======================================================================
 
+# Load ResourceManager (YARN) HA configurations
+if [[ "${YARN_RESOURCEMANAGER_HA_ENABLED}" == "true" ]]; then
+    IFS="," read -r -a RESOURCEMANAGER_IDS <<< ${YARN_RESOURCEMANAGER_HA_RM_IDS}
+
+    for RESOURCEMANAGER_ID in ${RESOURCEMANAGER_IDS[@]}; do
+        ENV_VAR_SUFFIX=$(echo $RESOURCEMANAGER_ID | tr '[a-z]' '[A-Z]')
+        ENV_VAR_YARN_RESOURCEMANAGER_HOSTNAME="YARN_RESOURCEMANAGER_HOSTNAME_${ENV_VAR_SUFFIX}"
+        ENV_VAR_YARN_RESOURCEMANAGER_ADDRESS="YARN_RESOURCEMANAGER_ADDRESS_${ENV_VAR_SUFFIX}"
+        ENV_VAR_YARN_RESOURCEMANAGER_SCHEDULER_ADDRESS="YARN_RESOURCEMANAGER_SCHEDULER_ADDRESS_${ENV_VAR_SUFFIX}"
+        ENV_VAR_YARN_RESOURCEMANAGER_RESOURCE_TRACKER_ADDRESS="YARN_RESOURCEMANAGER_RESOURCE_TRACKER_ADDRESS_${ENV_VAR_SUFFIX}"
+        ENV_VAR_YARN_RESOURCEMANAGER_ADMIN_ADDRESS="YARN_RESOURCEMANAGER_ADMIN_ADDRESS_${ENV_VAR_SUFFIX}"
+        ENV_VAR_YARN_RESOURCEMANAGER_WEBAPP_ADDRESS="YARN_RESOURCEMANAGER_WEBAPP_ADDRESS_${ENV_VAR_SUFFIX}"
+        ENV_VAR_YARN_RESOURCEMANAGER_WEBAPP_HTTPS_ADDRESS="YARN_RESOURCEMANAGER_WEBAPP_HTTPS_ADDRESS_${ENV_VAR_SUFFIX}"
+
+        load_config "yarn.resourcemanager.hostname.$RESOURCEMANAGER_ID" "${!ENV_VAR_YARN_RESOURCEMANAGER_HOSTNAME:=NULL}" "yarn-site.xml"
+        load_config "yarn.resourcemanager.address.$RESOURCEMANAGER_ID" "${!ENV_VAR_YARN_RESOURCEMANAGER_ADDRESS:=NULL}" "yarn-site.xml"
+        load_config "yarn.resourcemanager.scheduler.address.$RESOURCEMANAGER_ID" "${!ENV_VAR_YARN_RESOURCEMANAGER_SCHEDULER_ADDRESS:=NULL}" "yarn-site.xml"
+        load_config "yarn.resourcemanager.resource-tracker.address.$RESOURCEMANAGER_ID" "${!ENV_VAR_YARN_RESOURCEMANAGER_RESOURCE_TRACKER_ADDRESS:=NULL}" "yarn-site.xml"
+        load_config "yarn.resourcemanager.admin.address.$RESOURCEMANAGER_ID" "${!ENV_VAR_YARN_RESOURCEMANAGER_ADMIN_ADDRESS:=NULL}" "yarn-site.xml"
+        load_config "yarn.resourcemanager.webapp.address.$RESOURCEMANAGER_ID" "${!ENV_VAR_YARN_RESOURCEMANAGER_WEBAPP_ADDRESS:=NULL}" "yarn-site.xml"
+        load_config "yarn.resourcemanager.webapp.https.address.$RESOURCEMANAGER_ID" "${!ENV_VAR_YARN_RESOURCEMANAGER_WEBAPP_HTTPS_ADDRESS:=NULL}" "yarn-site.xml"
+    done
+fi
 
 # Add additional JARs to Hadoop classpath like AWS, S3 and Hadoop Streaming
 echo "export HADOOP_CLASSPATH=\$HADOOP_CLASSPATH:\$HADOOP_HOME/share/hadoop/tools/lib/*" >> "${HADOOP_HOME}/etc/hadoop/hadoop-env.sh"
+
+printf "</configuration>" >> "${HADOOP_CONF_DIR}/hdfs-site.xml"
+printf "</configuration>" >> "${HADOOP_CONF_DIR}/yarn-site.xml"
+printf "</configuration>" >> "${HADOOP_CONF_DIR}/core-site.xml"
+printf "</configuration>" >> "${HADOOP_CONF_DIR}/mapred-site.xml"
+
