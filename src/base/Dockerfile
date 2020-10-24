@@ -18,9 +18,6 @@ ENV HADOOP_CONF_DIR="${HADOOP_HOME}/etc/hadoop" \
 
 ADD entrypoint.sh ${HDUSER_HOME}/hadoop_entrypoint.sh
 ADD config_loader.sh ${HDUSER_HOME}/hadoop_config_loader.sh
-ADD sshd_config ${HDUSER_HOME}/sshd_config
-ADD id_rsa ${HDUSER_HOME}/id_rsa
-ADD id_rsa.pub ${HDUSER_HOME}/id_rsa.pub
 
 RUN apt-get update && \
     apt-get -y install --no-install-recommends procps \
@@ -38,10 +35,5 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     addgroup hadoop && adduser --disabled-password --gecos "" --ingroup hadoop hduser && \
     mkdir -p ${HADOOP_HOME} ${HADOOP_TMP_DIR} && \
-    mkdir -p ${HDUSER_HOME}/.ssh && \
-    mv ${HDUSER_HOME}/id_rsa ${HDUSER_HOME}/.ssh && \
-    mv ${HDUSER_HOME}/id_rsa.pub ${HDUSER_HOME}/.ssh && \
-    cat  ${HDUSER_HOME}/.ssh/id_rsa.pub >> ${HDUSER_HOME}/.ssh/authorized_keys && \
-    chmod 700 ${HDUSER_HOME}/.ssh && chmod 644 ${HDUSER_HOME}/.ssh/authorized_keys && \
     chown -R hduser:hadoop ${HDUSER_HOME} && \
     chmod +x ${HDUSER_HOME}/hadoop_entrypoint.sh ${HDUSER_HOME}/hadoop_config_loader.sh

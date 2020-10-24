@@ -1,5 +1,0 @@
-RSAAuthentication yes
-PublicKeyAuthentication yes
-PasswordAuthentication no
-UsePAM no
-PermitRootLogin without-password
