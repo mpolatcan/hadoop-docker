@@ -1,6 +1,6 @@
 ARG JAVA_VERSION=""
 
-FROM openjdk:${JAVA_VERSION}-slim
+FROM azul/zulu-openjdk:${JAVA_VERSION}
 
 MAINTAINER Mutlu Polatcan <mutlupolatcan@gmail.com>
 
@@ -30,9 +30,11 @@ RUN apt-get update && \
                                              iputils-ping \
                                              telnet \
                                              dnsutils \
-                                             netcat && \
+                                             netcat \
+                                             openssh-server && \
     rm -rf /var/lib/apt/lists/* && \
     addgroup hadoop && adduser --disabled-password --gecos "" --ingroup hadoop hduser && \
     mkdir -p ${HADOOP_HOME} ${HADOOP_TMP_DIR} && \
     chown -R hduser:hadoop ${HDUSER_HOME} && \
-    chmod +x ${HDUSER_HOME}/hadoop_entrypoint.sh ${HDUSER_HOME}/hadoop_config_loader.sh
+    chmod +x ${HDUSER_HOME}/hadoop_entrypoint.sh ${HDUSER_HOME}/hadoop_config_loader.sh && \
+    ssh-keygen -b 2048 -t rsa -f ${HDUSER_HOME}/.ssh/id_rsa -q -N ""
