@@ -1,0 +1,68 @@
+version: "3"
+services:
+  zk1:
+    image: zookeeper
+    restart: always
+    hostname: zk1
+    ports:
+      - 2181:2181
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181 server.2=zk2:2888:3888;2181 server.3=zk3:2888:3888;2181
+
+  zk2:
+    image: zookeeper
+    restart: always
+    hostname: zk2
+    ports:
+      - 2182:2181
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zk1:2888:3888;2181 server.2=0.0.0.0:2888:3888;2181 server.3=zk3:2888:3888;2181
+
+  zk3:
+    image: zookeeper
+    restart: always
+    hostname: zk3
+    ports:
+      - 2183:2181
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zk1:2888:3888;2181 server.2=zk2:2888:3888;2181 server.3=0.0.0.0:2888:3888;2181
+
+  rm1:
+    image: mpolatcan/hadoop:3.3.0-java8
+    hostname: rm1
+    container_name: rm1
+    environment:
+      HADOOP_DAEMONS: |
+        resourcemanager
+    env_file:
+      - config.env
+    ports:
+      - 8088 # Resourcemanager UI Port
+
+  rm2:
+    image: mpolatcan/hadoop:3.3.0-java8
+    hostname: rm2
+    container_name: rm2
+    environment:
+      HADOOP_DAEMONS: |
+        resourcemanager
+    env_file:
+      - config.env
+    ports:
+      - 8088 # Resourcemanager UI Port
+
+  nm:
+    image: mpolatcan/hadoop:3.3.0-java8
+    environment:
+      HADOOP_DAEMONS: |
+        nodemanager
+    env_file:
+      - config.env
+    ports:
+      - 8042 # Nodemanager UI Port
+    depends_on:
+      - rm1
+      - rm2

@@ -362,6 +362,7 @@ yarn:
     zk-appid-node.split-index: "0"
     zk-delegation-token-node.split-index: "0"
     zk-max-znode-size.bytes: "1048576"
+    zk-address: "NULL"
     cluster-id: "NULL"
     epoch.range: "0"
     max-completed-applications: "1000"

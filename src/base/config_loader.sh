@@ -840,6 +840,7 @@ load_config "yarn.resourcemanager.decommissioning-nodes-watcher.poll-interval-se
 load_config "yarn.resourcemanager.zk-appid-node.split-index" "${YARN_RESOURCEMANAGER_ZK_APPID_NODE_SPLIT_INDEX:=0}" "yarn-site.xml"
 load_config "yarn.resourcemanager.zk-delegation-token-node.split-index" "${YARN_RESOURCEMANAGER_ZK_DELEGATION_TOKEN_NODE_SPLIT_INDEX:=0}" "yarn-site.xml"
 load_config "yarn.resourcemanager.zk-max-znode-size.bytes" "${YARN_RESOURCEMANAGER_ZK_MAX_ZNODE_SIZE_BYTES:=1048576}" "yarn-site.xml"
+load_config "yarn.resourcemanager.zk-address" "${YARN_RESOURCEMANAGER_ZK_ADDRESS:=NULL}" "yarn-site.xml"
 load_config "yarn.resourcemanager.cluster-id" "${YARN_RESOURCEMANAGER_CLUSTER_ID:=NULL}" "yarn-site.xml"
 load_config "yarn.resourcemanager.epoch.range" "${YARN_RESOURCEMANAGER_EPOCH_RANGE:=0}" "yarn-site.xml"
 load_config "yarn.resourcemanager.max-completed-applications" "${YARN_RESOURCEMANAGER_MAX_COMPLETED_APPLICATIONS:=1000}" "yarn-site.xml"

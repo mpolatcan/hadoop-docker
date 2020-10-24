@@ -9,5 +9,3 @@ Scalable **Apache Hadoop** Docker image works at **Docker Compose** and **Kubern
 - Documentation
 - Kubernetes deployment refactoring
 - Kustomize manifests
-- Helm chart
-- Operator development
