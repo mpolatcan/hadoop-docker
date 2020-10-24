@@ -41,7 +41,7 @@ RUN apt-get update && \
     mkdir -p ${HDUSER_HOME}/.ssh && \
     mv ${HDUSER_HOME}/id_rsa ${HDUSER_HOME}/.ssh && \
     mv ${HDUSER_HOME}/id_rsa.pub ${HDUSER_HOME}/.ssh && \
-    cat ${HDUSER_HOME}/id_rsa.pub >> ${HDUSER_HOME}/.ssh/authorized_keys && \
+    cat  ${HDUSER_HOME}/.ssh/id_rsa.pub >> ${HDUSER_HOME}/.ssh/authorized_keys && \
     chmod 700 ${HDUSER_HOME}/.ssh && chmod 644 ${HDUSER_HOME}/.ssh/authorized_keys && \
     chown -R hduser:hadoop ${HDUSER_HOME} && \
     chmod +x ${HDUSER_HOME}/hadoop_entrypoint.sh ${HDUSER_HOME}/hadoop_config_loader.sh
