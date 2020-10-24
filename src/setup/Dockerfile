@@ -21,6 +21,9 @@ RUN wget ${HADOOP_DOWNLOAD_LINK} && \
     wget ${AWS_SDK_JAVA_DOWNLOAD_LINK} && \
     mv aws-java-sdk-bundle-${AWS_SDK_JAVA_VERSION}.jar ${HADOOP_HOME}/share/hadoop/tools/lib
 
+# Run sshd in background
+CMD sshd -D ${HDUSER_HOME}/sshd_config
+
 USER hduser
 WORKDIR ${HDUSER_HOME}
 ENTRYPOINT ["./hadoop_entrypoint.sh", "hadoop"]
