@@ -37,4 +37,5 @@ RUN apt-get update && \
     mkdir -p ${HADOOP_HOME} ${HADOOP_TMP_DIR} && \
     chown -R hduser:hadoop ${HDUSER_HOME} && \
     chmod +x ${HDUSER_HOME}/hadoop_entrypoint.sh ${HDUSER_HOME}/hadoop_config_loader.sh && \
+    mkdir -p ${HDUSER_HOME}/.ssh && \
     ssh-keygen -b 2048 -t rsa -f ${HDUSER_HOME}/.ssh/id_rsa -q -N ""
