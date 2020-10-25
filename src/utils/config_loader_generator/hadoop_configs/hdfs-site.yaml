@@ -470,7 +470,7 @@ dfs:
     zkfc:
       nn.http.timeout.ms: "20000"
       port: "8019"
-    fencing.methods: "NULL"
+    fencing.methods: "shell(/bin/true)"
     standby.checkpoints: "true"
   short.circuit.shared.memory.watcher.interrupt.check.ms: "60000"
   journalnode:

@@ -43,6 +43,32 @@ config_loader_sh_template: |
       done
   fi
 
+  # Load HDFS HA configurations
+  if [[ "${{DFS_NAMESERVICES:=NULL}}" != "NULL" ]]; then
+      IFS="," read -r -a DFS_NAMESERVICE_IDS <<< ${{DFS_NAMESERVICES}}
+
+      for DFS_NAMESERVICE_ID in ${{DFS_NAMESERVICES[@]}}; do
+          ENV_VAR_SUFFIX_NAMESERVICE_ID=$(echo $DFS_NAMESERVICE_ID | tr '[a-z]' '[A-Z]')
+          ENV_VAR_DFS_HA_NAMENODES="DFS_HA_NAMENODES_${{ENV_VAR_SUFFIX_NAMESERVICE_ID}}"
+          ENV_VAR_DFS_CLIENT_FAILOVER_PROXY_PROVIDER="DFS_CLIENT_FAILOVER_PROXY_PROVIDER_${{ENV_VAR_SUFFIX_NAMESERVICE_ID}}"
+
+          load_config "dfs.ha.namenodes.$DFS_NAMESERVICE_ID" "${{!ENV_VAR_DFS_HA_NAMENODES:=NULL}}" "hdfs-site.xml"
+          load_config "dfs.client.failover.proxy.provider.$DFS_NAMESERVICE_ID" "${{!ENV_VAR_DFS_CLIENT_FAILOVER_PROXY_PROVIDER:=org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider}}" "hdfs-site.xml"
+
+          # Load HDFS HA Namenode configurations
+          IFS="," read -r -a DFS_HA_NAMENODE_IDS <<< ${{!ENV_VAR_DFS_HA_NAMENODES:=NULL}}
+
+          for DFS_HA_NAMENODE_ID in ${{DFS_HA_NAMENODE_IDS[@]}}; do
+              ENV_VAR_SUFFIX_DFS_HA_NAMENODE_ID=$(echo $DFS_HA_NAMENODE_ID | tr '[a-z]' '[A-Z]')
+              ENV_VAR_DFS_NAMENODE_RPC_ADDRESS="DFS_NAMENODE_RPC_ADDRESS_${{ENV_VAR_SUFFIX_NAMESERVICE_ID}}_${{ENV_VAR_SUFFIX_DFS_HA_NAMENODE_ID}}"
+              ENV_VAR_DFS_NAMENODE_HTTP_ADDRESS="DFS_NAMENODE_HTTP_ADDRESS_${{ENV_VAR_SUFFIX_NAMESERVICE_ID}}_${{ENV_VAR_SUFFIX_DFS_HA_NAMENODE_ID}}"
+
+              load_config "dfs.namenode.rpc-address.$DFS_NAMESERVICE_ID.$DFS_HA_NAMENODE_ID" "${{!ENV_VAR_DFS_NAMENODE_RPC_ADDRESS:=NULL}}" "hdfs-site.xml"
+              load_config "dfs.namenode.http-address.$DFS_NAMESERVICE_ID.$DFS_HA_NAMENODE_ID" "${{!ENV_VAR_DFS_NAMENODE_HTTP_ADDRESS:=NULL}}" "hdfs-site.xml"
+          done
+      done
+  fi
+
   # Add additional JARs to Hadoop classpath like AWS, S3 and Hadoop Streaming
   echo "export HADOOP_CLASSPATH=\$HADOOP_CLASSPATH:\$HADOOP_HOME/share/hadoop/tools/lib/*" >> "${{HADOOP_HOME}}/etc/hadoop/hadoop-env.sh"
 
