@@ -53,44 +53,6 @@ hadoop_daemons[historyserver]=mapred
 hadoop_daemons_backport[historyserver]=mr-jobhistory-daemon.sh
 # -------------------------------------------------------------
 
-# ------------------------ HEALTHCHECKS -----------------------
-healthchecks[nodemanager]=resourcemanager
-healthchecks[datanode]=namenode
-
-healthcheck_hosts[resourcemanager]=$YARN_RESOURCEMANAGER_HOSTNAME
-healthcheck_hosts[namenode]=$DFS_NAMENODE_HOSTNAME
-
-healthcheck_ports[resourcemanager]=${YARN_RESOURCEMANAGER_WEBAPP_PORT:=8088}
-healthcheck_ports[namenode]=${DFS_NAMENODE_HTTP_PORT:=9870}
-# -------------------------------------------------------------
-
-# $1: message
-function __log__() {
-    echo "[$(date '+%d/%m/%Y %H:%M:%S')] -> $1"
-}
-
-function health_checker() {
-    host=${healthcheck_hosts[$2]}
-
-    if [[ "${healthcheck_hosts[$2]}" == "" ]]; then
-        host=$HOSTNAME
-    fi
-
-    port=${healthcheck_ports[$2]}
-
-    __log__ "Hadoop $2 healthcheck started (for: \"$1\", host: \"$host\", port: \"$port\")"
-
-    nc -z $host $port
-
-    until [[ $? -eq 0 ]]; do
-        __log__ "Waiting Hadoop $2 is ready (for: \"$1\", host: \"$host\", port: \"$port\")"
-        sleep $HADOOP_HEALTHCHECK_INTERVAL_IN_SECS
-        nc -z $host $port
-    done
-
-    __log__ "Hadoop $2 is ready (for: \"$1\", host: \"$host\", port: \"$port\") ✔"
-}
-
 function configure_hdfs() {
     # Formatting HDFS
     if [[ ! -d "${HADOOP_TMP_DIR}/dfs" ]]; then
@@ -123,10 +85,6 @@ function start_daemons() {
             configure_hdfs
         elif [[ "$daemon" == "zkfc" ]]; then
             configure_zkfc
-        fi
-
-        if [[ "${healthchecks[$daemon]}" != "" ]]; then
-            health_checker $daemon ${healthchecks[$daemon]}
         fi
 
         # Start current daemon

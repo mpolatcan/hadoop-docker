@@ -90,3 +90,6 @@ config_loader_sh_template: |
 overridden_configs:
   hadoop.security.group.mapping.ldap.search.filter.user: "NULL"
   hadoop.security.group.mapping.ldap.search.filter.group: "NULL"
+
+deprecated_configs:
+  - fs.default.name
