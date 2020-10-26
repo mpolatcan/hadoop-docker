@@ -86,15 +86,3 @@ config_loader_sh_template: |
   load_yarn_ha_configs
   load_hdfs_ha_configs
   end_load_configs
-
-config_files:
-  - path: hadoop_configs/hdfs-site.yaml
-    filename: hdfs-site.xml
-  - path: hadoop_configs/yarn-site.yaml
-    filename: yarn-site.xml
-  - path: hadoop_configs/core-site.yaml
-    filename: core-site.xml
-  - path: hadoop_configs/mapred-site.yaml
-    filename: mapred-site.xml
-
-output_dir: ../../base

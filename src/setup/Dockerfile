@@ -11,6 +11,8 @@ ARG AWS_SDK_JAVA_DOWNLOAD_LINK="https://repo1.maven.org/maven2/com/amazonaws/aws
 
 ENV HADOOP_VERSION=$HADOOP_VERSION
 
+ADD config_loader.sh ${HDUSER_HOME}/hadoop_config_loader.sh
+
 RUN wget ${HADOOP_DOWNLOAD_LINK} && \
     tar -xvzf hadoop-${HADOOP_VERSION}.tar.gz -C ${HDUSER_HOME} && \
     mv ${HDUSER_HOME}/hadoop-${HADOOP_VERSION}/* ${HADOOP_HOME} && \
@@ -19,8 +21,8 @@ RUN wget ${HADOOP_DOWNLOAD_LINK} && \
     rm hadoop-${HADOOP_VERSION}.tar.gz && \
     rm ${HADOOP_HOME}/share/hadoop/tools/lib/aws-java-sdk-*.jar && \
     wget ${AWS_SDK_JAVA_DOWNLOAD_LINK} && \
-    mv aws-java-sdk-bundle-${AWS_SDK_JAVA_VERSION}.jar ${HADOOP_HOME}/share/hadoop/tools/lib
-
+    mv aws-java-sdk-bundle-${AWS_SDK_JAVA_VERSION}.jar ${HADOOP_HOME}/share/hadoop/tools/lib && \
+    chmod +x ${HDUSER_HOME}/hadoop_config_loader.sh
 
 USER hduser
 WORKDIR ${HDUSER_HOME}

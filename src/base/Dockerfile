@@ -16,7 +16,6 @@ ENV HADOOP_CONF_DIR="${HADOOP_HOME}/etc/hadoop" \
     HADOOP_HEALTHCHECK_INTERVAL_IN_SECS="2"
 
 ADD entrypoint.sh ${HDUSER_HOME}/hadoop_entrypoint.sh
-ADD config_loader.sh ${HDUSER_HOME}/hadoop_config_loader.sh
 
 RUN apt-get update && \
     apt-get -y install --no-install-recommends procps \
@@ -35,4 +34,4 @@ RUN apt-get update && \
     addgroup hadoop && adduser --disabled-password --gecos "" --ingroup hadoop hduser && \
     mkdir -p ${HADOOP_HOME} ${HADOOP_TMP_DIR} && \
     chown -R hduser:hadoop ${HDUSER_HOME} && \
-    chmod +x ${HDUSER_HOME}/hadoop_entrypoint.sh ${HDUSER_HOME}/hadoop_config_loader.sh
+    chmod +x ${HDUSER_HOME}/hadoop_entrypoint.sh
