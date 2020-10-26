@@ -103,7 +103,7 @@ function configure_hdfs() {
     fi
 
     if [[ "${HADOOP_BOOTSTRAP_STANDBY_NAMENODE:=false}" == "true" ]]; then
-        hdfs namenode -bootstrapStanby
+        hdfs namenode -bootstrapStandby
     fi
 }
 
