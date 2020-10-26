@@ -1590,6 +1590,8 @@ if [[ "${YARN_RESOURCEMANAGER_HA_ENABLED}" == "true" ]]; then
     done
 fi
 
+# ====================================================================================================================
+
 # Load HDFS HA configurations
 if [[ "${DFS_NAMESERVICES:=NULL}" != "NULL" ]]; then
     IFS="," read -r -a DFS_NAMESERVICE_IDS <<< ${DFS_NAMESERVICES}

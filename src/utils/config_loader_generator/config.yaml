@@ -43,6 +43,8 @@ config_loader_sh_template: |
       done
   fi
 
+  # ====================================================================================================================
+
   # Load HDFS HA configurations
   if [[ "${{DFS_NAMESERVICES:=NULL}}" != "NULL" ]]; then
       IFS="," read -r -a DFS_NAMESERVICE_IDS <<< ${{DFS_NAMESERVICES}}

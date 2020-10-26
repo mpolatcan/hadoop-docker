@@ -1,0 +1,56 @@
+version: "3"
+services:
+  nn1:
+    image: mpolatcan/hadoop:3.3.0-java8
+    container_name: nn1
+    hostname: nn1
+    environment:
+      HADOOP_DAEMONS: |
+        namenode
+    env_file:
+      - config.env
+    ports:
+      - 9870
+
+  nn2:
+    image: mpolatcan/hadoop:3.3.0-java8
+    container_name: nn2
+    hostname: nn2
+    environment:
+      HADOOP_DAEMONS: |
+        namenode
+      HADOOP_FORMAT_NAMENODE: "false"
+      HADOOP_BOOTSTRAP_STANDBY_NAMENODE: "true"
+    env_file:
+      - config.env
+    ports:
+      - 9870
+
+  jn1:
+    image: mpolatcan/hadoop:3.3.0-java8
+    container_name: jn1
+    hostname: jn1
+    environment:
+      HADOOP_DAEMONS: |
+        journalnode
+    env_file:
+      - config.env
+
+  jn2:
+    image: mpolatcan/hadoop:3.3.0-java8
+    container_name: jn2
+    hostname: jn2
+    environment:
+      HADOOP_DAEMONS: |
+        journalnode
+    env_file:
+      - config.env
+
+  datanode:
+    image: mpolatcan/hadoop:3.3.0-java8
+    environment:
+      HADOOP_DAEMONS: |
+        datanode
+      DFS_NAMENODE_HOSTNAME: "nn1"
+    env_file:
+      - config.env

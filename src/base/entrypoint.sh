@@ -91,6 +91,22 @@ function health_checker() {
     __log__ "Hadoop $2 is ready (for: \"$1\", host: \"$host\", port: \"$port\") ✔"
 }
 
+function configure_hdfs() {
+    # Formatting HDFS
+    if [[ ! -d "${HADOOP_TMP_DIR}/dfs" ]]; then
+        if [[ "${HADOOP_FORMAT_NAMENODE:=true}" == "true" ]]; then
+            __log__ "Formatting HDFS on namenode..."
+            hdfs namenode -format
+        fi
+    else
+        __log__ "HDFS already formatted!"
+    fi
+
+    if [[ "${HADOOP_BOOTSTRAP_STANDBY_NAMENODE:=false}" == "true" ]]; then
+        hdfs namenode -bootstrapStanby
+    fi
+}
+
 function start_daemons() {
     IFS='.' read -r -a HADOOP_VERSION_TOKENS <<< "$HADOOP_VERSION"
 
@@ -98,13 +114,7 @@ function start_daemons() {
 
     for daemon in ${HADOOP_DAEMONS[@]}; do
         if [[ "$daemon" == "namenode" ]]; then
-            # Formatting HDFS
-            if [[ ! -d "${HADOOP_TMP_DIR}/dfs" ]]; then
-                __log__ "Formatting HDFS on namenode..."
-                hdfs namenode -format
-            else
-                __log__ "HDFS already formatted!"
-            fi
+            configure_hdfs
         fi
 
         if [[ "${healthchecks[$daemon]}" != "" ]]; then
