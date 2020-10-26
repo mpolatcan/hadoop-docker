@@ -16,7 +16,7 @@ class HadoopConfigLoaderGenerator:
     def __init__(self, hadoop_version: str):
         self.__hadoop_version = hadoop_version
         self.__hadop_major_version, self.__hadoop_minor_version, _ = tuple(self.__hadoop_version.split("."))
-        self.__config_loader_config = yaml.safe_load(open(f"{__file__}/config.yaml", "r"))
+        self.__config_loader_config = yaml.safe_load(open(f"config.yaml", "r"))
 
     def __get_configs_and_parse(self):
         core_site_config_raw = requests.get(
