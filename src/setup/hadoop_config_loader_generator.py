@@ -57,7 +57,11 @@ class HadoopConfigLoaderGenerator:
         load_fn_calls = []
 
         for soup, config_filename in self.__get_configs_and_parse():
-            _load_fn_calls = [self.CONFIGURATION_TAG_WRITE_FMT.format(filename=config_filename)]
+            _load_fn_calls = [
+                "# ==================================== {filename} "
+                "CONFIGURATIONS ==================================".format(filename=config_filename),
+                self.CONFIGURATION_TAG_WRITE_FMT.format(filename=config_filename)
+            ]
 
             for property in soup.find_all("property"):
                 name = property.find("name").get_text().strip().replace("\n", "").replace(" ", "")
@@ -84,11 +88,6 @@ class HadoopConfigLoaderGenerator:
                                                                     config_filename=config_filename)
                     )
 
-            _load_fn_calls.append(load_fn_calls.append("# ==================================== {filename} "
-                                                       "CONFIGURATIONS ==================================".format(
-                                                            filename=config_filename
-                                                      )
-            ))
             load_fn_calls.extend(_load_fn_calls)
 
         open("config_loader.sh", "w").write(
