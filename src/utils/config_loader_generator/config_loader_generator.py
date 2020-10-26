@@ -16,7 +16,7 @@ class Constants:
     CONFIG_LOADER_SUBST_STATEMENT_FMT = "load_config \"{property}\" \"{substitution}\" \"{config_filename}\""
     CONFIG_LOADER_OPT_SUBST_STATEMENT_FMT = "load_config_with_opt \"{property}\" \"{check}\" \"{substitution_not_null}\" \"{substitution_null}\" \"{config_filename}\""
     CONFIGURATION_TAG_WRITE_FMT = "printf \"<configuration>\\n\" > \"${{HADOOP_CONF_DIR}}/{filename}\""
-    CONFIGURATION_TAG_APPEND_FMT = "printf \"</configuration>\" >> \"${{HADOOP_CONF_DIR}}/{filename}\"\n"
+    CONFIGURATION_TAG_APPEND_FMT = "printf \"</configuration>\" >> \"${{HADOOP_CONF_DIR}}/{filename}\""
 
 
 class ConfigLoaderGenerator:
@@ -65,12 +65,12 @@ class ConfigLoaderGenerator:
             _load_fn_calls = self.__get_infos(yaml.safe_load(open(config_file_path, "r")), config_filename)
             _load_fn_calls.insert(0, Constants.CONFIGURATION_TAG_WRITE_FMT.format(filename=config_filename))
             load_fn_calls.extend(_load_fn_calls)
-            load_fn_calls.append("# ======================================================================")
+            load_fn_calls.append("# ==================================== {filename} CONFIGURATIONS ==================================".format(filename=config_filename))
 
         open("{loc}/config_loader.sh".format(loc=self.__config[Constants.KEY_OUTPUT_DIR]), "w").write(
             self.__config[Constants.KEY_CONFIG_LOADER_SH_TEMPLATE].format(
-                begin_load_fn_calls="\n".join(load_fn_calls),
-                end_load_fn_calls="".join([
+                begin_load_fn_calls="\n\t\t".join(load_fn_calls),
+                end_load_fn_calls="\n\t\t".join([
                     Constants.CONFIGURATION_TAG_APPEND_FMT.format(filename=config_info[Constants.KEY_FILENAME])
                     for config_info in self.__config[Constants.KEY_CONFIG_FILES]
                 ])

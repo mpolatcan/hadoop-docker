@@ -17,64 +17,75 @@ config_loader_sh_template: |
       fi
   }}
 
-  {begin_load_fn_calls}
+  function load_core_configs() {{
+      {begin_load_fn_calls}
+  }}
 
-  # Load ResourceManager (YARN) HA configurations
-  if [[ "${{YARN_RESOURCEMANAGER_HA_ENABLED}}" == "true" ]]; then
-      IFS="," read -r -a RESOURCEMANAGER_IDS <<< ${{YARN_RESOURCEMANAGER_HA_RM_IDS}}
+  function load_yarn_ha_configs() {{
+      if [[ "${{YARN_RESOURCEMANAGER_HA_ENABLED}}" == "true" ]]; then
+          IFS="," read -r -a RESOURCEMANAGER_IDS <<< ${{YARN_RESOURCEMANAGER_HA_RM_IDS}}
 
-      for RESOURCEMANAGER_ID in ${{RESOURCEMANAGER_IDS[@]}}; do
-          ENV_VAR_SUFFIX=$(echo $RESOURCEMANAGER_ID | tr '[a-z]' '[A-Z]')
-          ENV_VAR_YARN_RESOURCEMANAGER_HOSTNAME="YARN_RESOURCEMANAGER_HOSTNAME_${{ENV_VAR_SUFFIX}}"
-          ENV_VAR_YARN_RESOURCEMANAGER_ADDRESS="YARN_RESOURCEMANAGER_ADDRESS_${{ENV_VAR_SUFFIX}}"
-          ENV_VAR_YARN_RESOURCEMANAGER_SCHEDULER_ADDRESS="YARN_RESOURCEMANAGER_SCHEDULER_ADDRESS_${{ENV_VAR_SUFFIX}}"
-          ENV_VAR_YARN_RESOURCEMANAGER_RESOURCE_TRACKER_ADDRESS="YARN_RESOURCEMANAGER_RESOURCE_TRACKER_ADDRESS_${{ENV_VAR_SUFFIX}}"
-          ENV_VAR_YARN_RESOURCEMANAGER_ADMIN_ADDRESS="YARN_RESOURCEMANAGER_ADMIN_ADDRESS_${{ENV_VAR_SUFFIX}}"
-          ENV_VAR_YARN_RESOURCEMANAGER_WEBAPP_ADDRESS="YARN_RESOURCEMANAGER_WEBAPP_ADDRESS_${{ENV_VAR_SUFFIX}}"
-          ENV_VAR_YARN_RESOURCEMANAGER_WEBAPP_HTTPS_ADDRESS="YARN_RESOURCEMANAGER_WEBAPP_HTTPS_ADDRESS_${{ENV_VAR_SUFFIX}}"
+          for RESOURCEMANAGER_ID in ${{RESOURCEMANAGER_IDS[@]}}; do
+              ENV_VAR_SUFFIX=$(echo $RESOURCEMANAGER_ID | tr '[a-z]' '[A-Z]')
+              ENV_VAR_YARN_RESOURCEMANAGER_HOSTNAME="YARN_RESOURCEMANAGER_HOSTNAME_${{ENV_VAR_SUFFIX}}"
+              ENV_VAR_YARN_RESOURCEMANAGER_ADDRESS="YARN_RESOURCEMANAGER_ADDRESS_${{ENV_VAR_SUFFIX}}"
+              ENV_VAR_YARN_RESOURCEMANAGER_SCHEDULER_ADDRESS="YARN_RESOURCEMANAGER_SCHEDULER_ADDRESS_${{ENV_VAR_SUFFIX}}"
+              ENV_VAR_YARN_RESOURCEMANAGER_RESOURCE_TRACKER_ADDRESS="YARN_RESOURCEMANAGER_RESOURCE_TRACKER_ADDRESS_${{ENV_VAR_SUFFIX}}"
+              ENV_VAR_YARN_RESOURCEMANAGER_ADMIN_ADDRESS="YARN_RESOURCEMANAGER_ADMIN_ADDRESS_${{ENV_VAR_SUFFIX}}"
+              ENV_VAR_YARN_RESOURCEMANAGER_WEBAPP_ADDRESS="YARN_RESOURCEMANAGER_WEBAPP_ADDRESS_${{ENV_VAR_SUFFIX}}"
+              ENV_VAR_YARN_RESOURCEMANAGER_WEBAPP_HTTPS_ADDRESS="YARN_RESOURCEMANAGER_WEBAPP_HTTPS_ADDRESS_${{ENV_VAR_SUFFIX}}"
 
-          load_config "yarn.resourcemanager.hostname.$RESOURCEMANAGER_ID" "${{!ENV_VAR_YARN_RESOURCEMANAGER_HOSTNAME:=NULL}}" "yarn-site.xml"
-          load_config "yarn.resourcemanager.address.$RESOURCEMANAGER_ID" "${{!ENV_VAR_YARN_RESOURCEMANAGER_ADDRESS:=NULL}}" "yarn-site.xml"
-          load_config "yarn.resourcemanager.scheduler.address.$RESOURCEMANAGER_ID" "${{!ENV_VAR_YARN_RESOURCEMANAGER_SCHEDULER_ADDRESS:=NULL}}" "yarn-site.xml"
-          load_config "yarn.resourcemanager.resource-tracker.address.$RESOURCEMANAGER_ID" "${{!ENV_VAR_YARN_RESOURCEMANAGER_RESOURCE_TRACKER_ADDRESS:=NULL}}" "yarn-site.xml"
-          load_config "yarn.resourcemanager.admin.address.$RESOURCEMANAGER_ID" "${{!ENV_VAR_YARN_RESOURCEMANAGER_ADMIN_ADDRESS:=NULL}}" "yarn-site.xml"
-          load_config "yarn.resourcemanager.webapp.address.$RESOURCEMANAGER_ID" "${{!ENV_VAR_YARN_RESOURCEMANAGER_WEBAPP_ADDRESS:=NULL}}" "yarn-site.xml"
-          load_config "yarn.resourcemanager.webapp.https.address.$RESOURCEMANAGER_ID" "${{!ENV_VAR_YARN_RESOURCEMANAGER_WEBAPP_HTTPS_ADDRESS:=NULL}}" "yarn-site.xml"
-      done
-  fi
+              load_config "yarn.resourcemanager.hostname.$RESOURCEMANAGER_ID" "${{!ENV_VAR_YARN_RESOURCEMANAGER_HOSTNAME:=NULL}}" "yarn-site.xml"
+              load_config "yarn.resourcemanager.address.$RESOURCEMANAGER_ID" "${{!ENV_VAR_YARN_RESOURCEMANAGER_ADDRESS:=NULL}}" "yarn-site.xml"
+              load_config "yarn.resourcemanager.scheduler.address.$RESOURCEMANAGER_ID" "${{!ENV_VAR_YARN_RESOURCEMANAGER_SCHEDULER_ADDRESS:=NULL}}" "yarn-site.xml"
+              load_config "yarn.resourcemanager.resource-tracker.address.$RESOURCEMANAGER_ID" "${{!ENV_VAR_YARN_RESOURCEMANAGER_RESOURCE_TRACKER_ADDRESS:=NULL}}" "yarn-site.xml"
+              load_config "yarn.resourcemanager.admin.address.$RESOURCEMANAGER_ID" "${{!ENV_VAR_YARN_RESOURCEMANAGER_ADMIN_ADDRESS:=NULL}}" "yarn-site.xml"
+              load_config "yarn.resourcemanager.webapp.address.$RESOURCEMANAGER_ID" "${{!ENV_VAR_YARN_RESOURCEMANAGER_WEBAPP_ADDRESS:=NULL}}" "yarn-site.xml"
+              load_config "yarn.resourcemanager.webapp.https.address.$RESOURCEMANAGER_ID" "${{!ENV_VAR_YARN_RESOURCEMANAGER_WEBAPP_HTTPS_ADDRESS:=NULL}}" "yarn-site.xml"
+          done
+      fi
+  }}
 
   # ====================================================================================================================
 
-  # Load HDFS HA configurations
-  if [[ "${{DFS_NAMESERVICES:=NULL}}" != "NULL" ]]; then
-      IFS="," read -r -a DFS_NAMESERVICE_IDS <<< ${{DFS_NAMESERVICES}}
+  function load_hdfs_ha_configs() {{
+      if [[ "${{DFS_NAMESERVICES:=NULL}}" != "NULL" ]]; then
+          IFS="," read -r -a DFS_NAMESERVICE_IDS <<< ${{DFS_NAMESERVICES}}
 
-      for DFS_NAMESERVICE_ID in ${{DFS_NAMESERVICES[@]}}; do
-          ENV_VAR_SUFFIX_NAMESERVICE_ID=$(echo $DFS_NAMESERVICE_ID | tr '[a-z]' '[A-Z]')
-          ENV_VAR_DFS_HA_NAMENODES="DFS_HA_NAMENODES_${{ENV_VAR_SUFFIX_NAMESERVICE_ID}}"
-          ENV_VAR_DFS_CLIENT_FAILOVER_PROXY_PROVIDER="DFS_CLIENT_FAILOVER_PROXY_PROVIDER_${{ENV_VAR_SUFFIX_NAMESERVICE_ID}}"
+          for DFS_NAMESERVICE_ID in ${{DFS_NAMESERVICE_IDS[@]}}; do
+              ENV_VAR_SUFFIX_NAMESERVICE_ID=$(echo $DFS_NAMESERVICE_ID | tr '[a-z]' '[A-Z]')
+              ENV_VAR_DFS_HA_NAMENODES="DFS_HA_NAMENODES_${{ENV_VAR_SUFFIX_NAMESERVICE_ID}}"
+              ENV_VAR_DFS_CLIENT_FAILOVER_PROXY_PROVIDER="DFS_CLIENT_FAILOVER_PROXY_PROVIDER_${{ENV_VAR_SUFFIX_NAMESERVICE_ID}}"
 
-          load_config "dfs.ha.namenodes.$DFS_NAMESERVICE_ID" "${{!ENV_VAR_DFS_HA_NAMENODES:=NULL}}" "hdfs-site.xml"
-          load_config "dfs.client.failover.proxy.provider.$DFS_NAMESERVICE_ID" "${{!ENV_VAR_DFS_CLIENT_FAILOVER_PROXY_PROVIDER:=org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider}}" "hdfs-site.xml"
+              load_config "dfs.ha.namenodes.$DFS_NAMESERVICE_ID" "${{!ENV_VAR_DFS_HA_NAMENODES:=NULL}}" "hdfs-site.xml"
+              load_config "dfs.client.failover.proxy.provider.$DFS_NAMESERVICE_ID" "${{!ENV_VAR_DFS_CLIENT_FAILOVER_PROXY_PROVIDER:=org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider}}" "hdfs-site.xml"
 
-          # Load HDFS HA Namenode configurations
-          IFS="," read -r -a DFS_HA_NAMENODE_IDS <<< ${{!ENV_VAR_DFS_HA_NAMENODES:=NULL}}
+              # Load HDFS HA Namenode configurations
+              IFS="," read -r -a DFS_HA_NAMENODE_IDS <<< ${{!ENV_VAR_DFS_HA_NAMENODES:=NULL}}
 
-          for DFS_HA_NAMENODE_ID in ${{DFS_HA_NAMENODE_IDS[@]}}; do
-              ENV_VAR_SUFFIX_DFS_HA_NAMENODE_ID=$(echo $DFS_HA_NAMENODE_ID | tr '[a-z]' '[A-Z]')
-              ENV_VAR_DFS_NAMENODE_RPC_ADDRESS="DFS_NAMENODE_RPC_ADDRESS_${{ENV_VAR_SUFFIX_NAMESERVICE_ID}}_${{ENV_VAR_SUFFIX_DFS_HA_NAMENODE_ID}}"
-              ENV_VAR_DFS_NAMENODE_HTTP_ADDRESS="DFS_NAMENODE_HTTP_ADDRESS_${{ENV_VAR_SUFFIX_NAMESERVICE_ID}}_${{ENV_VAR_SUFFIX_DFS_HA_NAMENODE_ID}}"
+              for DFS_HA_NAMENODE_ID in ${{DFS_HA_NAMENODE_IDS[@]}}; do
+                  ENV_VAR_SUFFIX_DFS_HA_NAMENODE_ID=$(echo $DFS_HA_NAMENODE_ID | tr '[a-z]' '[A-Z]')
+                  ENV_VAR_DFS_NAMENODE_RPC_ADDRESS="DFS_NAMENODE_RPC_ADDRESS_${{ENV_VAR_SUFFIX_NAMESERVICE_ID}}_${{ENV_VAR_SUFFIX_DFS_HA_NAMENODE_ID}}"
+                  ENV_VAR_DFS_NAMENODE_HTTP_ADDRESS="DFS_NAMENODE_HTTP_ADDRESS_${{ENV_VAR_SUFFIX_NAMESERVICE_ID}}_${{ENV_VAR_SUFFIX_DFS_HA_NAMENODE_ID}}"
 
-              load_config "dfs.namenode.rpc-address.$DFS_NAMESERVICE_ID.$DFS_HA_NAMENODE_ID" "${{!ENV_VAR_DFS_NAMENODE_RPC_ADDRESS:=NULL}}" "hdfs-site.xml"
-              load_config "dfs.namenode.http-address.$DFS_NAMESERVICE_ID.$DFS_HA_NAMENODE_ID" "${{!ENV_VAR_DFS_NAMENODE_HTTP_ADDRESS:=NULL}}" "hdfs-site.xml"
+                  load_config "dfs.namenode.rpc-address.$DFS_NAMESERVICE_ID.$DFS_HA_NAMENODE_ID" "${{!ENV_VAR_DFS_NAMENODE_RPC_ADDRESS:=NULL}}" "hdfs-site.xml"
+                  load_config "dfs.namenode.http-address.$DFS_NAMESERVICE_ID.$DFS_HA_NAMENODE_ID" "${{!ENV_VAR_DFS_NAMENODE_HTTP_ADDRESS:=NULL}}" "hdfs-site.xml"
+              done
           done
-      done
-  fi
+      fi
+  }}
+
+  function end_load_configs() {{
+      {end_load_fn_calls}
+  }}
 
   # Add additional JARs to Hadoop classpath like AWS, S3 and Hadoop Streaming
   echo "export HADOOP_CLASSPATH=\$HADOOP_CLASSPATH:\$HADOOP_HOME/share/hadoop/tools/lib/*" >> "${{HADOOP_HOME}}/etc/hadoop/hadoop-env.sh"
 
-  {end_load_fn_calls}
+  load_core_configs
+  load_yarn_ha_configs
+  load_hdfs_ha_configs
+  end_load_configs
 
 config_files:
   - path: hadoop_configs/hdfs-site.yaml
