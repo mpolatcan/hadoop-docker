@@ -456,7 +456,6 @@ dfs:
   nameservice.id: "NULL"
   internal.nameservices: "NULL"
   ha:
-    namenodes.EXAMPLENAMESERVICE: "NULL"
     namenode.id: "NULL"
     log-roll.period: "NULL"
     tail-edits:
@@ -657,6 +656,68 @@ dfs:
   stream-buffer-size: "4096"
   bytes-per-checksum: "512"
   client-write-packet-size: "65536"
+  federation.router:
+    default:
+      nameserviceId: "NULL"
+      nameservice.enable: "true"
+    rpc.enable: "true"
+    rpc-address: "0.0.0.0:8888"
+    rpc-bind-host: "NULL"
+    handler:
+      count: "10"
+      queue.size: "100"
+    reader:
+      count: "1"
+      queue.size: "100"
+    connection:
+      creator.queue-size: "100"
+      pool-size: "1"
+      clean.ms: "10000"
+      pool.clean.ms: "60000"
+    metrics:
+      enable: "true"
+      class: "org.apache.hadoop.hdfs.server.federation.metrics.FederationRPCPerformanceMonitor"
+    admin:
+      enable: "true"
+      handler.count: "1"
+    admin-address: "0.0.0.0:8111"
+    admin-bind-host: "NULL"
+    http-address: "0.0.0.0:50071"
+    http-bind-host: "NULL"
+    https-address: "0.0.0.0:50072"
+    https-bind-host: "NULL"
+    http.enable: "true"
+    metrics.enable: "true"
+    file.resolver.client.class: "org.apache.hadoop.hdfs.server.federation.resolver.MountTableResolver"
+    namenode.resolver.client.class: "org.apache.hadoop.hdfs.server.federation.resolver.MembershipNamenodeResolver"
+    store:
+      enable: "true"
+      serializer: "org.apache.hadoop.hdfs.server.federation.store.driver.impl.StateStoreSerializerPBImpl"
+      driver.class: "org.apache.hadoop.hdfs.server.federation.store.driver.impl.StateStoreZooKeeperImpl"
+      connection.test: "60000"
+      membership.expiration: "300000"
+      router.expiration: "5m"
+    cache.ttl: "1m"
+    heartbeat:
+      enable: "true"
+      interval: "5000"
+    heartbeat-state.interval: "5s"
+    safemode:
+      enable: "true"
+      extension: "30s"
+      expiration: "3m"
+    monitor:
+      namenode: "NULL"
+      localnamenode.enable: "true"
+    mount-table:
+      max-cache-size: "10000"
+      cache.enable: "false"
+    quota.enable: "false"
+    quota-cache.update.interval: "60s"
+    client:
+      thread-size: "32"
+      retry.max.attemps: "3"
+      reject.overload: "false"
 nfs:
   server.port: "2049"
   mountd.port: "4242"
