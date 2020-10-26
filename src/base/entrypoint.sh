@@ -107,6 +107,12 @@ function configure_hdfs() {
     fi
 }
 
+function configure_zkfc() {
+    if [[ "${HADDOP_INITIALIZE_HA_STATE_IN_ZK:=false}" == "true" ]]; then
+        hdfs zkfc -formatZK
+    fi
+}
+
 function start_daemons() {
     IFS='.' read -r -a HADOOP_VERSION_TOKENS <<< "$HADOOP_VERSION"
 
@@ -115,6 +121,8 @@ function start_daemons() {
     for daemon in ${HADOOP_DAEMONS[@]}; do
         if [[ "$daemon" == "namenode" ]]; then
             configure_hdfs
+        elif [[ "$daemon" == "zkfc" ]]; then
+            configure_zkfc
         fi
 
         if [[ "${healthchecks[$daemon]}" != "" ]]; then
