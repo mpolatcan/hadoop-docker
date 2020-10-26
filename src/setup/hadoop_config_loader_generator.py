@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 
 class HadoopConfigLoaderGenerator:
     KEY_CONFIG_LOADER_SH_TEMPLATE = "config_loader_sh_template"
+    KEY_OVERRIDDEN_CONFIGS = "overridden_configs"
     HADOOP_DOC_BASE_URL = "https://hadoop.apache.org/docs/r"
     CONFIG_LOADER_STD_STATEMENT_FMT = "load_config \"{property}\" \"${{{env_var_name}:={env_var_value}}}\" \"{config_filename}\""
     CONFIGURATION_TAG_WRITE_FMT = "printf \"<configuration>\\n\" > \"${{HADOOP_CONF_DIR}}/{filename}\""
@@ -69,13 +70,14 @@ class HadoopConfigLoaderGenerator:
 
                 if raw_value:
                     value = raw_value.get_text().strip().replace("\n", "") \
-                                                        .replace(" ", "") \
                                                         .replace("\"", "\\\"") \
                                                         .replace("}", "\\}") \
                                                         .replace("$", "\\$")
 
                     if value == "":
                         value = "NULL"
+
+                    value = self.__config_loader_config[self.KEY_OVERRIDDEN_CONFIGS].get(name, value)
                 else:
                     value = "NULL"
 

@@ -86,3 +86,7 @@ config_loader_sh_template: |
   load_yarn_ha_configs
   load_hdfs_ha_configs
   end_load_configs
+
+overridden_configs:
+  hadoop.security.group.mapping.ldap.search.filter.user: "NULL"
+  hadoop.security.group.mapping.ldap.search.filter.group: "NULL"
