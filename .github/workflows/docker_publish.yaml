@@ -41,7 +41,7 @@ jobs:
           pip install pyyaml requests beautifulsoup4
       - run: |
           cd src/setup
-          python hadoop_config_loader_generator ${{matrix.hadoop_version}}
+          python hadoop_config_loader_generator.py ${{matrix.hadoop_version}}
       - run: echo ${{secrets.DOCKER_PASSWORD}} | docker login -u ${{secrets.DOCKER_USERNAME}} --password-stdin
       - run: docker build -q
           -t ${{secrets.DOCKER_USERNAME}}/${{matrix.repository}}:${{matrix.hadoop_version}}-java${{matrix.java_version}}
