@@ -84,6 +84,5 @@ services:
     environment:
       HADOOP_DAEMONS: |
         datanode
-      DFS_NAMENODE_HOSTNAME: "nn1"
     env_file:
       - config.env
