@@ -53,6 +53,11 @@ hadoop_daemons[historyserver]=mapred
 hadoop_daemons_backport[historyserver]=mr-jobhistory-daemon.sh
 # -------------------------------------------------------------
 
+# $1: message
+function __log__() {
+    echo "[$(date '+%d/%m/%Y %H:%M:%S')] -> $1"
+}
+
 function configure_hdfs() {
     # Formatting HDFS
     if [[ ! -d "${HADOOP_TMP_DIR}/dfs" ]]; then
