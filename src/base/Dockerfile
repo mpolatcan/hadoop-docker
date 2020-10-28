@@ -11,9 +11,7 @@ ENV HADOOP_CONF_DIR="${HADOOP_HOME}/etc/hadoop" \
     HADOOP_TMP_DIR="${HDUSER_HOME}/app/hadoop/tmp" \
     PATH=$PATH:${HADOOP_HOME}/bin:${HADOOP_HOME}/sbin \
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HADOOP_HOME}/lib/native/ \
-    HADOOP_DAEMONS="NULL" \
-    HADOOP_WEBAPPS_HOSTNAME="0.0.0.0" \
-    HADOOP_HEALTHCHECK_INTERVAL_IN_SECS="2"
+    HADOOP_DAEMONS="NULL"
 
 ADD entrypoint.sh ${HDUSER_HOME}/hadoop_entrypoint.sh
 
@@ -29,7 +27,8 @@ RUN apt-get update && \
                                              telnet \
                                              dnsutils \
                                              netcat \
-                                             openssh-server && \
+                                             net-tools \
+                                             python && \
     rm -rf /var/lib/apt/lists/* && \
     addgroup hadoop && adduser --disabled-password --gecos "" --ingroup hadoop hduser && \
     mkdir -p ${HADOOP_HOME} ${HADOOP_TMP_DIR} && \

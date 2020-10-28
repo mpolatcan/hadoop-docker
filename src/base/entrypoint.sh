@@ -1,9 +1,6 @@
 #!/bin/bash
 declare -A hadoop_daemons
 declare -A hadoop_daemons_backport
-declare -A healthchecks
-declare -A healthcheck_hosts
-declare -A healthcheck_ports
 
 # ------------------------- DAEMONS -----------------------
 # ------- YARN Daemons ---------
