@@ -7,6 +7,7 @@ MAINTAINER Mutlu Polatcan <mutlupolatcan@gmail.com>
 ARG HADOOP_VERSION="3.3.0"
 ARG HADOOP_ZIP_FOLDER_NAME="hadoop-${HADOOP_VERSION}"
 ARG HADOOP_DOWNLOAD_LINK="http://downloads.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/${HADOOP_ZIP_FOLDER_NAME}.tar.gz"
+ARG TEZ_VERSION="0.9.2"
 ARG TEZ_ZIP_FOLDER_NAME="apache-tez-${TEZ_VERSION}-bin"
 ARG TEZ_DOWNLOAD_LINK="https://downloads.apache.org/tez/${TEZ_VERSION}/${TEZ_ZIP_FOLDER_NAME}.tar.gz"
 ARG AWS_SDK_JAVA_VERSION="1.11.881"
