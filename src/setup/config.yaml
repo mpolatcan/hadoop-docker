@@ -91,6 +91,9 @@ overridden_configs:
   hadoop.security.group.mapping.ldap.search.filter.user: "NULL"
   hadoop.security.group.mapping.ldap.search.filter.group: "NULL"
   dfs.ha.fencing.methods: "shell(/bin/true)"
+  mapreduce.framework.name: "yarn"
+  yarn.log-aggregation.enable: "true"
+  yarn.nodemanager.aux-services: "mapreduce_shuffle"
 
 deprecated_configs:
   - fs.default.name
