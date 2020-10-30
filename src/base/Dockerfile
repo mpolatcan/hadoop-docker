@@ -11,6 +11,7 @@ ENV HADOOP_CONF_DIR="${HADOOP_HOME}/etc/hadoop" \
     HADOOP_TMP_DIR="${HDUSER_HOME}/app/hadoop/tmp" \
     PATH=$PATH:${HADOOP_HOME}/bin:${HADOOP_HOME}/sbin \
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HADOOP_HOME}/lib/native/ \
+    HADOOP_CLASSPATH=$HADOOP_CLASSPATH:${HADOOP_HOME}/share/hadoop/tools/lib/* \
     HADOOP_DAEMONS="NULL"
 
 ADD entrypoint.sh ${HDUSER_HOME}/hadoop_entrypoint.sh

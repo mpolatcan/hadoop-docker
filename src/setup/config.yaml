@@ -79,9 +79,6 @@ config_loader_sh_template: |
       {end_load_fn_calls}
   }}
 
-  # Add additional JARs to Hadoop classpath like AWS, S3 and Hadoop Streaming
-  echo "export HADOOP_CLASSPATH=\$HADOOP_CLASSPATH:\$HADOOP_HOME/share/hadoop/tools/lib/*" >> "${{HADOOP_HOME}}/etc/hadoop/hadoop-env.sh"
-
   load_core_configs
   load_yarn_ha_configs
   load_hdfs_ha_configs
