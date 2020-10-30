@@ -5,7 +5,7 @@ services:
     container_name: master
     hostname: master
     environment:
-      HADOOP_ DAEMONS: |
+      HADOOP_DAEMONS: |
         namenode
         secondarynamenode
         resourcemanager
