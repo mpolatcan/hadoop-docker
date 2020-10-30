@@ -12,8 +12,8 @@ class HadoopConfigLoaderGenerator:
     KEY_DEPRECATED_CONFIGS = "deprecated_configs"
     KEY_ADDITIONAL_CONFIGS = "additional_configs"
     CONFIG_LOADER_STD_STATEMENT_FMT = "load_config \"{property}\" \"${{{env_var_name}:={env_var_value}}}\" \"{config_filename}\""
-    CONFIGURATION_TAG_WRITE_FMT = "printf \"<configuration>\\n\" > \"${{HADOOP_CONF_DIR}}/{filename}\""
-    CONFIGURATION_TAG_APPEND_FMT = "printf \"</configuration>\" >> \"${{HADOOP_CONF_DIR}}/{filename}\""
+    CONFIGURATION_TAG_WRITE_FMT = "printf \"<configuration>\\n\" > \"{config_filename}\""
+    CONFIGURATION_TAG_APPEND_FMT = "printf \"</configuration>\" >> \"{config_filename}\""
 
     def __init__(self, hadoop_version: str, tez_version):
         self.__hadoop_version = hadoop_version
@@ -98,12 +98,12 @@ class HadoopConfigLoaderGenerator:
 
     def __get_formatted_config(self, property, value, config_filename):
         # If value overridden take it from config, else set given value
-        value = self.__config_loader_config[self.KEY_OVERRIDDEN_CONFIGS].get(property, value)
+        _value = self.__config_loader_config[self.KEY_OVERRIDDEN_CONFIGS].get(property, value)
 
         return self.CONFIG_LOADER_STD_STATEMENT_FMT.format(property=property,
                                                            env_var_name=property.upper().replace(".", "_")
                                                                                         .replace("-", "_"),
-                                                           env_var_value=value,
+                                                           env_var_value=_value,
                                                            config_filename=config_filename)
 
     def generate(self):
@@ -141,7 +141,11 @@ class HadoopConfigLoaderGenerator:
                 begin_load_fn_calls="\n\t\t".join(load_fn_calls),
                 end_load_fn_calls="\n\t\t".join([
                     self.CONFIGURATION_TAG_APPEND_FMT.format(filename=config_filename)
-                    for config_filename in ["core-site.xml", "yarn-site.xml", "hdfs-site.xml", "mapred-site.xml", "tez-site.xml"]
+                    for config_filename in ["${HADDOP_CONF_DIR}/core-site.xml",
+                                            "${HADDOP_CONF_DIR/yarn-site.xml",
+                                            "${HADDOP_CONF_DIR}/hdfs-site.xml",
+                                            "${HADDOP_CONF_DIR}/mapred-site.xml",
+                                            "${TEZ_CONF_DIR}/tez-site.xml"]
                 ])
             )
         )
