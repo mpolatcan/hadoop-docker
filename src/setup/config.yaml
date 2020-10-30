@@ -97,7 +97,7 @@ overridden_configs:
 additional_configs:
   mapred-site.xml:
     mapreduce.map.env: "HADOOP_MAPRED_HOME=/home/hduser/hadoop"
-    mapreduce.reduce.env: "HADOOP_MAPRED_HOME/home/hduser/hadoop"
+    mapreduce.reduce.env: "HADOOP_MAPRED_HOME=/home/hduser/hadoop"
 
 deprecated_configs:
   - fs.default.name
