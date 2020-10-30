@@ -10,6 +10,7 @@ class HadoopConfigLoaderGenerator:
     KEY_CONFIG_LOADER_SH_TEMPLATE = "config_loader_sh_template"
     KEY_OVERRIDDEN_CONFIGS = "overridden_configs"
     KEY_DEPRECATED_CONFIGS = "deprecated_configs"
+    KEY_ADDITIONAL_CONFIGS = "additional_configs"
     HADOOP_DOC_BASE_URL = "https://hadoop.apache.org/docs/r"
     CONFIG_LOADER_STD_STATEMENT_FMT = "load_config \"{property}\" \"${{{env_var_name}:={env_var_value}}}\" \"{config_filename}\""
     CONFIGURATION_TAG_WRITE_FMT = "printf \"<configuration>\\n\" > \"${{HADOOP_CONF_DIR}}/{filename}\""
@@ -93,6 +94,18 @@ class HadoopConfigLoaderGenerator:
                         self.CONFIG_LOADER_STD_STATEMENT_FMT.format(property=name,
                                                                     env_var_name=name.upper().replace(".","_")
                                                                                              .replace("-", "_"),
+                                                                    env_var_value=value,
+                                                                    config_filename=config_filename)
+                    )
+
+            additional_configs = self.__config_loader_config[self.KEY_ADDITIONAL_CONFIGS].get(config_filename)
+
+            if additional_configs:
+                for property, value in additional_configs.items():
+                    _load_fn_calls.append(
+                        self.CONFIG_LOADER_STD_STATEMENT_FMT.format(property=property,
+                                                                    env_var_name=property.upper().replace(".", "_")
+                                                                                                 .replace("-", "_"),
                                                                     env_var_value=value,
                                                                     config_filename=config_filename)
                     )
