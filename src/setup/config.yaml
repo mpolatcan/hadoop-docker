@@ -4,16 +4,7 @@ config_loader_sh_template: |
   function load_config() {{
       if [[ "$2" != "NULL" ]]
           then
-              printf "\t<property>\n\t\t<name>$1</name>\n\t\t<value>$2</value>\n\t</property>\n" >> "${{HADOOP_CONF_DIR}}/$3"
-      fi
-  }}
-
-  function load_config_with_opt() {{
-      if [[ "$2" != "NULL" ]]
-          then
-              printf "\t<property>\n\t\t<name>$1</name>\n\t\t<value>$3</value>\n\t</property>\n" >> "${{HADOOP_CONF_DIR}}/$5"
-      else
-          printf "\t<property>\n\t\t<name>$1</name>\n\t\t<value>$4</value>\n\t</property>\n" >> "${{HADOOP_CONF_DIR}}/$5"
+              printf "\t<property>\n\t\t<name>$1</name>\n\t\t<value>$2</value>\n\t</property>\n" >> "$3"
       fi
   }}
 
@@ -93,11 +84,12 @@ overridden_configs:
   yarn.nodemanager.aux-services: "mapreduce_shuffle"
   hadoop.tmp.dir: "/home/hduser/app/hadoop/tmp"
   yarn.app.mapreduce.am.env: "HADOOP_MAPRED_HOME=/home/hduser/hadoop"
+  tez.lib.uris: "${fs.defaultFS}/tez/tez.tar.gz"
+
+deprecated_configs:
+  - fs.default.name
 
 additional_configs:
   mapred-site.xml:
     mapreduce.map.env: "HADOOP_MAPRED_HOME=/home/hduser/hadoop"
     mapreduce.reduce.env: "HADOOP_MAPRED_HOME=/home/hduser/hadoop"
-
-deprecated_configs:
-  - fs.default.name

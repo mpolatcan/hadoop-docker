@@ -5,18 +5,19 @@ FROM azul/zulu-openjdk:${JAVA_VERSION}
 MAINTAINER Mutlu Polatcan <mutlupolatcan@gmail.com>
 
 ENV HDUSER_HOME "/home/hduser"
-ENV HADOOP_HOME "${HDUSER_HOME}/hadoop"
+ENV HADOOP_HOME="${HDUSER_HOME}/hadoop" \
+    TEZ_HOME="${HDUSER_HOME}/tez"
 ENV HADOOP_CONF_DIR="${HADOOP_HOME}/etc/hadoop" \
     YARN_CONF_DIR="${HADOOP_HOME}/etc/hadoop" \
+    TEZ_CONF_DIR="${TEZ_HOME}/conf"
+ENV PATH=$PATH:${HADOOP_HOME}/bin:${HADOOP_HOME}/sbin \
+    HADOOP_CLASSPATH=$HADOOP_CLASSPATH:${HADOOP_HOME}/share/hadoop/tools/lib/*:${TEZ_CONF_DIR}:${TEZ_HOME}/*:${TEZ_HOME}/lib/* \
+    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HADOOP_HOME}/lib/native/ \
     HADOOP_TMP_DIR="${HDUSER_HOME}/app/hadoop/tmp" \
     HADOOP_HDFS_HOME="${HADOOP_HOME}" \
     HADOOP_MAPRED_HOME="${HADOOP_HOME}" \
     HADOOP_COMMON_HOME="${HADOOP_HOME}" \
-    HADOOP_YARN_HOME="${HADOOP_HOME}" \
-    PATH=$PATH:${HADOOP_HOME}/bin:${HADOOP_HOME}/sbin \
-    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HADOOP_HOME}/lib/native/ \
-    HADOOP_CLASSPATH=$HADOOP_CLASSPATH:${HADOOP_HOME}/share/hadoop/tools/lib/* \
-    HADOOP_DAEMONS="NULL"
+    HADOOP_YARN_HOME="${HADOOP_HOME}"
 
 ADD entrypoint.sh ${HDUSER_HOME}/hadoop_entrypoint.sh
 
@@ -36,6 +37,6 @@ RUN apt-get update && \
                                              python && \
     rm -rf /var/lib/apt/lists/* && \
     addgroup hadoop && adduser --disabled-password --gecos "" --ingroup hadoop hduser && \
-    mkdir -p ${HADOOP_HOME} ${HADOOP_TMP_DIR} && \
+    mkdir -p ${HADOOP_HOME} ${TEZ_HOME} ${HADOOP_TMP_DIR} && \
     chown -R hduser:hadoop ${HDUSER_HOME} && \
     chmod +x ${HDUSER_HOME}/hadoop_entrypoint.sh

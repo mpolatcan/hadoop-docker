@@ -71,7 +71,14 @@ function configure_hdfs() {
     fi
 }
 
+function configure_tez() {
+    __log__ "Configuring Tez..."
+    hdfs dfs -mkdir -p /tez
+    hdfs dfs -copyFromLocal tez.tar.gz /tez
+}
+
 function configure_zkfc() {
+    __log__ "Configuring Zkfc..."
     if [[ "${HADDOP_INITIALIZE_HA_STATE_IN_ZK:=false}" == "true" ]]; then
         hdfs zkfc -formatZK
     fi
@@ -95,6 +102,11 @@ function start_daemons() {
             ${hadoop_daemons_backport[$daemon]} start $daemon
         else
             ${hadoop_daemons[$daemon]} --daemon start $daemon
+        fi
+
+        # After HDFS started, if Tez enabled, configure it!
+        if [[ "$daemon" == "namenode" && "${TEZ_ENABLED:=false}" == "true" ]]; then
+            configure_tez
         fi
     done
 }
