@@ -140,7 +140,7 @@ class HadoopConfigLoaderGenerator:
             self.__config_loader_config[self.KEY_CONFIG_LOADER_SH_TEMPLATE].format(
                 begin_load_fn_calls="\n\t\t".join(load_fn_calls),
                 end_load_fn_calls="\n\t\t".join([
-                    self.CONFIGURATION_TAG_APPEND_FMT.format(filename=config_filename)
+                    self.CONFIGURATION_TAG_APPEND_FMT.format(config_filename=config_filename)
                     for config_filename in ["${HADDOP_CONF_DIR}/core-site.xml",
                                             "${HADDOP_CONF_DIR/yarn-site.xml",
                                             "${HADDOP_CONF_DIR}/hdfs-site.xml",
