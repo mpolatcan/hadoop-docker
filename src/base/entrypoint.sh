@@ -76,7 +76,7 @@ function configure_hdfs() {
 function configure_tez() {
     __log__ "Configuring Tez..."
     hdfs dfs -mkdir -p /tez
-    hdfs dfs -copyFromLocal tez.tar.gz /tez
+    hdfs dfs -copyFromLocal ${TEZ_HOME}/share/tez.tar.gz /tez
 }
 
 function configure_zkfc() {
