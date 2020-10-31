@@ -57,7 +57,7 @@ class HadoopConfigLoaderGenerator:
                  (tez_site_soup, "tez", "${TEZ_CONF_DIR}", "tez-site.xml")]
 
         if int(self.__hadop_major_version) >= 3 and int(self.__hadoop_minor_version) >= 1:
-            soups.append((BeautifulSoup(hdfs_rbf_site_config_raw, "html.parser"), "hadoop", "${HADOOP_CONF_DIR}", "hdfs-site.xml"))
+            soups.insert(len(soups) - 2, (BeautifulSoup(hdfs_rbf_site_config_raw, "html.parser"), "hadoop", "${HADOOP_CONF_DIR}", "hdfs-site.xml"))
 
         configs = []
 
@@ -103,7 +103,7 @@ class HadoopConfigLoaderGenerator:
         return self.CONFIG_LOADER_STD_STATEMENT_FMT.format(property=property,
                                                            env_var_name=property.upper().replace(".", "_")
                                                                                         .replace("-", "_"),
-                                                           env_var_value=_value,
+                                                           env_var_value=_value if _value != "" else "NULL",
                                                            config_filename=config_filename)
 
     def generate(self):
@@ -116,7 +116,7 @@ class HadoopConfigLoaderGenerator:
                 _load_fn_calls = [
                     "# ==================================== {config_filename} "
                     "CONFIGURATIONS ==================================".format(config_filename=config_filename),
-                    self.CONFIGURATION_TAG_WRITE_FMT.format(config_filename=config_filename)
+                    self.CONFIGURATION_TAG_WRITE_FMT.format(config_filename=f"{config_path}/{config_filename}")
                 ]
                 begin_tag_added_config_files.append(config_filename)
             else:
@@ -141,10 +141,10 @@ class HadoopConfigLoaderGenerator:
                 begin_load_fn_calls="\n\t\t".join(load_fn_calls),
                 end_load_fn_calls="\n\t\t".join([
                     self.CONFIGURATION_TAG_APPEND_FMT.format(config_filename=config_filename)
-                    for config_filename in ["${HADDOP_CONF_DIR}/core-site.xml",
-                                            "${HADDOP_CONF_DIR/yarn-site.xml",
-                                            "${HADDOP_CONF_DIR}/hdfs-site.xml",
-                                            "${HADDOP_CONF_DIR}/mapred-site.xml",
+                    for config_filename in ["${HADOOP_CONF_DIR}/core-site.xml",
+                                            "${HADOOP_CONF_DIR}/yarn-site.xml",
+                                            "${HADOOP_CONF_DIR}/hdfs-site.xml",
+                                            "${HADOOP_CONF_DIR}/mapred-site.xml",
                                             "${TEZ_CONF_DIR}/tez-site.xml"]
                 ])
             )
