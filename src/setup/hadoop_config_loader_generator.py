@@ -114,9 +114,9 @@ class HadoopConfigLoaderGenerator:
         for configs, config_path, config_filename in self.__get_configs_and_parse():
             if config_filename not in begin_tag_added_config_files:
                 _load_fn_calls = [
-                    "# ==================================== {filename} "
-                    "CONFIGURATIONS ==================================".format(filename=config_filename),
-                    self.CONFIGURATION_TAG_WRITE_FMT.format(filename=config_filename)
+                    "# ==================================== {config_filename} "
+                    "CONFIGURATIONS ==================================".format(config_filename=config_filename),
+                    self.CONFIGURATION_TAG_WRITE_FMT.format(config_filename=config_filename)
                 ]
                 begin_tag_added_config_files.append(config_filename)
             else:
