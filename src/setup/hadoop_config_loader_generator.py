@@ -83,6 +83,7 @@ class HadoopConfigLoaderGenerator:
                             [
                                 tag.get_text().strip().replace("\n", "").replace("\"", "\\\"")
                                                       .replace("}", "\\}").replace("$", "\\$")
+                                if tag.get_text() != "null" else "NULL"
                                 for tag in property.find_all("td")[:2]
                             ]
                         )

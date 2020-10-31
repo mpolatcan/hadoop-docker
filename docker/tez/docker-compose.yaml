@@ -9,14 +9,23 @@ services:
         namenode
         secondarynamenode
         resourcemanager
+        timelineserver
       FS_DEFAULTFS: "hdfs://master:9000"
       YARN_RESOURCEMANAGER_HOSTNAME: "master"
       YARN_SCHEDULER_MINIMUM_ALLOCATION_MB: "128"
       YARN_SCHEDULER_MAXIMUM_ALLOCATION_MB: "3096"
+      TEZ_ENABLED: "true"
+      TEZ_HISTORY_LOGGING_SERVICE_CLASS: "org.apache.tez.dag.history.logging.ats.ATSHistoryLoggingService"
+      TEZ_TEZ_UI_HISTORY_URL_BASE: "http://master:8188/tez-ui/"
+      YARN_TIMELINE_SERVICE_ENABLED: "true"
+      YARN_TIMELINE_SERVICE_HOSTNAME: "master"
+      YARN_TIMELINE_SERVICE_HTTP_CROSS_ORIGIN_ENABLED: "true"
+      YARN_RESOURCEMANAGER_SYSTEM_METRICS_PUBLISHER_ENABLED: "true"
     ports:
       - 9870:9870 # Namenode UI
       - 9868:9868 # Secondarynamenode UI Port
       - 8088:8088 # Resourcemanager UI Port
+      - 8188:8188
 
   slave:
     image: mpolatcan/hadoop:3.1.4-java8
@@ -33,3 +42,13 @@ services:
       - 8042 # Nodemanager UI Port
     depends_on:
       - master
+
+  tez-ui:
+    image: mpolatcan/tez-ui:0.9.2
+    container_name: tez-ui
+    hostname: tez-ui
+    environment:
+      YARN_TIMELINE_SERVER_HOSTNAME: "master"
+      YARN_RESOURCEMANAGER_HOSTNAME: "master"
+    ports:
+      - 8080:8080

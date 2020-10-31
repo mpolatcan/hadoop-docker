@@ -53,3 +53,19 @@ jobs:
           src/setup
       - run: docker push ${{secrets.DOCKER_USERNAME}}/${{matrix.repository}}:${{matrix.hadoop_version}}-java${{matrix.java_version}}
       - run: docker rmi ${{secrets.DOCKER_USERNAME}}/${{matrix.repository}}:${{matrix.hadoop_version}}-java${{matrix.java_version}}
+
+  build-tez-ui:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repository: [tez-ui]
+        tez_ui_version: [0.9.2]
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo ${{secrets.DOCKER_PASSWORD}} | docker login -u ${{secrets.DOCKER_USERNAME}} --password-stdin
+      - run: docker build -q
+         -t ${{secrets.DOCKER_USERNAME}}/${{matrix.repository}}:${{matrix.tez_ui_version}}
+         --build-arg TEZ_UI_VERSION=${{matrix.tez_ui_version}}
+         src/tez_ui
+      - run: docker push ${{secrets.DOCKER_USERNAME}}/${{matrix.repository}}:${{matrix.tez_ui_version}}
+      - run: docker rmi ${{secrets.DOCKER_USERNAME}}/${{matrix.repository}}:${{matrix.tez_ui_version}}

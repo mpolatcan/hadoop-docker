@@ -16,6 +16,8 @@ hadoop_daemons[router]=yarn
 hadoop_daemons_backport[router]=yarn-daemon.sh
 hadoop_daemons[sharedcachemanager]=yarn
 hadoop_daemons_backport[sharedcachemanager]=yarn-daemon.sh
+hadoop_daemons[timelineserver]=yarn
+hadoop_daemons_backport[timelineserver]=yarn-daemon.sh
 # ------------------------------
 
 # -------- HDFS Daemons --------
