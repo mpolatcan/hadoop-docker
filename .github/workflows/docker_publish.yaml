@@ -40,7 +40,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml requests beautifulsoup4
       - run: |
-          cd src/setup
+          cd src/hadoop
           python hadoop_config_loader_generator.py ${{matrix.hadoop_version}} ${{matrix.tez_version}}
       - run: echo ${{secrets.DOCKER_PASSWORD}} | docker login -u ${{secrets.DOCKER_USERNAME}} --password-stdin
       - run: docker build -q
