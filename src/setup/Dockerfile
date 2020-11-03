@@ -31,6 +31,7 @@ RUN wget ${HADOOP_DOWNLOAD_LINK} ${TEZ_DOWNLOAD_LINK} ${AWS_SDK_JAVA_DOWNLOAD_LI
     mv ${HADOOP_HOME}/share/hadoop/common/lib/guava-*.jar ${TEZ_HOME}/lib && \
     mv ${HADOOP_HOME}/share/hadoop/common/lib/jersey-*.jar ${TEZ_HOME}/lib && \
     mv ${HADOOP_HOME}/share/hadoop/common/lib/jetty-*.jar ${TEZ_HOME}/lib && \
+    mv ${HADOOP_HOME}/share/hadoop/common/lib/javax-*.jar ${TEZ_HOME}/lib && \
     cd ${TEZ_HOME} && tar -czvf tez.tar.gz * && cd .. && \
     chmod +x hadoop_config_loader.sh && \
     chown -R hduser:hadoop ${HDUSER_HOME} && \
