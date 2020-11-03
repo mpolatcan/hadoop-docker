@@ -37,6 +37,6 @@ RUN apt-get update && \
                                              python && \
     rm -rf /var/lib/apt/lists/* && \
     addgroup hadoop && adduser --disabled-password --gecos "" --ingroup hadoop hduser && \
-    mkdir -p ${HADOOP_HOME} ${TEZ_HOME} ${HADOOP_TMP_DIR} && \
+    mkdir -p ${HADOOP_HOME} ${TEZ_CONF_DIR} ${HADOOP_TMP_DIR} && \
     chown -R hduser:hadoop ${HDUSER_HOME} && \
     chmod +x ${HDUSER_HOME}/hadoop_entrypoint.sh
