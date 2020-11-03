@@ -20,13 +20,13 @@ ADD config_loader.sh ${HDUSER_HOME}/hadoop_config_loader.sh
 RUN wget ${HADOOP_DOWNLOAD_LINK} ${TEZ_DOWNLOAD_LINK} ${AWS_SDK_JAVA_DOWNLOAD_LINK} && \
     tar -xvzf ${HADOOP_ZIP_FOLDER_NAME}.tar.gz -C ${HDUSER_HOME} && \
     tar -xvzf ${TEZ_ZIP_FOLDER_NAME}.tar.gz -C ${TEZ_HOME} && \
+    mv ${TEZ_ZIP_FOLDER_NAME}.tar.gz ${TEZ_HOME}/tez.tar.gz && \
     mv ${HDUSER_HOME}/${HADOOP_ZIP_FOLDER_NAME}/* ${HADOOP_HOME} && \
     rm ${HADOOP_HOME}/share/hadoop/tools/lib/aws-java-sdk-*.jar && \
     mv aws-java-sdk-bundle-${AWS_SDK_JAVA_VERSION}.jar ${HADOOP_HOME}/share/hadoop/tools/lib && \
     chmod +x ${HDUSER_HOME}/hadoop_config_loader.sh && \
     chown -R hduser:hadoop ${HDUSER_HOME} && \
     rm -r ${HDUSER_HOME}/${HADOOP_ZIP_FOLDER_NAME} \
-          ${TEZ_ZIP_FOLDER_NAME}.tar.gz \
           ${HADOOP_ZIP_FOLDER_NAME}.tar.gz
 
 USER hduser
