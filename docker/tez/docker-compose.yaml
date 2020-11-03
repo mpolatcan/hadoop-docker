@@ -1,7 +1,10 @@
+# Successfully worked Hadoop versions:
+# - 2.8.5
+
 version: "3"
 services:
   master:
-    image: mpolatcan/hadoop:3.1.4-java8
+    image: mpolatcan/hadoop:2.9.2-java8
     container_name: master
     hostname: master
     environment:
@@ -32,7 +35,7 @@ services:
       - 8188:8188 # Timelineserver Port
 
   slave:
-    image: mpolatcan/hadoop:3.1.4-java8
+    image: mpolatcan/hadoop:2.9.2-java8
     environment:
       HADOOP_DAEMONS: |
         datanode
