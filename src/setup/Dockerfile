@@ -25,11 +25,9 @@ RUN wget ${HADOOP_DOWNLOAD_LINK} ${TEZ_DOWNLOAD_LINK} ${AWS_SDK_JAVA_DOWNLOAD_LI
     rm ${HADOOP_HOME}/share/hadoop/tools/lib/aws-java-sdk-*.jar && \
     mv aws-java-sdk-bundle-${AWS_SDK_JAVA_VERSION}.jar ${HADOOP_HOME}/share/hadoop/tools/lib && \
     tar -xvzf ${TEZ_ZIP_FOLDER_NAME}.tar.gz -C ${TEZ_HOME} && \
-    rm ${TEZ_HOME}/lib/guava-*.jar \
-       ${TEZ_HOME}/lib/jersey-*.jar \
+    rm ${TEZ_HOME}/lib/jersey-*.jar \
        ${TEZ_HOME}/lib/jetty-*.jar \
        ${TEZ_HOME}/lib/*servlet*.jar && \
-    mv ${HADOOP_HOME}/share/hadoop/common/lib/guava-*.jar ${TEZ_HOME}/lib && \
     mv ${HADOOP_HOME}/share/hadoop/common/lib/jersey-*.jar ${TEZ_HOME}/lib && \
     mv ${HADOOP_HOME}/share/hadoop/common/lib/jetty-*.jar ${TEZ_HOME}/lib && \
     mv ${HADOOP_HOME}/share/hadoop/common/lib/*servlet*.jar ${TEZ_HOME}/lib && \

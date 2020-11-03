@@ -21,7 +21,10 @@ services:
       YARN_TIMELINE_SERVICE_HOSTNAME: "master"
       YARN_TIMELINE_SERVICE_HTTP_CROSS_ORIGIN_ENABLED: "true"
       YARN_SYSTEM_METRICS_PUBLISHER_ENABLED: "true"
+      YARN_NODEMANAGER_VMEM_PMEM_RATIO: "3"
       TEZ_USE_CLUSTER_HADOOP_LIBS: "true"
+      MAPREDUCE_MAP_MEMORY_MB: "4096"
+      MAPREDUCE_REDUCE_MEMORY_MB: "4096"
     ports:
       - 9870:9870 # Namenode UI
       - 9868:9868 # Secondarynamenode UI Port
@@ -45,6 +48,9 @@ services:
       YARN_TIMELINE_SERVICE_HTTP_CROSS_ORIGIN_ENABLED: "true"
       YARN_SYSTEM_METRICS_PUBLISHER_ENABLED: "true"
       TEZ_USE_CLUSTER_HADOOP_LIBS: "true"
+      MAPREDUCE_MAP_MEMORY_MB: "4096"
+      MAPREDUCE_REDUCE_MEMORY_MB: "4096"
+      YARN_NODEMANAGER_VMEM_PMEM_RATIO: "3"
     ports:
       - 9864 # Datanode UI Port
       - 8042 # Nodemanager UI Port
@@ -56,7 +62,7 @@ services:
     container_name: tez-ui
     hostname: tez-ui
     environment:
-      YARN_TIMELINE_SERVER_HOSTNAME: "master"
+      YARN_TIMELINE_SERVER_HOSTNAME: "localhost"
       YARN_RESOURCEMANAGER_HOSTNAME: "master"
     ports:
       - 8080:8080
