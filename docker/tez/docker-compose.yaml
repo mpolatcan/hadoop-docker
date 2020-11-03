@@ -21,6 +21,7 @@ services:
       YARN_TIMELINE_SERVICE_HOSTNAME: "master"
       YARN_TIMELINE_SERVICE_HTTP_CROSS_ORIGIN_ENABLED: "true"
       YARN_SYSTEM_METRICS_PUBLISHER_ENABLED: "true"
+      TEZ_USE_CLUSTER_HADOOP_LIBS: "true"
     ports:
       - 9870:9870 # Namenode UI
       - 9868:9868 # Secondarynamenode UI Port
@@ -43,6 +44,7 @@ services:
       YARN_TIMELINE_SERVICE_HOSTNAME: "master"
       YARN_TIMELINE_SERVICE_HTTP_CROSS_ORIGIN_ENABLED: "true"
       YARN_SYSTEM_METRICS_PUBLISHER_ENABLED: "true"
+      TEZ_USE_CLUSTER_HADOOP_LIBS: "true"
     ports:
       - 9864 # Datanode UI Port
       - 8042 # Nodemanager UI Port
