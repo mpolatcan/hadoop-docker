@@ -17,8 +17,6 @@ ENV HADOOP_CONF_DIR="${HADOOP_HOME}/etc/hadoop" \
     HADOOP_COMMON_HOME="${HADOOP_HOME}" \
     HADOOP_YARN_HOME="${HADOOP_HOME}"
 
-ADD entrypoint.sh ${HDUSER_HOME}/hadoop_entrypoint.sh
-
 RUN apt-get update && \
     apt-get -y install --no-install-recommends procps \
                                              nano \
@@ -36,5 +34,4 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     addgroup hadoop && adduser --disabled-password --gecos "" --ingroup hadoop hduser && \
     mkdir -p ${HADOOP_HOME} ${HADOOP_TMP_DIR} && \
-    chown -R hduser:hadoop ${HDUSER_HOME} && \
-    chmod +x ${HDUSER_HOME}/hadoop_entrypoint.sh
+    chown -R hduser:hadoop ${HDUSER_HOME}
