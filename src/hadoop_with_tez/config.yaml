@@ -1,0 +1,23 @@
+config_loader_sh_template: |
+  #!/usr/bin/env bash
+
+  function load_config() {{
+      if [[ "$2" != "NULL" ]]
+          then
+              printf "\t<property>\n\t\t<name>$1</name>\n\t\t<value>$2</value>\n\t</property>\n" >> "$3"
+      fi
+  }}
+
+  function load_core_configs() {{
+      {begin_load_fn_calls}
+  }}
+
+  function end_load_configs() {{
+      {end_load_fn_calls}
+  }}
+
+  load_core_configs
+  end_load_configs
+
+overridden_configs:
+  tez.lib.uris: "\\${fs.defaultFS\\}/tez/tez.tar.gz"

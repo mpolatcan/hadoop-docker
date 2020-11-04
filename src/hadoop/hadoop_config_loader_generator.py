@@ -18,7 +18,7 @@ class HadoopConfigLoaderGenerator:
     def __init__(self, hadoop_version: str, tez_version):
         self.__hadoop_version = hadoop_version
         self.__tez_version = tez_version
-        self.__hadop_major_version, self.__hadoop_minor_version, _ = tuple(self.__hadoop_version.split("."))
+        self.__hadoop_major_version, self.__hadoop_minor_version, _ = tuple(self.__hadoop_version.split("."))
         self.__config_loader_config = yaml.safe_load(open(f"config.yaml", "r"))
 
     def __get_configs_and_parse(self):
@@ -39,7 +39,7 @@ class HadoopConfigLoaderGenerator:
         ).content.decode("utf-8")
         hdfs_rbf_site_config_raw = None
 
-        if int(self.__hadop_major_version) >= 3 and int(self.__hadoop_minor_version) >= 1:
+        if int(self.__hadoop_major_version) >= 3 and int(self.__hadoop_minor_version) >= 1:
             hdfs_rbf_site_config_raw = requests.get(
                 f"https://hadoop.apache.org/docs/r{self.__hadoop_version}/hadoop-project-dist/hadoop-hdfs-rbf/hdfs-rbf-default.xml"
             ).content.decode("utf-8")
@@ -56,7 +56,7 @@ class HadoopConfigLoaderGenerator:
                  (mapred_site_soup, "hadoop", "${HADOOP_CONF_DIR}", "mapred-site.xml"),
                  (tez_site_soup, "tez", "${TEZ_CONF_DIR}", "tez-site.xml")]
 
-        if int(self.__hadop_major_version) >= 3 and int(self.__hadoop_minor_version) >= 1:
+        if int(self.__hadoop_major_version) >= 3 and int(self.__hadoop_minor_version) >= 1:
             soups.insert(len(soups) - 2, (BeautifulSoup(hdfs_rbf_site_config_raw, "html.parser"), "hadoop", "${HADOOP_CONF_DIR}", "hdfs-site.xml"))
 
         configs = []
@@ -99,7 +99,7 @@ class HadoopConfigLoaderGenerator:
 
     def __get_formatted_config(self, property, value, config_filename):
         # If value overridden take it from config, else set given value
-        _value = self.__config_loader_config[self.KEY_OVERRIDDEN_CONFIGS].get(property, value)
+        _value = self.__config_loader_config(self.KEY_OVERRIDDEN_CONFIGS, {}).get(property, value)
 
         return self.CONFIG_LOADER_STD_STATEMENT_FMT.format(property=property,
                                                            env_var_name=property.upper().replace(".", "_")
@@ -125,11 +125,12 @@ class HadoopConfigLoaderGenerator:
 
             for property, value in configs:
                 # If property not deprecated or not include square bracket, add this property
-                if "[" not in property and property not in self.__config_loader_config[self.KEY_DEPRECATED_CONFIGS]:
+                if "[" not in property and property not in self.__config_loader_config.get(self.KEY_DEPRECATED_CONFIGS, []):
                     _load_fn_calls.append(self.__get_formatted_config(property, value, f"{config_path}/{config_filename}"))
 
             # If there any additional properties for that config file, add these properties
-            additional_configs = self.__config_loader_config[self.KEY_ADDITIONAL_CONFIGS].get(config_filename)
+
+            additional_configs = self.__config_loader_config.get(self.KEY_ADDITIONAL_CONFIGS, {}).get(config_filename)
 
             if additional_configs:
                 for property, value in additional_configs.items():
