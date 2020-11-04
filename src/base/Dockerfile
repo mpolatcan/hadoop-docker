@@ -8,7 +8,7 @@ ENV HDUSER_HOME "/home/hduser"
 ENV HADOOP_HOME="${HDUSER_HOME}/hadoop" \
 ENV HADOOP_CONF_DIR="${HADOOP_HOME}/etc/hadoop" \
     YARN_CONF_DIR="${HADOOP_HOME}/etc/hadoop" \
-ENV PATH=$PATH:${HADOOP_HOME}/bin:${HADOOP_HOME}/sbin \
+    PATH=$PATH:${HADOOP_HOME}/bin:${HADOOP_HOME}/sbin \
     HADOOP_CLASSPATH=$HADOOP_CLASSPATH:${HADOOP_HOME}/share/hadoop/tools/lib/* \
     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HADOOP_HOME}/lib/native/ \
     HADOOP_TMP_DIR="${HDUSER_HOME}/app/hadoop/tmp" \
