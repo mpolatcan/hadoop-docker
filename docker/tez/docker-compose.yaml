@@ -61,6 +61,6 @@ services:
     hostname: tez-ui
     environment:
       YARN_TIMELINE_SERVER_HOSTNAME: "localhost"
-      YARN_RESOURCEMANAGER_HOSTNAME: "master"
+      YARN_RESOURCEMANAGER_HOSTNAME: "localhost"
     ports:
       - 8080:8080
