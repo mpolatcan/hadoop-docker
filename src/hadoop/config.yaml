@@ -84,7 +84,6 @@ overridden_configs:
   yarn.nodemanager.aux-services: "mapreduce_shuffle"
   hadoop.tmp.dir: "/home/hduser/app/hadoop/tmp"
   yarn.app.mapreduce.am.env: "HADOOP_MAPRED_HOME=/home/hduser/hadoop"
-  tez.lib.uris: "\\${fs.defaultFS\\}/tez/tez.tar.gz"
 
 deprecated_configs:
   - fs.default.name

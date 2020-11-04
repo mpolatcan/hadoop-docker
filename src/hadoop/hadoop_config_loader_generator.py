@@ -15,9 +15,8 @@ class HadoopConfigLoaderGenerator:
     CONFIGURATION_TAG_WRITE_FMT = "printf \"<configuration>\\n\" > \"{config_filename}\""
     CONFIGURATION_TAG_APPEND_FMT = "printf \"</configuration>\" >> \"{config_filename}\""
 
-    def __init__(self, hadoop_version: str, tez_version):
+    def __init__(self, hadoop_version: str):
         self.__hadoop_version = hadoop_version
-        self.__tez_version = tez_version
         self.__hadoop_major_version, self.__hadoop_minor_version, _ = tuple(self.__hadoop_version.split("."))
         self.__config_loader_config = yaml.safe_load(open(f"config.yaml", "r"))
 
@@ -34,9 +33,6 @@ class HadoopConfigLoaderGenerator:
         mapred_site_config_raw = requests.get(
             f"https://hadoop.apache.org/docs/r{self.__hadoop_version}/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml"
         ).content.decode("utf-8")
-        tez_site_config_raw = requests.get(
-            f"https://tez.apache.org/releases/{self.__tez_version}/tez-api-javadocs/configs/TezConfiguration.html"
-        ).content.decode("utf-8")
         hdfs_rbf_site_config_raw = None
 
         if int(self.__hadoop_major_version) >= 3 and int(self.__hadoop_minor_version) >= 1:
@@ -48,13 +44,11 @@ class HadoopConfigLoaderGenerator:
         yarn_site_soup = BeautifulSoup(yarn_site_config_raw, "html.parser")
         hdfs_site_soup = BeautifulSoup(hdfs_site_config_raw, "html.parser")
         mapred_site_soup = BeautifulSoup(mapred_site_config_raw, "html.parser")
-        tez_site_soup = BeautifulSoup(tez_site_config_raw, "html.parser")
 
         soups = [(core_site_soup, "hadoop", "${HADOOP_CONF_DIR}", "core-site.xml"),
                  (yarn_site_soup, "hadoop", "${HADOOP_CONF_DIR}", "yarn-site.xml"),
                  (hdfs_site_soup, "hadoop", "${HADOOP_CONF_DIR}", "hdfs-site.xml"),
-                 (mapred_site_soup, "hadoop", "${HADOOP_CONF_DIR}", "mapred-site.xml"),
-                 (tez_site_soup, "tez", "${TEZ_CONF_DIR}", "tez-site.xml")]
+                 (mapred_site_soup, "hadoop", "${HADOOP_CONF_DIR}", "mapred-site.xml")]
 
         if int(self.__hadoop_major_version) >= 3 and int(self.__hadoop_minor_version) >= 1:
             soups.insert(len(soups) - 2, (BeautifulSoup(hdfs_rbf_site_config_raw, "html.parser"), "hadoop", "${HADOOP_CONF_DIR}", "hdfs-site.xml"))
@@ -62,38 +56,19 @@ class HadoopConfigLoaderGenerator:
         configs = []
 
         for soup, config_type, config_path, config_filename in soups:
-            if config_type == "hadoop":
-                configs.append((
-                    ([
-                        (
-                            property.find("name").get_text().strip().replace("\n", ""),
-                            property.find("value").get_text().strip().replace("\n", "").replace("\"", "\\\"")
-                                                                     .replace("}", "\\}").replace("$", "\\$")
-                            if property.find("value") else "NULL"
-                        )
-                        for property in soup.find_all("property")
-                    ]),
-                    config_path,
-                    config_filename
-                ))
-            elif config_type == "tez":
-                configs.append((
-                    [
-                        tuple(
-                            [
-                                tag.get_text().strip().replace("\n", "").replace("\"", "\\\"")
-                                                      .replace("}", "\\}").replace("$", "\\$")
-                                if tag.get_text() != "null" else "NULL"
-                                for tag in property.find_all("td")[:2]
-                            ]
-                        )
-                        for property in soup.find_all("tr")[1:]
-                    ],
-                    config_path,
-                    config_filename
-                ))
-            else:
-                pass
+            configs.append((
+                ([
+                    (
+                        property.find("name").get_text().strip().replace("\n", ""),
+                        property.find("value").get_text().strip().replace("\n", "").replace("\"", "\\\"")
+                                                                 .replace("}", "\\}").replace("$", "\\$")
+                        if property.find("value") else "NULL"
+                    )
+                    for property in soup.find_all("property")
+                ]),
+                config_path,
+                config_filename
+            ))
 
         return configs
 
@@ -146,12 +121,11 @@ class HadoopConfigLoaderGenerator:
                     for config_filename in ["${HADOOP_CONF_DIR}/core-site.xml",
                                             "${HADOOP_CONF_DIR}/yarn-site.xml",
                                             "${HADOOP_CONF_DIR}/hdfs-site.xml",
-                                            "${HADOOP_CONF_DIR}/mapred-site.xml",
-                                            "${TEZ_CONF_DIR}/tez-site.xml"]
+                                            "${HADOOP_CONF_DIR}/mapred-site.xml"]
                 ])
             )
         )
 
 
 if __name__ == "__main__":
-    HadoopConfigLoaderGenerator(hadoop_version=argv[1], tez_version=argv[2]).generate()
+    HadoopConfigLoaderGenerator(hadoop_version=argv[1]).generate()
