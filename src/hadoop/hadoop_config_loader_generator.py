@@ -74,7 +74,7 @@ class HadoopConfigLoaderGenerator:
 
     def __get_formatted_config(self, property, value, config_filename):
         # If value overridden take it from config, else set given value
-        _value = self.__config_loader_config(self.KEY_OVERRIDDEN_CONFIGS, {}).get(property, value)
+        _value = self.__config_loader_config.get(self.KEY_OVERRIDDEN_CONFIGS, {}).get(property, value)
 
         return self.CONFIG_LOADER_STD_STATEMENT_FMT.format(property=property,
                                                            env_var_name=property.upper().replace(".", "_")
