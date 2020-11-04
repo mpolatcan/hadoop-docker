@@ -80,6 +80,7 @@ overridden_configs:
   hadoop.security.group.mapping.ldap.search.filter.group: "NULL"
   dfs.ha.fencing.methods: "shell(/bin/true)"
   mapreduce.framework.name: "yarn"
+  mapreduce.jobtracker.address: "yarn"
   yarn.log-aggregation.enable: "true"
   yarn.nodemanager.aux-services: "mapreduce_shuffle"
   hadoop.tmp.dir: "/home/hduser/app/hadoop/tmp"
