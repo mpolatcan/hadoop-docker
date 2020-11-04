@@ -5,7 +5,7 @@ FROM azul/zulu-openjdk:${JAVA_VERSION}
 MAINTAINER Mutlu Polatcan <mutlupolatcan@gmail.com>
 
 ENV HDUSER_HOME "/home/hduser"
-ENV HADOOP_HOME="${HDUSER_HOME}/hadoop" \
+ENV HADOOP_HOME="${HDUSER_HOME}/hadoop"
 ENV HADOOP_CONF_DIR="${HADOOP_HOME}/etc/hadoop" \
     YARN_CONF_DIR="${HADOOP_HOME}/etc/hadoop" \
     PATH=$PATH:${HADOOP_HOME}/bin:${HADOOP_HOME}/sbin \
