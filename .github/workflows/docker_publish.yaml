@@ -60,7 +60,6 @@ jobs:
         java_version: [8]
         hadoop_version: [2.10.1, 2.9.2, 2.8.5]
         tez_version: [0.9.2]
-        aws_sdk_java_version: [1.11.881]
     needs: build-hadoop-image
     steps:
       - uses: actions/checkout@v2
@@ -75,9 +74,8 @@ jobs:
           python tez_config_loader_generator.py ${{matrix.tez_version}}
       - run: echo ${{secrets.DOCKER_PASSWORD}} | docker login -u ${{secrets.DOCKER_USERNAME}} --password-stdin
       - run: docker build -q
-          -t ${{secrets.DOCKER_USERNAME}}/${{matrix.repository}}:${{matrix.hadoop_version}}-java${{matrix.java_version}}
+          -t ${{secrets.DOCKER_USERNAME}}/${{matrix.repository}}:${{matrix.hadoop_version}}-tez-${{matrix.tez_version}}-java${{matrix.java_version}}
           --build-arg HADOOP_VERSION=${{matrix.hadoop_version}}
-          --build-arg AWS_SDK_JAVA_VERSION=${{matrix.aws_sdk_java_version}}
           --build-arg TEZ_VERSION=${{matrix.tez_version}}
           --build-arg JAVA_VERSION=${{matrix.java_version}}
           src/hadoop_with_tez

@@ -1,10 +1,7 @@
-# Successfully worked Hadoop versions:
-# - 2.8.5
-
 version: "3"
 services:
   master:
-    image: mpolatcan/hadoop:3.2.1-java8
+    image: mpolatcan/hadoop:2.10.1-tez-0.9.2-java8
     container_name: master
     hostname: master
     environment:
@@ -25,7 +22,6 @@ services:
       YARN_TIMELINE_SERVICE_HTTP_CROSS_ORIGIN_ENABLED: "true"
       YARN_SYSTEM_METRICS_PUBLISHER_ENABLED: "true"
       YARN_NODEMANAGER_VMEM_PMEM_RATIO: "3"
-      TEZ_LIB_URIS_CLASSPATH: "./tezlib/*:./tezlib/lib/*"
       MAPREDUCE_MAP_MEMORY_MB: "4096"
       MAPREDUCE_REDUCE_MEMORY_MB: "4096"
     ports:
@@ -35,7 +31,7 @@ services:
       - 8188:8188 # Timelineserver Port
 
   slave:
-    image: mpolatcan/hadoop:3.2.1-java8
+    image: mpolatcan/hadoop:2.10.1-tez-0.9.2-java8
     environment:
       HADOOP_DAEMONS: |
         datanode
@@ -50,7 +46,6 @@ services:
       YARN_TIMELINE_SERVICE_HOSTNAME: "master"
       YARN_TIMELINE_SERVICE_HTTP_CROSS_ORIGIN_ENABLED: "true"
       YARN_SYSTEM_METRICS_PUBLISHER_ENABLED: "true"
-      TEZ_LIB_URIS_CLASSPATH: "./tezlib/*:./tezlib/lib/*"
       MAPREDUCE_MAP_MEMORY_MB: "4096"
       MAPREDUCE_REDUCE_MEMORY_MB: "4096"
       YARN_NODEMANAGER_VMEM_PMEM_RATIO: "3"
