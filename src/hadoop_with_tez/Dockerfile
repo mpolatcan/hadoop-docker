@@ -23,7 +23,7 @@ RUN mkdir -p ${TEZ_CONF_DIR} && \
     tar -xvzf ${TEZ_ZIP_FOLDER_NAME}.tar.gz -C ${TEZ_HOME} && \
     cd ${TEZ_HOME} && tar -czvf tez.tar.gz * && cd .. && \
     chown -R hduser:hadoop ${HDUSER_HOME} && \
-    chmod +x tez_config_loader.sh && \
+    chmod +x tez_entrypoint.sh tez_config_loader.sh && \
     rm -r ${TEZ_ZIP_FOLDER_NAME}.tar.gz
 
 USER hduser
