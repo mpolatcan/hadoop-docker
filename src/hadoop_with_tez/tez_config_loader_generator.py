@@ -76,7 +76,7 @@ class TezConfigLoaderGenerator:
             self.__config_loader_config[self.KEY_CONFIG_LOADER_SH_TEMPLATE].format(
                 begin_load_fn_calls="\n\t\t".join(load_fn_calls),
                 end_load_fn_calls="\n\t\t".join([
-                    self.CONFIGURATION_TAG_APPEND_FMT.format(config_filename=f"${config_path}/{config_filename}")
+                    self.CONFIGURATION_TAG_APPEND_FMT.format(config_filename=f"å{config_path}/{config_filename}")
                 ])
             )
         )
